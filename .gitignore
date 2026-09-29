@@ -1,0 +1,19 @@
+# Downloaded and generated datasets
+/data/
+
+# Python environment and temporary files
+/.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Local credentials and connection settings
+.env
+.env.*
+/.dbt/
+profiles.yml
+
+# Generated dbt files
+target/
+logs/
+dbt_packages/
