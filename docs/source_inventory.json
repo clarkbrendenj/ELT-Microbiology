@@ -1,0 +1,82 @@
+{
+  "source_url": "https://datadryad.org/dataset/doi:10.5061/dryad.jq2bvq8kp",
+  "source_version": null,
+  "inspected_at_utc": "2026-09-29T18:08:41.679533+00:00",
+  "python_version": "3.12.7",
+  "scope": "File inventory and CSV structure; not clinical validation.",
+  "files": [
+    {
+      "file_name": "microbiology_cultures_cohort.csv",
+      "size_bytes": 257013798,
+      "sha256": "631d9f3c35e620b60366a5bcc3e94fd9c031c79c7fd2d042ea6f182a1fcdd871",
+      "encoding_used": "utf-8-sig",
+      "data_row_count": 2241050,
+      "column_count": 10,
+      "columns": [
+        "anon_id",
+        "pat_enc_csn_id_coded",
+        "order_proc_id_coded",
+        "order_time_jittered_utc",
+        "ordering_mode",
+        "culture_description",
+        "was_positive",
+        "organism",
+        "antibiotic",
+        "susceptibility"
+      ],
+      "empty_record_count": 0,
+      "field_count_error_count": 0,
+      "first_field_count_error_record_numbers": [],
+      "duplicate_column_names": [],
+      "blank_column_positions": [],
+      "warnings": []
+    },
+    {
+      "file_name": "microbiology_cultures_demographics.csv",
+      "size_bytes": 34784218,
+      "sha256": "1d18182aee2af9c34b6a95e1b399241a4cc64d007c8488196b43a97fa58f93ee",
+      "encoding_used": "utf-8-sig",
+      "data_row_count": 751075,
+      "column_count": 5,
+      "columns": [
+        "anon_id",
+        "pat_enc_csn_id_coded",
+        "order_proc_id_coded",
+        "age",
+        "gender"
+      ],
+      "empty_record_count": 0,
+      "field_count_error_count": 0,
+      "first_field_count_error_record_numbers": [],
+      "duplicate_column_names": [],
+      "blank_column_positions": [],
+      "warnings": []
+    },
+    {
+      "file_name": "microbiology_cultures_ward_info.csv",
+      "size_bytes": 49894350,
+      "sha256": "1f8a1d004d4967b1acea311422fe6a6d0152c4c0ccccedbaaaff0379b771ed46",
+      "encoding_used": "utf-8-sig",
+      "data_row_count": 751075,
+      "column_count": 8,
+      "columns": [
+        "anon_id",
+        "pat_enc_csn_id_coded",
+        "order_proc_id_coded",
+        "order_time_jittered_utc",
+        "hosp_ward_IP",
+        "hosp_ward_OP",
+        "hosp_ward_ER",
+        "hosp_ward_ICU"
+      ],
+      "empty_record_count": 0,
+      "field_count_error_count": 0,
+      "first_field_count_error_record_numbers": [],
+      "duplicate_column_names": [],
+      "blank_column_positions": [],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "inspection_complete": true
+}
