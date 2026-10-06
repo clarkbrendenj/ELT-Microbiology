@@ -1,0 +1,7 @@
+name: clinical_microbiology
+version: "1.0.0"
+config-version: 2
+
+profile: armd_personal
+
+model-paths: ["models"]

@@ -2,7 +2,7 @@
 /data/
 
 # Python environment and temporary files
-/.venv/
+.venv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
@@ -12,8 +12,12 @@ __pycache__/
 .env.*
 /.dbt/
 profiles.yml
+.databrickscfg
 
 # Generated dbt files
 target/
 logs/
 dbt_packages/
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
