@@ -1,0 +1,117 @@
+version: 2
+
+models:
+  - name: fct_culture
+    description: >
+      One row per microbiology culture order in the analyzed ARMD release.
+
+    columns:
+      - name: culture_key
+        description: >
+          Project-generated unique identifier for a culture order within
+          an ARMD dataset release.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: source_version
+        data_tests:
+          - not_null
+
+      - name: patient_key
+        data_tests:
+          - not_null
+
+      - name: encounter_key
+        data_tests:
+          - not_null
+
+      - name: culture_order_key
+        data_tests:
+          - not_null
+
+      - name: was_positive
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+  - name: fct_culture_organism
+    description: >
+      One row per culture-organism combination. Cultures without an
+      identified organism remain represented in fct_culture but do not
+      appear in this model. The source does not provide a verified isolate
+      identifier, so repeated isolates of the same organism cannot be
+      independently distinguished.
+
+    columns:
+      - name: culture_organism_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: culture_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_culture')
+                field: culture_key
+
+      - name: organism
+        data_tests:
+          - not_null
+
+      - name: source_version
+        data_tests:
+          - not_null
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - culture_key
+              - organism                
+  
+  - name: fct_susceptibility
+    description: >
+      One row per unambiguous culture-organism-antibiotic susceptibility
+      result. Groups containing conflicting or missing source-result states
+      are retained separately in the susceptibility exception model.
+
+    columns:
+      - name: susceptibility_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: culture_organism_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_culture_organism')
+                field: culture_organism_key
+
+      - name: antibiotic
+        data_tests:
+          - not_null
+
+      - name: susceptibility
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - Susceptible
+                  - Resistant
+                  - Intermediate
+                  - Inconclusive
+                  - Synergism
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - culture_organism_key
+              - antibiotic                
