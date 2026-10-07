@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: int_susceptibility_reconciliation
+    description: >
+      Reconciles repeated susceptibility source records at the
+      culture-organism-antibiotic grain and classifies each group as
+      resolved, missing, or conflicting.
+
+    columns:
+      - name: culture_organism_key
+        data_tests:
+          - not_null
+
+      - name: antibiotic
+        data_tests:
+          - not_null
+
+      - name: resolution_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - resolved
+                  - missing
+                  - conflict
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - culture_organism_key
+              - antibiotic
