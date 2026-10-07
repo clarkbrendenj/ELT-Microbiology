@@ -32,3 +32,43 @@ models:
             combination_of_columns:
               - culture_organism_key
               - antibiotic
+
+  - name: int_cohort_culture_organism
+    description: >
+      Assigns each culture-organism combination to an explicitly
+      defined microbiology culture cohort based on the source
+      culture_description.
+
+    columns:
+      - name: culture_organism_key
+        data_tests:
+          - not_null
+
+      - name: culture_key
+        data_tests:
+          - not_null
+
+      - name: patient_key
+        data_tests:
+          - not_null
+
+      - name: organism
+        data_tests:
+          - not_null
+
+      - name: cohort_id
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - blood
+                  - urine
+                  - respiratory
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - culture_organism_key
+              - cohort_id
