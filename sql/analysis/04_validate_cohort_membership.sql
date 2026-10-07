@@ -38,16 +38,21 @@ having count(*) > 1;
 
 
 -- ------------------------------------------------------------
--- 3. Confirm every source culture description maps to a cohort.
+-- 3. Confirm every culture description maps to a defined cohort.
 -- Expected result: zero rows for the current ARMD release.
 -- ------------------------------------------------------------
 
 select
     culture_description,
-    count(*) as rows_without_cohort
-from workspace.micro_dev.int_cohort_culture_organism
-where cohort_id is null
-group by culture_description;
+    count(*) as unmapped_culture_orders
+from workspace.micro_dev.fct_culture
+where culture_description not in (
+    'BLOOD',
+    'URINE',
+    'RESPIRATORY'
+)
+group by culture_description
+order by unmapped_culture_orders desc;
 
 
 -- ------------------------------------------------------------

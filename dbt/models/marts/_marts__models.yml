@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: mart_susceptibility
+    description: >
+      Patient-deduplicated susceptibility reporting mart at the grain
+      of source release, cohort, standardized organism, and reviewed
+      antibiotic pair.
+
+    columns:
+      - name: susceptibility_mart_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: source_version
+        data_tests:
+          - not_null
+
+      - name: cohort_id
+        data_tests:
+          - not_null
+
+      - name: organism_standardized
+        data_tests:
+          - not_null
+
+      - name: antibiotic
+        data_tests:
+          - not_null
+
+      - name: eligible_count
+        data_tests:
+          - not_null
+
+      - name: categorized_count
+        data_tests:
+          - not_null
+
+      - name: display_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - display
+                  - insufficient_data

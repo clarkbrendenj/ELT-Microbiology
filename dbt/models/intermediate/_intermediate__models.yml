@@ -72,3 +72,137 @@ models:
             combination_of_columns:
               - culture_organism_key
               - cohort_id
+
+  - name: int_mapped_cohort_culture_organism
+    description: >
+      Culture-organism cohort memberships enriched with reviewed organism
+      terminology mappings. Source organism labels are preserved.
+
+    columns:
+      - name: culture_organism_key
+        data_tests:
+          - not_null
+
+      - name: organism_source_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_organism')
+                field: organism_source_key
+
+      - name: organism_source
+        data_tests:
+          - not_null
+
+      - name: cohort_id
+        data_tests:
+          - not_null
+
+      - name: mapping_status
+        data_tests:
+          - not_null
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - culture_organism_key
+              - cohort_id
+
+  - name: int_standardized_culture_organism
+    description: >
+      One row per culture and reviewed standardized organism. Source
+      organism records that map unambiguously to one standardized organism
+      are marked resolved. Cultures containing multiple source organism
+      records mapping to the same standardized organism are retained and
+      flagged as collisions rather than arbitrarily collapsed.
+
+    columns:
+      - name: standardized_culture_organism_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: organism_standardized
+        data_tests:
+          - not_null
+
+      - name: cohort_id
+        data_tests:
+          - not_null
+
+      - name: mapping_resolution_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - resolved
+                  - collision
+
+  - name: int_first_culture_organism
+    description: >
+      First eligible resolved culture-organism per patient,
+      standardized organism, and cohort across the analyzed ARMD
+      release. Selection occurs before considering antibiotic
+      testing or susceptibility result.
+
+    columns:
+      - name: first_culture_organism_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: standardized_culture_organism_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_standardized_culture_organism')
+                field: standardized_culture_organism_key
+
+      - name: culture_organism_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_culture_organism')
+                field: culture_organism_key
+
+      - name: patient_key
+        data_tests:
+          - not_null
+
+      - name: cohort_id
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - blood
+                  - urine
+                  - respiratory
+
+      - name: organism_standardized
+        data_tests:
+          - not_null
+
+      - name: culture_time_shifted
+        data_tests:
+          - not_null
+
+      - name: culture_rank
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [1]
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_version
+              - cohort_id
+              - patient_key
+              - organism_standardized

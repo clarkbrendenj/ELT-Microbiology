@@ -115,3 +115,36 @@ models:
             combination_of_columns:
               - culture_organism_key
               - antibiotic                
+
+  - name: dim_organism
+    description: >
+      Version-controlled project mapping from ARMD source organism labels
+      to reviewed standardized organism identities. Unreviewed source
+      labels remain visible and are explicitly marked as unmapped.
+
+    columns:
+      - name: organism_source_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: organism_source
+        data_tests:
+          - not_null
+          - unique
+
+      - name: include_primary_summary
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+      - name: mapping_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - reviewed
+                  - unmapped
