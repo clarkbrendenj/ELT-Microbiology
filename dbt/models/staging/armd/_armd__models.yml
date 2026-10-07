@@ -1,0 +1,106 @@
+version: 2
+
+models:
+  - name: stg_armd_cohort
+    description: >
+      Staged ARMD microbiology culture and antimicrobial susceptibility records.
+
+    columns:
+      - name: patient_key
+        data_tests:
+          - not_null
+
+      - name: encounter_key
+        data_tests:
+          - not_null
+
+      - name: culture_order_key
+        data_tests:
+          - not_null
+
+      - name: was_positive
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+      - name: source_version
+        data_tests:
+          - not_null
+
+
+  - name: stg_armd_demographics
+    description: >
+      Staged demographic information associated with ARMD microbiology orders.
+
+    columns:
+      - name: patient_key
+        data_tests:
+          - not_null
+
+      - name: encounter_key
+        data_tests:
+          - not_null
+
+      - name: culture_order_key
+        data_tests:
+          - not_null
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - patient_key
+              - encounter_key
+              - culture_order_key
+
+
+  - name: stg_armd_ward
+    description: >
+      Staged ward and care-setting information associated with ARMD microbiology orders.
+
+    columns:
+      - name: patient_key
+        data_tests:
+          - not_null
+
+      - name: encounter_key
+        data_tests:
+          - not_null
+
+      - name: culture_order_key
+        data_tests:
+          - not_null
+
+      - name: hosp_ward_ip
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+      - name: hosp_ward_op
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+      - name: hosp_ward_er
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+      - name: hosp_ward_icu
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - patient_key
+              - encounter_key
+              - culture_order_key

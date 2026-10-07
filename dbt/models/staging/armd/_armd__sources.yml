@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: armd_raw
+    description: >
+      Raw tables loaded from the April 11, 2025 release of the
+      Stanford Antibiotic Resistance Microbiology Dataset (ARMD).
+
+    database: workspace
+    schema: micro_raw
+
+    tables:
+      - name: raw_armd_cohort
+        description: Raw microbiology culture and susceptibility records.
+
+      - name: raw_armd_demographics
+        description: Raw demographic data associated with microbiology orders.
+
+      - name: raw_armd_ward
+        description: Raw ward information associated with microbiology orders.
