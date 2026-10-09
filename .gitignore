@@ -3,6 +3,7 @@
 
 # Python environment and temporary files
 .venv/
+.venv-dbx/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
