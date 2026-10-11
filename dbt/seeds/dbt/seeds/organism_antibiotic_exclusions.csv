@@ -1,0 +1,17 @@
+organism_reporting_group,antibiotic,exclusion_reason,review_basis,notes
+Klebsiella pneumoniae,Ampicillin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
+Klebsiella oxytoca,Ampicillin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
+Serratia marcescens,Cefoxitin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
+Enterobacter cloacae complex,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Enterobacter cloacae complex,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Enterobacter cloacae complex,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Enterobacter cloacae complex,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Not preferred for invasive infection with moderate-risk inducible AmpC organisms
+Klebsiella aerogenes,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Klebsiella aerogenes,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Klebsiella aerogenes,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Klebsiella aerogenes,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Not preferred for invasive infection with moderate-risk inducible AmpC organisms
+Citrobacter freundii complex,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Citrobacter freundii complex,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Citrobacter freundii complex,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Citrobacter freundii complex,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Enterobacter cloacae complex,Cefoxitin,expected_resistant,expected phenotype,Chromosomal AmpC-associated expected resistance

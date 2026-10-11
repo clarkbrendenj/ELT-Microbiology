@@ -12,14 +12,23 @@ with first_isolates as (
 pairs as (
 
     select
-        organism_reporting_group,
-        antibiotic,
-        pair_order
+        p.organism_reporting_group,
+        p.antibiotic,
+        p.pair_order
 
-    from {{ ref('reportable_organism_antibiotic_pairs') }}
+    from {{ ref('reportable_organism_antibiotic_pairs') }} p
 
-    where include_primary_dashboard = 1
-      and review_status = 'reviewed'
+    left join {{ ref('organism_antibiotic_exclusions') }} e
+        on p.organism_reporting_group = e.organism_reporting_group
+       and p.antibiotic = e.antibiotic
+
+    where p.include_primary_dashboard = 1
+      and p.review_status = 'reviewed'
+
+      -- An organism-antibiotic combination can exist in the source
+      -- and still be inappropriate for the summary antibiogram.
+      -- The reviewed exclusion seed overrides the reporting-pair seed.
+      and e.organism_reporting_group is null
 
 ),
 
