@@ -263,5 +263,11 @@ final as (
 
 )
 
-select *
-from final
+select
+    f.*,
+    g.gram_stain_group
+
+from final f
+
+left join {{ ref('organism_reporting_groups') }} g
+    on f.organism_base_name = g.organism_reporting_group

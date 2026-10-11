@@ -104,6 +104,18 @@ models:
                 values:
                   - display
                   - insufficient_data
+                  
+      - name: gram_stain_group
+        description: >
+          Gram-stain classification assigned at the reviewed organism
+          reporting-group level.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - gram_positive
+                  - gram_negative
 
     data_tests:
       - dbt_utils.expression_is_true:
@@ -185,6 +197,18 @@ models:
       - name: evaluable_pct
         data_tests:
           - not_null
+          
+      - name: gram_stain_group
+        description: >
+          Gram-stain classification assigned at the reviewed organism
+          reporting-group level.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - gram_positive
+                  - gram_negative
 
     data_tests:
       - dbt_utils.expression_is_true:

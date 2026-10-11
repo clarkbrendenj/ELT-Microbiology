@@ -76,3 +76,23 @@ seeds:
             combination_of_columns:
               - organism_reporting_group
               - antibiotic
+  
+  - name: organism_reporting_groups
+    description: >
+      Reference table for organism-level reporting attributes used by
+      the final susceptibility and MDRO marts.
+
+    columns:
+      - name: organism_reporting_group
+        data_tests:
+          - not_null
+          - unique
+
+      - name: gram_stain_group
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - gram_positive
+                  - gram_negative              
