@@ -35,3 +35,8 @@ CITROBACTER FREUNDII COMPLEX (CARBAPENEM RESISTANT),Citrobacter freundii complex
 CITROBACTER KOSERI,Citrobacter koseri,Citrobacter koseri,,1,reviewed,
 CITROBACTER KOSERI (CARBAPENEM RESISTANT),Citrobacter koseri,Citrobacter koseri,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
 CITROBACTER YOUNGAE,Citrobacter youngae,Citrobacter freundii complex,,1,reviewed,Grouped to reviewed Citrobacter freundii complex reporting category
+COAG NEGATIVE STAPHYLOCOCCUS,Coagulase-negative staphylococci (unspeciated),Coagulase-negative staphylococci (unspeciated),,1,reviewed,Unspeciated CoNS source label; pooled reporting group; exclude separately identified species
+"STAPHYLOCOCCUS SPECIES - COAG NEGATIVE, NOT STAPH SAPROPHYTICUS",Coagulase-negative staphylococci (unspeciated),Coagulase-negative staphylococci (unspeciated),excludes_saprophyticus,1,reviewed,"Nonspeciated CoNS, excluding S. saprophyticus per source label; do not add species-specific isolates to pool"
+ENTEROCOCCUS SPECIES,Enterococcus species (unspeciated),Enterococcus species (unspeciated),,1,reviewed,Unspeciated source identification; keep separate from identified E. faecalis and E. faecium
+MORGANELLA MORGANII,Morganella morganii,Morganella morganii,,1,reviewed,Species-level identity; source categorical AST retained unchanged
+STENOTROPHOMONAS MALTOPHILIA,Stenotrophomonas maltophilia,Stenotrophomonas maltophilia,,1,reviewed,Species-level identity; special AST interpretation considerations documented separately

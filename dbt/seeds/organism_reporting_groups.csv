@@ -2,16 +2,20 @@ organism_reporting_group,gram_stain_group
 Citrobacter farmeri,gram_negative
 Citrobacter freundii complex,gram_negative
 Citrobacter koseri,gram_negative
+Coagulase-negative staphylococci (unspeciated),gram_positive
 Enterobacter cloacae complex,gram_negative
 Enterococcus faecalis,gram_positive
 Enterococcus faecium,gram_positive
+Enterococcus species (unspeciated),gram_positive
 Escherichia coli,gram_negative
 Klebsiella aerogenes,gram_negative
 Klebsiella oxytoca,gram_negative
 Klebsiella pneumoniae,gram_negative
+Morganella morganii,gram_negative
 Proteus mirabilis,gram_negative
 Pseudomonas aeruginosa,gram_negative
 Serratia marcescens,gram_negative
 Staphylococcus aureus,gram_positive
+Stenotrophomonas maltophilia,gram_negative
 Streptococcus agalactiae,gram_positive
 Streptococcus pneumoniae,gram_positive

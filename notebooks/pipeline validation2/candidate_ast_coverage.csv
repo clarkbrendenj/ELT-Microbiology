@@ -1,0 +1,495 @@
+cohort_id,candidate_group,antibiotic,source_records,unique_patients,tested_records,categorized_records,categorized_coverage_pct,conflict_records,missing_records
+blood,Achromobacter xylosoxidans,Amikacin,10,10,10,10,100.0,0,0
+blood,Achromobacter xylosoxidans,Aztreonam,10,10,10,10,100.0,0,0
+blood,Achromobacter xylosoxidans,Ciprofloxacin,10,10,10,10,100.0,0,0
+blood,Achromobacter xylosoxidans,Gentamicin,10,10,10,10,100.0,0,0
+blood,Achromobacter xylosoxidans,Tobramycin,10,10,10,10,100.0,0,0
+blood,Achromobacter xylosoxidans,Trimethoprim/Sulfamethoxazole,10,10,10,10,100.0,0,0
+blood,Achromobacter xylosoxidans,Cefepime,10,10,10,9,90.0,1,0
+blood,Achromobacter xylosoxidans,Ceftazidime,10,10,9,9,90.0,0,0
+blood,Achromobacter xylosoxidans,Piperacillin/Tazobactam,10,10,10,9,90.0,1,0
+blood,Achromobacter xylosoxidans,Imipenem,10,10,7,7,70.0,0,0
+blood,Achromobacter xylosoxidans,Levofloxacin,10,10,6,6,60.0,0,0
+blood,Achromobacter xylosoxidans,Meropenem,10,10,7,6,60.0,1,0
+blood,Achromobacter xylosoxidans,Ampicillin/Sulbactam,10,10,2,2,20.0,0,0
+blood,Achromobacter xylosoxidans,Ceftriaxone,10,10,1,1,10.0,0,0
+blood,Achromobacter xylosoxidans,Ertapenem,10,10,1,1,10.0,0,0
+blood,Achromobacter xylosoxidans,Ticacarcillin/Clavulanic Acid,10,10,1,1,10.0,0,0
+respiratory,Achromobacter xylosoxidans,Aztreonam,455,166,448,438,96.3,10,0
+respiratory,Achromobacter xylosoxidans,Gentamicin,455,166,455,435,95.6,20,0
+respiratory,Achromobacter xylosoxidans,Tobramycin,455,166,454,433,95.2,21,0
+respiratory,Achromobacter xylosoxidans,Trimethoprim/Sulfamethoxazole,455,166,455,427,93.8,28,0
+respiratory,Achromobacter xylosoxidans,Ciprofloxacin,455,166,455,422,92.7,33,0
+respiratory,Achromobacter xylosoxidans,Amikacin,455,166,444,419,92.1,25,0
+respiratory,Achromobacter xylosoxidans,Piperacillin/Tazobactam,455,166,455,417,91.6,38,0
+respiratory,Achromobacter xylosoxidans,Cefepime,455,166,453,415,91.2,38,0
+respiratory,Achromobacter xylosoxidans,Levofloxacin,455,166,383,341,74.9,42,0
+respiratory,Achromobacter xylosoxidans,Ceftazidime,455,166,373,333,73.2,40,0
+respiratory,Achromobacter xylosoxidans,Meropenem,455,166,339,322,70.8,17,0
+respiratory,Achromobacter xylosoxidans,Imipenem,455,166,238,221,48.6,16,1
+respiratory,Achromobacter xylosoxidans,Ampicillin/Sulbactam,455,166,96,91,20.0,5,0
+respiratory,Achromobacter xylosoxidans,Ceftriaxone,455,166,6,6,1.3,0,0
+respiratory,Achromobacter xylosoxidans,Minocycline,455,166,8,6,1.3,2,0
+respiratory,Achromobacter xylosoxidans,Doxycycline,455,166,1,1,0.2,0,0
+respiratory,Achromobacter xylosoxidans,Piperacillin,455,166,1,1,0.2,0,0
+respiratory,Achromobacter xylosoxidans,Tetracycline,455,166,1,1,0.2,0,0
+respiratory,Achromobacter xylosoxidans,Ticacarcillin/Clavulanic Acid,455,166,1,1,0.2,0,0
+respiratory,Achromobacter xylosoxidans,Ticarcillin,455,166,1,1,0.2,0,0
+respiratory,Achromobacter xylosoxidans,Cefazolin,455,166,1,0,0.0,0,1
+respiratory,Achromobacter xylosoxidans,Ertapenem,455,166,1,0,0.0,0,1
+respiratory,Achromobacter xylosoxidans,Tigecycline,455,166,1,0,0.0,0,0
+urine,Achromobacter xylosoxidans,Ciprofloxacin,24,18,24,24,100.0,0,0
+urine,Achromobacter xylosoxidans,Gentamicin,24,18,24,24,100.0,0,0
+urine,Achromobacter xylosoxidans,Piperacillin/Tazobactam,24,18,24,24,100.0,0,0
+urine,Achromobacter xylosoxidans,Trimethoprim/Sulfamethoxazole,24,18,24,24,100.0,0,0
+urine,Achromobacter xylosoxidans,Amikacin,24,18,23,23,95.8,0,0
+urine,Achromobacter xylosoxidans,Aztreonam,24,18,22,22,91.7,0,0
+urine,Achromobacter xylosoxidans,Tobramycin,24,18,22,22,91.7,0,0
+urine,Achromobacter xylosoxidans,Cefepime,24,18,22,21,87.5,0,1
+urine,Achromobacter xylosoxidans,Ceftazidime,24,18,19,19,79.2,0,0
+urine,Achromobacter xylosoxidans,Levofloxacin,24,18,16,16,66.7,0,0
+urine,Achromobacter xylosoxidans,Meropenem,24,18,16,16,66.7,0,0
+urine,Achromobacter xylosoxidans,Imipenem,24,18,7,7,29.2,0,0
+urine,Achromobacter xylosoxidans,Ampicillin/Sulbactam,24,18,3,3,12.5,0,0
+urine,Achromobacter xylosoxidans,Ceftriaxone,24,18,2,2,8.3,0,0
+urine,Achromobacter xylosoxidans,Cefazolin,24,18,1,1,4.2,0,0
+urine,Achromobacter xylosoxidans,Ertapenem,24,18,1,1,4.2,0,0
+urine,Achromobacter xylosoxidans,Tetracycline,24,18,1,1,4.2,0,0
+urine,Achromobacter xylosoxidans,Ticacarcillin/Clavulanic Acid,24,18,1,1,4.2,0,0
+blood,Citrobacter freundii complex,Ciprofloxacin,89,84,89,89,100.0,0,0
+blood,Citrobacter freundii complex,Gentamicin,89,84,89,89,100.0,0,0
+blood,Citrobacter freundii complex,Trimethoprim/Sulfamethoxazole,89,84,89,89,100.0,0,0
+blood,Citrobacter freundii complex,Meropenem,89,84,88,88,98.9,0,0
+blood,Citrobacter freundii complex,Ceftriaxone,89,84,89,85,95.5,0,0
+blood,Citrobacter freundii complex,Levofloxacin,89,84,85,85,95.5,0,0
+blood,Citrobacter freundii complex,Piperacillin/Tazobactam,89,84,88,84,94.4,0,0
+blood,Citrobacter freundii complex,Ceftazidime,89,84,80,76,85.4,0,0
+blood,Citrobacter freundii complex,Cefoxitin,89,84,74,74,83.1,0,0
+blood,Citrobacter freundii complex,Ertapenem,89,84,63,63,70.8,0,0
+blood,Citrobacter freundii complex,Amoxicillin/Clavulanic Acid,89,84,59,59,66.3,0,0
+blood,Citrobacter freundii complex,Amikacin,89,84,54,54,60.7,0,0
+blood,Citrobacter freundii complex,Cefepime,89,84,54,54,60.7,0,0
+blood,Citrobacter freundii complex,Aztreonam,89,84,52,52,58.4,0,0
+blood,Citrobacter freundii complex,Tetracycline,89,84,51,51,57.3,0,0
+blood,Citrobacter freundii complex,Tobramycin,89,84,51,51,57.3,0,0
+blood,Citrobacter freundii complex,Ampicillin,89,84,49,49,55.1,0,0
+blood,Citrobacter freundii complex,Ampicillin/Sulbactam,89,84,49,49,55.1,0,0
+blood,Citrobacter freundii complex,Cefuroxime,89,84,49,49,55.1,0,0
+blood,Citrobacter freundii complex,Imipenem,89,84,42,42,47.2,0,0
+blood,Citrobacter freundii complex,Cefazolin,89,84,39,39,43.8,0,0
+blood,Citrobacter freundii complex,Moxifloxacin,89,84,15,15,16.9,0,0
+blood,Citrobacter freundii complex,Tigecycline,89,84,14,14,15.7,0,0
+blood,Citrobacter freundii complex,Cefotaxime,89,84,12,12,13.5,0,0
+blood,Citrobacter freundii complex,Cefotetan,89,84,9,9,10.1,0,0
+blood,Citrobacter freundii complex,Ceftazidime/Avibactam,89,84,2,2,2.2,0,0
+blood,Citrobacter freundii complex,Doripenem,89,84,2,2,2.2,0,0
+blood,Citrobacter freundii complex,Piperacillin,89,84,1,1,1.1,0,0
+respiratory,Citrobacter freundii complex,Ciprofloxacin,52,46,52,52,100.0,0,0
+respiratory,Citrobacter freundii complex,Gentamicin,52,46,52,52,100.0,0,0
+respiratory,Citrobacter freundii complex,Levofloxacin,52,46,52,52,100.0,0,0
+respiratory,Citrobacter freundii complex,Piperacillin/Tazobactam,52,46,52,52,100.0,0,0
+respiratory,Citrobacter freundii complex,Trimethoprim/Sulfamethoxazole,52,46,52,52,100.0,0,0
+respiratory,Citrobacter freundii complex,Ampicillin,52,46,51,51,98.1,0,0
+respiratory,Citrobacter freundii complex,Ceftriaxone,52,46,47,47,90.4,0,0
+respiratory,Citrobacter freundii complex,Cefoxitin,52,46,46,46,88.5,0,0
+respiratory,Citrobacter freundii complex,Ceftazidime,52,46,46,46,88.5,0,0
+respiratory,Citrobacter freundii complex,Cefuroxime,52,46,46,46,88.5,0,0
+respiratory,Citrobacter freundii complex,Ampicillin/Sulbactam,52,46,45,45,86.5,0,0
+respiratory,Citrobacter freundii complex,Cefazolin,52,46,43,43,82.7,0,0
+respiratory,Citrobacter freundii complex,Cefepime,52,46,38,38,73.1,0,0
+respiratory,Citrobacter freundii complex,Amoxicillin/Clavulanic Acid,52,46,36,36,69.2,0,0
+respiratory,Citrobacter freundii complex,Aztreonam,52,46,27,27,51.9,0,0
+respiratory,Citrobacter freundii complex,Imipenem,52,46,26,26,50.0,0,0
+respiratory,Citrobacter freundii complex,Meropenem,52,46,26,26,50.0,0,0
+respiratory,Citrobacter freundii complex,Ertapenem,52,46,24,24,46.2,0,0
+respiratory,Citrobacter freundii complex,Moxifloxacin,52,46,23,23,44.2,0,0
+respiratory,Citrobacter freundii complex,Amikacin,52,46,22,22,42.3,0,0
+respiratory,Citrobacter freundii complex,Tetracycline,52,46,22,22,42.3,0,0
+respiratory,Citrobacter freundii complex,Tobramycin,52,46,22,22,42.3,0,0
+respiratory,Citrobacter freundii complex,Tigecycline,52,46,21,21,40.4,0,0
+respiratory,Citrobacter freundii complex,Ceftazidime/Avibactam,52,46,12,12,23.1,0,0
+respiratory,Citrobacter freundii complex,Doripenem,52,46,3,3,5.8,0,0
+respiratory,Citrobacter freundii complex,Cefotaxime,52,46,2,2,3.8,0,0
+urine,Citrobacter freundii complex,Gentamicin,1001,863,1001,1001,100.0,0,0
+urine,Citrobacter freundii complex,Trimethoprim/Sulfamethoxazole,1001,863,1000,999,99.8,1,0
+urine,Citrobacter freundii complex,Ciprofloxacin,1001,863,1000,996,99.5,4,0
+urine,Citrobacter freundii complex,Nitrofurantoin,1001,863,998,993,99.2,5,0
+urine,Citrobacter freundii complex,Cefazolin,1001,863,974,973,97.2,1,0
+urine,Citrobacter freundii complex,Ceftriaxone,1001,863,923,920,91.9,3,0
+urine,Citrobacter freundii complex,Ceftazidime,1001,863,905,901,90.0,4,0
+urine,Citrobacter freundii complex,Levofloxacin,1001,863,890,887,88.6,3,0
+urine,Citrobacter freundii complex,Piperacillin/Tazobactam,1001,863,810,806,80.5,1,1
+urine,Citrobacter freundii complex,Cefoxitin,1001,863,796,796,79.5,0,0
+urine,Citrobacter freundii complex,Meropenem,1001,863,774,772,77.1,2,0
+urine,Citrobacter freundii complex,Amoxicillin/Clavulanic Acid,1001,863,710,709,70.8,0,1
+urine,Citrobacter freundii complex,Ertapenem,1001,863,693,692,69.1,1,0
+urine,Citrobacter freundii complex,Amikacin,1001,863,662,662,66.1,0,0
+urine,Citrobacter freundii complex,Tetracycline,1001,863,568,565,56.4,3,0
+urine,Citrobacter freundii complex,Tobramycin,1001,863,553,551,55.0,2,0
+urine,Citrobacter freundii complex,Cefepime,1001,863,334,334,33.4,0,0
+urine,Citrobacter freundii complex,Aztreonam,1001,863,146,146,14.6,0,0
+urine,Citrobacter freundii complex,Imipenem,1001,863,115,114,11.4,0,1
+urine,Citrobacter freundii complex,Cefuroxime,1001,863,38,36,3.6,2,0
+urine,Citrobacter freundii complex,Ampicillin,1001,863,72,20,2.0,0,52
+urine,Citrobacter freundii complex,Cefotetan,1001,863,19,19,1.9,0,0
+urine,Citrobacter freundii complex,Ampicillin/Sulbactam,1001,863,10,10,1.0,0,0
+urine,Citrobacter freundii complex,Tigecycline,1001,863,7,7,0.7,0,0
+urine,Citrobacter freundii complex,Ceftazidime/Avibactam,1001,863,2,2,0.2,0,0
+urine,Citrobacter freundii complex,Cephalexin/Cephalothin,1001,863,2,2,0.2,0,0
+urine,Citrobacter freundii complex,Piperacillin,1001,863,2,2,0.2,0,0
+urine,Citrobacter freundii complex,Fosfomycin,1001,863,2,1,0.1,0,0
+urine,Citrobacter freundii complex,Moxifloxacin,1001,863,2,1,0.1,0,1
+blood,Citrobacter koseri,Ceftriaxone,46,44,46,46,100.0,0,0
+blood,Citrobacter koseri,Ciprofloxacin,46,44,46,46,100.0,0,0
+blood,Citrobacter koseri,Gentamicin,46,44,46,46,100.0,0,0
+blood,Citrobacter koseri,Meropenem,46,44,46,46,100.0,0,0
+blood,Citrobacter koseri,Piperacillin/Tazobactam,46,44,46,46,100.0,0,0
+blood,Citrobacter koseri,Trimethoprim/Sulfamethoxazole,46,44,46,46,100.0,0,0
+blood,Citrobacter koseri,Ertapenem,46,44,40,40,87.0,0,0
+blood,Citrobacter koseri,Levofloxacin,46,44,39,39,84.8,0,0
+blood,Citrobacter koseri,Amikacin,46,44,36,36,78.3,0,0
+blood,Citrobacter koseri,Ceftazidime,46,44,36,36,78.3,0,0
+blood,Citrobacter koseri,Amoxicillin/Clavulanic Acid,46,44,33,33,71.7,0,0
+blood,Citrobacter koseri,Cefoxitin,46,44,30,30,65.2,0,0
+blood,Citrobacter koseri,Tetracycline,46,44,29,29,63.0,0,0
+blood,Citrobacter koseri,Tobramycin,46,44,29,29,63.0,0,0
+blood,Citrobacter koseri,Aztreonam,46,44,22,22,47.8,0,0
+blood,Citrobacter koseri,Cefepime,46,44,21,21,45.7,0,0
+blood,Citrobacter koseri,Ampicillin,46,44,15,15,32.6,0,0
+blood,Citrobacter koseri,Ampicillin/Sulbactam,46,44,15,15,32.6,0,0
+blood,Citrobacter koseri,Cefuroxime,46,44,15,15,32.6,0,0
+blood,Citrobacter koseri,Cefazolin,46,44,14,14,30.4,0,0
+blood,Citrobacter koseri,Imipenem,46,44,11,11,23.9,0,0
+blood,Citrobacter koseri,Moxifloxacin,46,44,5,5,10.9,0,0
+blood,Citrobacter koseri,Tigecycline,46,44,5,5,10.9,0,0
+blood,Citrobacter koseri,Cefotaxime,46,44,2,2,4.3,0,0
+blood,Citrobacter koseri,Cefotetan,46,44,1,1,2.2,0,0
+respiratory,Citrobacter koseri,Gentamicin,137,95,137,137,100.0,0,0
+respiratory,Citrobacter koseri,Trimethoprim/Sulfamethoxazole,137,95,137,137,100.0,0,0
+respiratory,Citrobacter koseri,Ciprofloxacin,137,95,137,136,99.3,1,0
+respiratory,Citrobacter koseri,Piperacillin/Tazobactam,137,95,137,134,97.8,2,0
+respiratory,Citrobacter koseri,Ampicillin,137,95,133,133,97.1,0,0
+respiratory,Citrobacter koseri,Levofloxacin,137,95,133,130,94.9,3,0
+respiratory,Citrobacter koseri,Cefazolin,137,95,121,121,88.3,0,0
+respiratory,Citrobacter koseri,Cefepime,137,95,107,107,78.1,0,0
+respiratory,Citrobacter koseri,Ceftriaxone,137,95,107,107,78.1,0,0
+respiratory,Citrobacter koseri,Amoxicillin/Clavulanic Acid,137,95,103,101,73.7,2,0
+respiratory,Citrobacter koseri,Cefuroxime,137,95,82,82,59.9,0,0
+respiratory,Citrobacter koseri,Ampicillin/Sulbactam,137,95,79,79,57.7,0,0
+respiratory,Citrobacter koseri,Ceftazidime,137,95,74,74,54.0,0,0
+respiratory,Citrobacter koseri,Amikacin,137,95,73,73,53.3,0,0
+respiratory,Citrobacter koseri,Tetracycline,137,95,73,73,53.3,0,0
+respiratory,Citrobacter koseri,Aztreonam,137,95,71,71,51.8,0,0
+respiratory,Citrobacter koseri,Cefoxitin,137,95,73,71,51.8,2,0
+respiratory,Citrobacter koseri,Ertapenem,137,95,71,71,51.8,0,0
+respiratory,Citrobacter koseri,Meropenem,137,95,71,71,51.8,0,0
+respiratory,Citrobacter koseri,Moxifloxacin,137,95,70,68,49.6,2,0
+respiratory,Citrobacter koseri,Imipenem,137,95,67,67,48.9,0,0
+respiratory,Citrobacter koseri,Tigecycline,137,95,67,67,48.9,0,0
+respiratory,Citrobacter koseri,Tobramycin,137,95,70,67,48.9,3,0
+respiratory,Citrobacter koseri,Ceftazidime/Avibactam,137,95,46,46,33.6,0,0
+respiratory,Citrobacter koseri,Ceftolozane/Tazobactam,137,95,46,46,33.6,0,0
+respiratory,Citrobacter koseri,Doripenem,137,95,12,12,8.8,0,0
+respiratory,Citrobacter koseri,Piperacillin,137,95,4,4,2.9,0,0
+respiratory,Citrobacter koseri,Meropenem/Vaborbactam,137,95,1,1,0.7,0,0
+urine,Citrobacter koseri,Ciprofloxacin,1208,1004,1208,1208,100.0,0,0
+urine,Citrobacter koseri,Gentamicin,1208,1004,1208,1208,100.0,0,0
+urine,Citrobacter koseri,Trimethoprim/Sulfamethoxazole,1208,1004,1208,1208,100.0,0,0
+urine,Citrobacter koseri,Nitrofurantoin,1208,1004,1207,1198,99.2,9,0
+urine,Citrobacter koseri,Cefazolin,1208,1004,1069,1068,88.4,0,1
+urine,Citrobacter koseri,Levofloxacin,1208,1004,1031,1031,85.3,0,0
+urine,Citrobacter koseri,Piperacillin/Tazobactam,1208,1004,1020,1020,84.4,0,0
+urine,Citrobacter koseri,Ceftriaxone,1208,1004,966,965,79.9,1,0
+urine,Citrobacter koseri,Meropenem,1208,1004,857,856,70.9,1,0
+urine,Citrobacter koseri,Amoxicillin/Clavulanic Acid,1208,1004,848,848,70.2,0,0
+urine,Citrobacter koseri,Ceftazidime,1208,1004,842,841,69.6,1,0
+urine,Citrobacter koseri,Ertapenem,1208,1004,839,837,69.3,2,0
+urine,Citrobacter koseri,Amikacin,1208,1004,836,836,69.2,0,0
+urine,Citrobacter koseri,Cefoxitin,1208,1004,684,683,56.5,1,0
+urine,Citrobacter koseri,Tetracycline,1208,1004,661,660,54.6,1,0
+urine,Citrobacter koseri,Tobramycin,1208,1004,660,659,54.6,1,0
+urine,Citrobacter koseri,Cefepime,1208,1004,291,291,24.1,0,0
+urine,Citrobacter koseri,Aztreonam,1208,1004,184,184,15.2,0,0
+urine,Citrobacter koseri,Imipenem,1208,1004,28,27,2.2,0,1
+urine,Citrobacter koseri,Cefuroxime,1208,1004,21,21,1.7,0,0
+urine,Citrobacter koseri,Ampicillin,1208,1004,77,11,0.9,0,66
+urine,Citrobacter koseri,Ampicillin/Sulbactam,1208,1004,9,9,0.7,0,0
+urine,Citrobacter koseri,Tigecycline,1208,1004,7,7,0.6,0,0
+urine,Citrobacter koseri,Cephalexin/Cephalothin,1208,1004,4,4,0.3,0,0
+urine,Citrobacter koseri,Fosfomycin,1208,1004,1,1,0.1,0,0
+urine,Citrobacter koseri,Moxifloxacin,1208,1004,6,1,0.1,0,5
+urine,Citrobacter koseri,Piperacillin,1208,1004,1,1,0.1,0,0
+urine,Citrobacter koseri,Ticacarcillin/Clavulanic Acid,1208,1004,1,1,0.1,0,0
+blood,Coagulase-negative staphylococci (candidate),Vancomycin,1913,1247,1912,1911,99.9,0,1
+blood,Coagulase-negative staphylococci (candidate),Oxacillin,1913,1247,1913,1868,97.6,44,1
+blood,Coagulase-negative staphylococci (candidate),Trimethoprim/Sulfamethoxazole,1913,1247,1908,1866,97.5,41,1
+blood,Coagulase-negative staphylococci (candidate),Erythromycin,1913,1247,1911,1852,96.8,58,1
+blood,Coagulase-negative staphylococci (candidate),Clindamycin,1913,1247,1878,1830,95.7,47,1
+blood,Coagulase-negative staphylococci (candidate),Gentamicin,1913,1247,1452,1426,74.5,24,2
+blood,Coagulase-negative staphylococci (candidate),Penicillin,1913,1247,1378,1352,70.7,25,1
+blood,Coagulase-negative staphylococci (candidate),Moxifloxacin,1913,1247,1138,1119,58.5,17,2
+blood,Coagulase-negative staphylococci (candidate),Linezolid,1913,1247,1080,1078,56.4,0,2
+blood,Coagulase-negative staphylococci (candidate),Levofloxacin,1913,1247,1076,1065,55.7,10,1
+blood,Coagulase-negative staphylococci (candidate),Tetracycline,1913,1247,997,985,51.5,11,1
+blood,Coagulase-negative staphylococci (candidate),Cefazolin,1913,1247,442,434,22.7,8,0
+blood,Coagulase-negative staphylococci (candidate),Daptomycin,1913,1247,63,61,3.2,0,2
+blood,Coagulase-negative staphylococci (candidate),Nitrofurantoin,1913,1247,396,13,0.7,1,382
+blood,Coagulase-negative staphylococci (candidate),Amikacin,1913,1247,2,2,0.1,0,0
+blood,Coagulase-negative staphylococci (candidate),Imipenem,1913,1247,2,2,0.1,0,0
+blood,Coagulase-negative staphylococci (candidate),Tobramycin,1913,1247,2,2,0.1,0,0
+blood,Coagulase-negative staphylococci (candidate),Amoxicillin/Clavulanic Acid,1913,1247,1,0,0.0,0,1
+blood,Coagulase-negative staphylococci (candidate),Ampicillin,1913,1247,2,0,0.0,0,2
+blood,Coagulase-negative staphylococci (candidate),Ampicillin/Sulbactam,1913,1247,1,0,0.0,0,1
+blood,Coagulase-negative staphylococci (candidate),Cefiderocol,1913,1247,1,0,0.0,0,1
+blood,Coagulase-negative staphylococci (candidate),Cefoxitin,1913,1247,1,0,0.0,0,1
+blood,Coagulase-negative staphylococci (candidate),Chloramphenicol,1913,1247,1,0,0.0,0,1
+blood,Coagulase-negative staphylococci (candidate),Ciprofloxacin,1913,1247,1,0,0.0,0,1
+respiratory,Coagulase-negative staphylococci (candidate),Vancomycin,157,144,157,157,100.0,0,0
+respiratory,Coagulase-negative staphylococci (candidate),Oxacillin,157,144,157,156,99.4,1,0
+respiratory,Coagulase-negative staphylococci (candidate),Trimethoprim/Sulfamethoxazole,157,144,157,156,99.4,1,0
+respiratory,Coagulase-negative staphylococci (candidate),Erythromycin,157,144,157,155,98.7,2,0
+respiratory,Coagulase-negative staphylococci (candidate),Gentamicin,157,144,157,155,98.7,2,0
+respiratory,Coagulase-negative staphylococci (candidate),Penicillin,157,144,154,154,98.1,0,0
+respiratory,Coagulase-negative staphylococci (candidate),Clindamycin,157,144,152,150,95.5,2,0
+respiratory,Coagulase-negative staphylococci (candidate),Moxifloxacin,157,144,134,131,83.4,3,0
+respiratory,Coagulase-negative staphylococci (candidate),Levofloxacin,157,144,129,128,81.5,1,0
+respiratory,Coagulase-negative staphylococci (candidate),Linezolid,157,144,127,127,80.9,0,0
+respiratory,Coagulase-negative staphylococci (candidate),Tetracycline,157,144,118,117,74.5,1,0
+respiratory,Coagulase-negative staphylococci (candidate),Daptomycin,157,144,1,1,0.6,0,0
+urine,Coagulase-negative staphylococci (candidate),Vancomycin,225,174,225,225,100.0,0,0
+urine,Coagulase-negative staphylococci (candidate),Nitrofurantoin,225,174,220,220,97.8,0,0
+urine,Coagulase-negative staphylococci (candidate),Oxacillin,225,174,223,213,94.7,10,0
+urine,Coagulase-negative staphylococci (candidate),Trimethoprim/Sulfamethoxazole,225,174,225,212,94.2,13,0
+urine,Coagulase-negative staphylococci (candidate),Gentamicin,225,174,160,156,69.3,4,0
+urine,Coagulase-negative staphylococci (candidate),Tetracycline,225,174,164,156,69.3,8,0
+urine,Coagulase-negative staphylococci (candidate),Penicillin,225,174,155,155,68.9,0,0
+urine,Coagulase-negative staphylococci (candidate),Moxifloxacin,225,174,146,140,62.2,6,0
+urine,Coagulase-negative staphylococci (candidate),Levofloxacin,225,174,134,130,57.8,4,0
+urine,Coagulase-negative staphylococci (candidate),Linezolid,225,174,128,128,56.9,0,0
+urine,Coagulase-negative staphylococci (candidate),Cefazolin,225,174,64,64,28.4,0,0
+urine,Coagulase-negative staphylococci (candidate),Erythromycin,225,174,63,63,28.0,0,0
+urine,Coagulase-negative staphylococci (candidate),Clindamycin,225,174,60,60,26.7,0,0
+urine,Coagulase-negative staphylococci (candidate),Ciprofloxacin,225,174,4,4,1.8,0,0
+urine,Coagulase-negative staphylococci (candidate),Daptomycin,225,174,3,2,0.9,0,1
+urine,Coagulase-negative staphylococci (candidate),Doxycycline,225,174,2,2,0.9,0,0
+urine,Coagulase-negative staphylococci (candidate),Tigecycline,225,174,3,0,0.0,0,3
+blood,Enterococcus species (unspeciated),Ampicillin,13,11,13,13,100.0,0,0
+blood,Enterococcus species (unspeciated),Penicillin,13,11,13,13,100.0,0,0
+blood,Enterococcus species (unspeciated),Vancomycin,13,11,13,13,100.0,0,0
+blood,Enterococcus species (unspeciated),Linezolid,13,11,8,8,61.5,0,0
+blood,Enterococcus species (unspeciated),Daptomycin,13,11,7,4,30.8,0,0
+blood,Enterococcus species (unspeciated),Quinupristin/Dalfopristin,13,11,3,3,23.1,0,0
+blood,Enterococcus species (unspeciated),Doxycycline,13,11,2,2,15.4,0,0
+blood,Enterococcus species (unspeciated),Gentamicin,13,11,13,1,7.7,0,0
+blood,Enterococcus species (unspeciated),Streptomycin,13,11,13,1,7.7,0,0
+urine,Enterococcus species (unspeciated),Ampicillin,9449,7354,9446,9426,99.8,20,0
+urine,Enterococcus species (unspeciated),Levofloxacin,9449,7354,9434,9420,99.7,14,0
+urine,Enterococcus species (unspeciated),Nitrofurantoin,9449,7354,9436,9419,99.7,17,0
+urine,Enterococcus species (unspeciated),Tetracycline,9449,7354,9438,9408,99.6,30,0
+urine,Enterococcus species (unspeciated),Ciprofloxacin,9449,7354,8966,8935,94.6,31,0
+urine,Enterococcus species (unspeciated),Penicillin,9449,7354,4726,4715,49.9,11,0
+urine,Enterococcus species (unspeciated),Vancomycin,9449,7354,4721,4715,49.9,4,0
+urine,Enterococcus species (unspeciated),Linezolid,9449,7354,4619,4618,48.9,0,1
+urine,Enterococcus species (unspeciated),Daptomycin,9449,7354,3127,3116,33.0,1,8
+urine,Enterococcus species (unspeciated),Doxycycline,9449,7354,279,277,2.9,2,0
+urine,Enterococcus species (unspeciated),Quinupristin/Dalfopristin,9449,7354,93,87,0.9,1,0
+urine,Enterococcus species (unspeciated),Fosfomycin,9449,7354,6,6,0.1,0,0
+urine,Enterococcus species (unspeciated),Clindamycin,9449,7354,1,1,0.0,0,0
+urine,Enterococcus species (unspeciated),Erythromycin,9449,7354,1,1,0.0,0,0
+urine,Enterococcus species (unspeciated),Trimethoprim/Sulfamethoxazole,9449,7354,1,1,0.0,0,0
+urine,Enterococcus species (unspeciated),Tigecycline,9449,7354,1,0,0.0,0,0
+blood,Klebsiella aerogenes,Ciprofloxacin,89,86,89,89,100.0,0,0
+blood,Klebsiella aerogenes,Gentamicin,89,86,89,89,100.0,0,0
+blood,Klebsiella aerogenes,Trimethoprim/Sulfamethoxazole,89,86,89,89,100.0,0,0
+blood,Klebsiella aerogenes,Meropenem,89,86,85,85,95.5,0,0
+blood,Klebsiella aerogenes,Ceftriaxone,89,86,89,81,91.0,0,0
+blood,Klebsiella aerogenes,Piperacillin/Tazobactam,89,86,88,79,88.8,0,0
+blood,Klebsiella aerogenes,Levofloxacin,89,86,77,77,86.5,0,0
+blood,Klebsiella aerogenes,Ceftazidime,89,86,85,76,85.4,0,0
+blood,Klebsiella aerogenes,Cefoxitin,89,86,71,71,79.8,0,0
+blood,Klebsiella aerogenes,Ertapenem,89,86,67,67,75.3,0,0
+blood,Klebsiella aerogenes,Amikacin,89,86,63,63,70.8,0,0
+blood,Klebsiella aerogenes,Amoxicillin/Clavulanic Acid,89,86,54,54,60.7,0,0
+blood,Klebsiella aerogenes,Tetracycline,89,86,52,52,58.4,0,0
+blood,Klebsiella aerogenes,Cefepime,89,86,51,51,57.3,0,0
+blood,Klebsiella aerogenes,Tobramycin,89,86,51,51,57.3,0,0
+blood,Klebsiella aerogenes,Aztreonam,89,86,48,48,53.9,0,0
+blood,Klebsiella aerogenes,Ampicillin,89,86,36,36,40.4,0,0
+blood,Klebsiella aerogenes,Cefuroxime,89,86,36,36,40.4,0,0
+blood,Klebsiella aerogenes,Ampicillin/Sulbactam,89,86,36,35,39.3,1,0
+blood,Klebsiella aerogenes,Cefazolin,89,86,35,35,39.3,0,0
+blood,Klebsiella aerogenes,Imipenem,89,86,34,33,37.1,1,0
+blood,Klebsiella aerogenes,Moxifloxacin,89,86,10,10,11.2,0,0
+blood,Klebsiella aerogenes,Tigecycline,89,86,10,10,11.2,0,0
+blood,Klebsiella aerogenes,Cefotaxime,89,86,9,9,10.1,0,0
+blood,Klebsiella aerogenes,Cefotetan,89,86,6,6,6.7,0,0
+respiratory,Klebsiella aerogenes,Gentamicin,243,197,243,243,100.0,0,0
+respiratory,Klebsiella aerogenes,Ciprofloxacin,243,197,243,242,99.6,1,0
+respiratory,Klebsiella aerogenes,Trimethoprim/Sulfamethoxazole,243,197,243,242,99.6,1,0
+respiratory,Klebsiella aerogenes,Ampicillin,243,197,232,232,95.5,0,0
+respiratory,Klebsiella aerogenes,Levofloxacin,243,197,232,231,95.1,1,0
+respiratory,Klebsiella aerogenes,Piperacillin/Tazobactam,243,197,242,228,93.8,4,0
+respiratory,Klebsiella aerogenes,Ampicillin/Sulbactam,243,197,220,220,90.5,0,0
+respiratory,Klebsiella aerogenes,Cefazolin,243,197,214,214,88.1,0,0
+respiratory,Klebsiella aerogenes,Cefoxitin,243,197,211,211,86.8,0,0
+respiratory,Klebsiella aerogenes,Ceftazidime,243,197,221,210,86.4,2,0
+respiratory,Klebsiella aerogenes,Cefuroxime,243,197,210,209,86.0,1,0
+respiratory,Klebsiella aerogenes,Ceftriaxone,243,197,220,207,85.2,4,0
+respiratory,Klebsiella aerogenes,Cefepime,243,197,191,191,78.6,0,0
+respiratory,Klebsiella aerogenes,Amoxicillin/Clavulanic Acid,243,197,170,170,70.0,0,0
+respiratory,Klebsiella aerogenes,Meropenem,243,197,158,158,65.0,0,0
+respiratory,Klebsiella aerogenes,Aztreonam,243,197,157,154,63.4,3,0
+respiratory,Klebsiella aerogenes,Ertapenem,243,197,154,153,63.0,1,0
+respiratory,Klebsiella aerogenes,Amikacin,243,197,141,141,58.0,0,0
+respiratory,Klebsiella aerogenes,Imipenem,243,197,137,135,55.6,2,0
+respiratory,Klebsiella aerogenes,Moxifloxacin,243,197,132,132,54.3,0,0
+respiratory,Klebsiella aerogenes,Tigecycline,243,197,132,132,54.3,0,0
+respiratory,Klebsiella aerogenes,Tetracycline,243,197,132,131,53.9,1,0
+respiratory,Klebsiella aerogenes,Tobramycin,243,197,130,130,53.5,0,0
+respiratory,Klebsiella aerogenes,Ceftazidime/Avibactam,243,197,79,79,32.5,0,0
+respiratory,Klebsiella aerogenes,Doripenem,243,197,22,22,9.1,0,0
+respiratory,Klebsiella aerogenes,Cefotaxime,243,197,14,14,5.8,0,0
+respiratory,Klebsiella aerogenes,Cefotetan,243,197,6,6,2.5,0,0
+respiratory,Klebsiella aerogenes,Meropenem/Vaborbactam,243,197,1,1,0.4,0,0
+urine,Klebsiella aerogenes,Gentamicin,1091,924,1091,1091,100.0,0,0
+urine,Klebsiella aerogenes,Ciprofloxacin,1091,924,1091,1090,99.9,1,0
+urine,Klebsiella aerogenes,Trimethoprim/Sulfamethoxazole,1091,924,1090,1090,99.9,0,0
+urine,Klebsiella aerogenes,Nitrofurantoin,1091,924,1089,1070,98.1,19,0
+urine,Klebsiella aerogenes,Cefazolin,1091,924,1046,1046,95.9,0,0
+urine,Klebsiella aerogenes,Piperacillin/Tazobactam,1091,924,1025,1019,93.4,6,0
+urine,Klebsiella aerogenes,Ceftriaxone,1091,924,1001,998,91.5,3,0
+urine,Klebsiella aerogenes,Ceftazidime,1091,924,994,987,90.5,7,0
+urine,Klebsiella aerogenes,Levofloxacin,1091,924,944,942,86.3,2,0
+urine,Klebsiella aerogenes,Cefoxitin,1091,924,843,843,77.3,0,0
+urine,Klebsiella aerogenes,Amoxicillin/Clavulanic Acid,1091,924,762,762,69.8,0,0
+urine,Klebsiella aerogenes,Ertapenem,1091,924,762,761,69.8,1,0
+urine,Klebsiella aerogenes,Meropenem,1091,924,741,741,67.9,0,0
+urine,Klebsiella aerogenes,Amikacin,1091,924,729,729,66.8,0,0
+urine,Klebsiella aerogenes,Tetracycline,1091,924,596,596,54.6,0,0
+urine,Klebsiella aerogenes,Tobramycin,1091,924,585,585,53.6,0,0
+urine,Klebsiella aerogenes,Cefepime,1091,924,318,318,29.1,0,0
+urine,Klebsiella aerogenes,Aztreonam,1091,924,157,157,14.4,0,0
+urine,Klebsiella aerogenes,Imipenem,1091,924,68,68,6.2,0,0
+urine,Klebsiella aerogenes,Cefuroxime,1091,924,22,22,2.0,0,0
+urine,Klebsiella aerogenes,Ampicillin,1091,924,147,12,1.1,0,135
+urine,Klebsiella aerogenes,Cefotetan,1091,924,8,8,0.7,0,0
+urine,Klebsiella aerogenes,Ampicillin/Sulbactam,1091,924,81,5,0.5,0,76
+urine,Klebsiella aerogenes,Cephalexin/Cephalothin,1091,924,4,4,0.4,0,0
+urine,Klebsiella aerogenes,Tigecycline,1091,924,3,3,0.3,0,0
+urine,Klebsiella aerogenes,Piperacillin,1091,924,1,1,0.1,0,0
+urine,Klebsiella aerogenes,Fosfomycin,1091,924,2,0,0.0,0,0
+urine,Klebsiella aerogenes,Moxifloxacin,1091,924,1,0,0.0,0,1
+blood,Morganella morganii,Ampicillin,48,48,48,48,100.0,0,0
+blood,Morganella morganii,Ceftriaxone,48,48,48,48,100.0,0,0
+blood,Morganella morganii,Ciprofloxacin,48,48,48,48,100.0,0,0
+blood,Morganella morganii,Gentamicin,48,48,48,48,100.0,0,0
+blood,Morganella morganii,Meropenem,48,48,47,47,97.9,0,0
+blood,Morganella morganii,Piperacillin/Tazobactam,48,48,47,47,97.9,0,0
+blood,Morganella morganii,Trimethoprim/Sulfamethoxazole,48,48,47,47,97.9,0,0
+blood,Morganella morganii,Ceftazidime,48,48,43,43,89.6,0,0
+blood,Morganella morganii,Levofloxacin,48,48,41,41,85.4,0,0
+blood,Morganella morganii,Ertapenem,48,48,39,39,81.3,0,0
+blood,Morganella morganii,Amikacin,48,48,32,32,66.7,0,0
+blood,Morganella morganii,Amoxicillin/Clavulanic Acid,48,48,29,29,60.4,0,0
+blood,Morganella morganii,Tetracycline,48,48,29,29,60.4,0,0
+blood,Morganella morganii,Ampicillin/Sulbactam,48,48,28,28,58.3,0,0
+blood,Morganella morganii,Aztreonam,48,48,28,28,58.3,0,0
+blood,Morganella morganii,Tobramycin,48,48,25,25,52.1,0,0
+blood,Morganella morganii,Cefoxitin,48,48,25,24,50.0,1,0
+blood,Morganella morganii,Cefazolin,48,48,22,22,45.8,0,0
+blood,Morganella morganii,Cefepime,48,48,21,21,43.8,0,0
+blood,Morganella morganii,Cefuroxime,48,48,21,21,43.8,0,0
+blood,Morganella morganii,Imipenem,48,48,21,21,43.8,0,0
+blood,Morganella morganii,Tigecycline,48,48,11,11,22.9,0,0
+blood,Morganella morganii,Cefotaxime,48,48,6,6,12.5,0,0
+blood,Morganella morganii,Cefotetan,48,48,4,4,8.3,0,0
+blood,Morganella morganii,Moxifloxacin,48,48,4,4,8.3,0,0
+blood,Morganella morganii,Piperacillin,48,48,1,1,2.1,0,0
+respiratory,Morganella morganii,Ampicillin,32,31,32,32,100.0,0,0
+respiratory,Morganella morganii,Ciprofloxacin,32,31,32,32,100.0,0,0
+respiratory,Morganella morganii,Gentamicin,32,31,32,32,100.0,0,0
+respiratory,Morganella morganii,Piperacillin/Tazobactam,32,31,32,32,100.0,0,0
+respiratory,Morganella morganii,Trimethoprim/Sulfamethoxazole,32,31,32,32,100.0,0,0
+respiratory,Morganella morganii,Ampicillin/Sulbactam,32,31,30,30,93.8,0,0
+respiratory,Morganella morganii,Cefuroxime,32,31,30,30,93.8,0,0
+respiratory,Morganella morganii,Levofloxacin,32,31,30,30,93.8,0,0
+respiratory,Morganella morganii,Ceftazidime,32,31,29,29,90.6,0,0
+respiratory,Morganella morganii,Ceftriaxone,32,31,29,29,90.6,0,0
+respiratory,Morganella morganii,Cefazolin,32,31,28,28,87.5,0,0
+respiratory,Morganella morganii,Imipenem,32,31,25,25,78.1,0,0
+respiratory,Morganella morganii,Cefepime,32,31,19,19,59.4,0,0
+respiratory,Morganella morganii,Meropenem,32,31,19,19,59.4,0,0
+respiratory,Morganella morganii,Amoxicillin/Clavulanic Acid,32,31,18,18,56.3,0,0
+respiratory,Morganella morganii,Aztreonam,32,31,18,18,56.3,0,0
+respiratory,Morganella morganii,Ertapenem,32,31,18,18,56.3,0,0
+respiratory,Morganella morganii,Tigecycline,32,31,18,18,56.3,0,0
+respiratory,Morganella morganii,Amikacin,32,31,17,17,53.1,0,0
+respiratory,Morganella morganii,Tetracycline,32,31,17,17,53.1,0,0
+respiratory,Morganella morganii,Cefoxitin,32,31,16,16,50.0,0,0
+respiratory,Morganella morganii,Moxifloxacin,32,31,15,15,46.9,0,0
+respiratory,Morganella morganii,Tobramycin,32,31,15,15,46.9,0,0
+respiratory,Morganella morganii,Ceftazidime/Avibactam,32,31,10,10,31.3,0,0
+respiratory,Morganella morganii,Ceftolozane/Tazobactam,32,31,10,10,31.3,0,0
+respiratory,Morganella morganii,Cefotaxime,32,31,5,5,15.6,0,0
+respiratory,Morganella morganii,Doripenem,32,31,3,3,9.4,0,0
+urine,Morganella morganii,Gentamicin,591,498,591,590,99.8,1,0
+urine,Morganella morganii,Ciprofloxacin,591,498,591,589,99.7,2,0
+urine,Morganella morganii,Nitrofurantoin,591,498,587,587,99.3,0,0
+urine,Morganella morganii,Trimethoprim/Sulfamethoxazole,591,498,586,585,99.0,1,0
+urine,Morganella morganii,Cefazolin,591,498,566,566,95.8,0,0
+urine,Morganella morganii,Piperacillin/Tazobactam,591,498,542,539,91.2,1,0
+urine,Morganella morganii,Ampicillin,591,498,535,535,90.5,0,0
+urine,Morganella morganii,Ceftriaxone,591,498,536,533,90.2,3,0
+urine,Morganella morganii,Ceftazidime,591,498,534,532,90.0,2,0
+urine,Morganella morganii,Levofloxacin,591,498,493,490,82.9,3,0
+urine,Morganella morganii,Meropenem,591,498,429,428,72.4,1,0
+urine,Morganella morganii,Amikacin,591,498,409,409,69.2,0,0
+urine,Morganella morganii,Ertapenem,591,498,394,392,66.3,2,0
+urine,Morganella morganii,Amoxicillin/Clavulanic Acid,591,498,374,374,63.3,0,0
+urine,Morganella morganii,Tetracycline,591,498,372,372,62.9,0,0
+urine,Morganella morganii,Cefoxitin,591,498,368,361,61.1,7,0
+urine,Morganella morganii,Tobramycin,591,498,327,324,54.8,3,0
+urine,Morganella morganii,Ampicillin/Sulbactam,591,498,220,220,37.2,0,0
+urine,Morganella morganii,Cefepime,591,498,155,155,26.2,0,0
+urine,Morganella morganii,Aztreonam,591,498,128,128,21.7,0,0
+urine,Morganella morganii,Cefuroxime,591,498,54,54,9.1,0,0
+urine,Morganella morganii,Imipenem,591,498,40,39,6.6,0,1
+urine,Morganella morganii,Tigecycline,591,498,21,21,3.6,0,0
+urine,Morganella morganii,Ceftolozane/Tazobactam,591,498,14,14,2.4,0,0
+urine,Morganella morganii,Ceftazidime/Avibactam,591,498,14,13,2.2,0,1
+urine,Morganella morganii,Cefotetan,591,498,5,5,0.8,0,0
+urine,Morganella morganii,Doripenem,591,498,3,3,0.5,0,0
+urine,Morganella morganii,Fosfomycin,591,498,3,3,0.5,0,0
+urine,Morganella morganii,Cephalexin/Cephalothin,591,498,2,2,0.3,0,0
+urine,Morganella morganii,Cefotaxime,591,498,1,1,0.2,0,0
+urine,Morganella morganii,Moxifloxacin,591,498,2,1,0.2,0,1
+blood,Stenotrophomonas maltophilia,Levofloxacin,35,34,35,35,100.0,0,0
+blood,Stenotrophomonas maltophilia,Trimethoprim/Sulfamethoxazole,35,34,35,35,100.0,0,0
+blood,Stenotrophomonas maltophilia,Ticacarcillin/Clavulanic Acid,35,34,6,6,17.1,0,0
+blood,Stenotrophomonas maltophilia,Ceftazidime,35,34,4,4,11.4,0,0
+blood,Stenotrophomonas maltophilia,Minocycline,35,34,2,2,5.7,0,0
+blood,Stenotrophomonas maltophilia,Tigecycline,35,34,1,0,0.0,0,0
+respiratory,Stenotrophomonas maltophilia,Trimethoprim/Sulfamethoxazole,966,621,966,963,99.7,3,0
+respiratory,Stenotrophomonas maltophilia,Levofloxacin,966,621,966,940,97.3,26,0
+respiratory,Stenotrophomonas maltophilia,Ticacarcillin/Clavulanic Acid,966,621,130,124,12.8,5,0
+respiratory,Stenotrophomonas maltophilia,Minocycline,966,621,55,55,5.7,0,0
+respiratory,Stenotrophomonas maltophilia,Ceftazidime,966,621,50,50,5.2,0,0
+respiratory,Stenotrophomonas maltophilia,Cefepime,966,621,1,1,0.1,0,0
+respiratory,Stenotrophomonas maltophilia,Chloramphenicol,966,621,1,1,0.1,0,0
+respiratory,Stenotrophomonas maltophilia,Ciprofloxacin,966,621,1,1,0.1,0,0
+respiratory,Stenotrophomonas maltophilia,Meropenem,966,621,1,1,0.1,0,0
+respiratory,Stenotrophomonas maltophilia,Piperacillin,966,621,1,1,0.1,0,0
+respiratory,Stenotrophomonas maltophilia,Tigecycline,966,621,17,1,0.1,0,0
+respiratory,Stenotrophomonas maltophilia,Tobramycin,966,621,1,1,0.1,0,0
+respiratory,Stenotrophomonas maltophilia,Colistin,966,621,2,0,0.0,0,0
+respiratory,Stenotrophomonas maltophilia,Doxycycline,966,621,1,0,0.0,0,0
+urine,Stenotrophomonas maltophilia,Trimethoprim/Sulfamethoxazole,119,112,119,119,100.0,0,0
+urine,Stenotrophomonas maltophilia,Levofloxacin,119,112,119,118,99.2,1,0
+urine,Stenotrophomonas maltophilia,Ticacarcillin/Clavulanic Acid,119,112,31,31,26.1,0,0
+urine,Stenotrophomonas maltophilia,Ceftazidime,119,112,10,10,8.4,0,0
+urine,Stenotrophomonas maltophilia,Minocycline,119,112,10,10,8.4,0,0
+urine,Stenotrophomonas maltophilia,Ampicillin,119,112,8,0,0.0,0,8
+urine,Stenotrophomonas maltophilia,Ampicillin/Sulbactam,119,112,8,0,0.0,0,8
+urine,Stenotrophomonas maltophilia,Cefazolin,119,112,5,0,0.0,0,5
+urine,Stenotrophomonas maltophilia,Ciprofloxacin,119,112,8,0,0.0,0,8
+urine,Stenotrophomonas maltophilia,Gentamicin,119,112,8,0,0.0,0,8

@@ -1,17 +1,34 @@
 organism_reporting_group,antibiotic,exclusion_reason,review_basis,notes
-Klebsiella pneumoniae,Ampicillin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
-Klebsiella oxytoca,Ampicillin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
-Serratia marcescens,Cefoxitin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
-Enterobacter cloacae complex,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
-Enterobacter cloacae complex,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
-Enterobacter cloacae complex,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
-Enterobacter cloacae complex,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Not preferred for invasive infection with moderate-risk inducible AmpC organisms
-Klebsiella aerogenes,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
-Klebsiella aerogenes,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
-Klebsiella aerogenes,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
-Klebsiella aerogenes,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Not preferred for invasive infection with moderate-risk inducible AmpC organisms
-Citrobacter freundii complex,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
-Citrobacter freundii complex,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Citrobacter freundii complex,Amoxicillin/Clavulanic Acid,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Citrobacter freundii complex,Ampicillin,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Citrobacter freundii complex,Ampicillin/Sulbactam,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Citrobacter freundii complex,Cefazolin,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
 Citrobacter freundii complex,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Citrobacter freundii complex,Cefoxitin,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Citrobacter freundii complex,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Citrobacter freundii complex,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
 Citrobacter freundii complex,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Project applies C. freundii AmpC reporting rule at reviewed reporting-group level
+Citrobacter koseri,Cefazolin,inappropriate_surrogate,CLSI AST Case Study (2019),Cefazolin is not validated as an oral-cephalosporin surrogate for C. koseri
+Enterobacter cloacae complex,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
 Enterobacter cloacae complex,Cefoxitin,expected_resistant,expected phenotype,Chromosomal AmpC-associated expected resistance
+Enterobacter cloacae complex,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Enterobacter cloacae complex,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Enterobacter cloacae complex,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Not preferred for invasive infection with moderate-risk inducible AmpC organisms
+Klebsiella aerogenes,Amoxicillin/Clavulanic Acid,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Klebsiella aerogenes,Ampicillin,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Klebsiella aerogenes,Ampicillin/Sulbactam,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Klebsiella aerogenes,Cefazolin,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Klebsiella aerogenes,Cefotaxime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Klebsiella aerogenes,Cefoxitin,expected_resistant,IDSA AMR Guidance 2026,Basal AmpC intrinsic resistance; source categorical AST is retained upstream
+Klebsiella aerogenes,Ceftazidime,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Klebsiella aerogenes,Ceftriaxone,ampc_reporting_suppression,IDSA 2026,Moderate-risk inducible AmpC organism; suppress from summary antibiogram
+Klebsiella aerogenes,Piperacillin/Tazobactam,ampc_reporting_suppression,IDSA 2026,Not preferred for invasive infection with moderate-risk inducible AmpC organisms
+Klebsiella oxytoca,Ampicillin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
+Klebsiella pneumoniae,Ampicillin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
+Morganella morganii,Amoxicillin/Clavulanic Acid,expected_resistant,M. morganii expected phenotype / literature review,Not appropriate for routine M. morganii susceptibility display
+Morganella morganii,Ampicillin,expected_resistant,M. morganii expected phenotype / literature review,Not appropriate for routine M. morganii susceptibility display
+Morganella morganii,Cefazolin,expected_resistant,M. morganii expected phenotype / literature review,Not appropriate for routine M. morganii susceptibility display
+Morganella morganii,Cefuroxime,expected_resistant,M. morganii expected phenotype / literature review,Not appropriate for routine M. morganii susceptibility display
+Morganella morganii,Nitrofurantoin,expected_resistant,M. morganii expected phenotype / literature review,Not appropriate for routine M. morganii susceptibility display
+Serratia marcescens,Cefoxitin,expected_resistant,EUCAST expected resistant phenotype,Do not include in susceptibility summary
+Stenotrophomonas maltophilia,Ceftazidime,no_current_breakpoint,CLSI AST News Update (May 2025),CLSI ceftazidime breakpoint was removed in 2024
