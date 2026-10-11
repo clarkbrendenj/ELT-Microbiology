@@ -16,8 +16,17 @@ mapping as (
     select
         organism_source,
         organism_standardized,
-        nullif(trim(source_qualifier), '') as source_qualifier,
-        cast(include_primary_summary as integer) as include_primary_summary,
+        nullif(
+            trim(organism_reporting_group),
+            ''
+        ) as organism_reporting_group,
+        nullif(
+            trim(source_qualifier),
+            ''
+        ) as source_qualifier,
+        cast(
+            include_primary_summary as integer
+        ) as include_primary_summary,
         mapping_status,
         notes
 
@@ -36,6 +45,7 @@ final as (
         v.organism_source,
 
         m.organism_standardized,
+        m.organism_reporting_group,
         m.source_qualifier,
 
         coalesce(

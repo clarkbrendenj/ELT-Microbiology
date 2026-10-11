@@ -1,24 +1,37 @@
-organism_source,organism_standardized,source_qualifier,include_primary_summary,mapping_status,notes
-ESCHERICHIA COLI,Escherichia coli,,1,reviewed,
-ESCHERICHIA COLI (CARBAPENEM RESISTANT),Escherichia coli,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
-STAPHYLOCOCCUS AUREUS,Staphylococcus aureus,,1,reviewed,
-STAPH AUREUS {MRSA},Staphylococcus aureus,MRSA,1,reviewed,Resistance phenotype retained separately
-STAPH AUREUS(COLONY VARIANT - SMALL COLONY OR OTHER MORPHOTYPE),Staphylococcus aureus,small_colony_or_other_morphotype,1,reviewed,Morphotype retained separately
-KLEBSIELLA PNEUMONIAE,Klebsiella pneumoniae,,1,reviewed,
-KLEBSIELLA PNEUMONIAE (CARBAPENEM RESISTANT),Klebsiella pneumoniae,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
-ENTEROCOCCUS FAECALIS,Enterococcus faecalis,,1,reviewed,
-ENTEROCOCCUS FAECALIS - VANCO RESISTANT,Enterococcus faecalis,vancomycin_resistant,1,reviewed,Resistance phenotype retained separately
-PSEUDOMONAS AERUGINOSA,Pseudomonas aeruginosa,,1,reviewed,
-MUCOID PSEUDOMONAS AERUGINOSA,Pseudomonas aeruginosa,mucoid,1,reviewed,Morphotype retained separately
-PSEUDOMONAS AERUGINOSA (NON-MUCOID CF),Pseudomonas aeruginosa,non_mucoid_cf,1,reviewed,Morphotype retained separately
-ENTEROBACTER CLOACAE COMPLEX,Enterobacter cloacae complex,,1,reviewed,
-ENTEROBACTER CLOACAE COMPLEX (CARBAPENEM RESISTANT),Enterobacter cloacae complex,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
-KLEBSIELLA OXYTOCA,Klebsiella oxytoca,,1,reviewed,
-PROTEUS MIRABILIS,Proteus mirabilis,,1,reviewed,
-ENTEROCOCCUS FAECIUM,Enterococcus faecium,,1,reviewed,
-ENTEROCOCCUS FAECIUM -  VANCO RESISTANT,Enterococcus faecium,vancomycin_resistant,1,reviewed,Resistance phenotype retained separately
-STREPTOCOCCUS PNEUMONIAE,Streptococcus pneumoniae,,1,reviewed,
-STREPTOCOCCUS AGALACTIAE (GROUP B),Streptococcus agalactiae,group_b,1,reviewed,
-STREPTOCOCCUS AGALACTIAE {GROUP B},Streptococcus agalactiae,group_b,1,reviewed,Formatting variant
-SERRATIA MARCESCENS,Serratia marcescens,,1,reviewed,
-SERRATIA MARCESCENS (CARBAPENEM RESISTANT),Serratia marcescens,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+organism_source,organism_standardized,organism_reporting_group,source_qualifier,include_primary_summary,mapping_status,notes
+ESCHERICHIA COLI,Escherichia coli,Escherichia coli,,1,reviewed,
+ESCHERICHIA COLI (CARBAPENEM RESISTANT),Escherichia coli,Escherichia coli,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+STAPHYLOCOCCUS AUREUS,Staphylococcus aureus,Staphylococcus aureus,,1,reviewed,
+STAPH AUREUS {MRSA},Staphylococcus aureus,Staphylococcus aureus,MRSA,1,reviewed,Resistance phenotype retained separately
+STAPH AUREUS(COLONY VARIANT - SMALL COLONY OR OTHER MORPHOTYPE),Staphylococcus aureus,Staphylococcus aureus,small_colony_or_other_morphotype,1,reviewed,Morphotype retained separately
+KLEBSIELLA PNEUMONIAE,Klebsiella pneumoniae,Klebsiella pneumoniae,,1,reviewed,
+KLEBSIELLA PNEUMONIAE (CARBAPENEM RESISTANT),Klebsiella pneumoniae,Klebsiella pneumoniae,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+ENTEROCOCCUS FAECALIS,Enterococcus faecalis,Enterococcus faecalis,,1,reviewed,
+ENTEROCOCCUS FAECALIS - VANCO RESISTANT,Enterococcus faecalis,Enterococcus faecalis,vancomycin_resistant,1,reviewed,Resistance phenotype retained separately
+PSEUDOMONAS AERUGINOSA,Pseudomonas aeruginosa,Pseudomonas aeruginosa,,1,reviewed,
+MUCOID PSEUDOMONAS AERUGINOSA,Pseudomonas aeruginosa,Pseudomonas aeruginosa,mucoid,1,reviewed,Morphotype retained separately
+PSEUDOMONAS AERUGINOSA (NON-MUCOID CF),Pseudomonas aeruginosa,Pseudomonas aeruginosa,non_mucoid_cf,1,reviewed,Morphotype retained separately
+ENTEROBACTER CLOACAE COMPLEX,Enterobacter cloacae complex,Enterobacter cloacae complex,,1,reviewed,
+ENTEROBACTER CLOACAE COMPLEX (CARBAPENEM RESISTANT),Enterobacter cloacae complex,Enterobacter cloacae complex,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+KLEBSIELLA OXYTOCA,Klebsiella oxytoca,Klebsiella oxytoca,,1,reviewed,
+PROTEUS MIRABILIS,Proteus mirabilis,Proteus mirabilis,,1,reviewed,
+ENTEROCOCCUS FAECIUM,Enterococcus faecium,Enterococcus faecium,,1,reviewed,
+ENTEROCOCCUS FAECIUM -  VANCO RESISTANT,Enterococcus faecium,Enterococcus faecium,vancomycin_resistant,1,reviewed,Resistance phenotype retained separately
+STREPTOCOCCUS PNEUMONIAE,Streptococcus pneumoniae,Streptococcus pneumoniae,,1,reviewed,
+STREPTOCOCCUS AGALACTIAE (GROUP B),Streptococcus agalactiae,Streptococcus agalactiae,group_b,1,reviewed,
+STREPTOCOCCUS AGALACTIAE {GROUP B},Streptococcus agalactiae,Streptococcus agalactiae,group_b,1,reviewed,Formatting variant
+SERRATIA MARCESCENS,Serratia marcescens,Serratia marcescens,,1,reviewed,
+SERRATIA MARCESCENS (CARBAPENEM RESISTANT),Serratia marcescens,Serratia marcescens,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+ENTEROBACTER ASBURIAE,Enterobacter asburiae,Enterobacter cloacae complex,,1,reviewed,Grouped to reviewed Enterobacter cloacae complex reporting category
+ENTEROBACTER CLOACAE,Enterobacter cloacae,Enterobacter cloacae complex,,1,reviewed,Grouped to reviewed Enterobacter cloacae complex reporting category
+KLEBSIELLA AEROGENES,Klebsiella aerogenes,Klebsiella aerogenes,,1,reviewed,
+KLEBSIELLA AEROGENES (CARBAPENEM RESISTANT),Klebsiella aerogenes,Klebsiella aerogenes,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+ZZZENTEROBACTER AEROGENES,Klebsiella aerogenes,Klebsiella aerogenes,,1,reviewed,Historical Enterobacter aerogenes terminology
+CITROBACTER BRAAKII,Citrobacter braakii,Citrobacter freundii complex,,1,reviewed,Grouped to reviewed Citrobacter freundii complex reporting category
+ZZZCITROBACTER FARMERI,Citrobacter farmeri,Citrobacter farmeri,,1,reviewed,Historical source label
+CITROBACTER FREUNDII,Citrobacter freundii,Citrobacter freundii complex,,1,reviewed,Grouped to reviewed Citrobacter freundii complex reporting category
+CITROBACTER FREUNDII COMPLEX,Citrobacter freundii complex,Citrobacter freundii complex,,1,reviewed,
+CITROBACTER FREUNDII COMPLEX (CARBAPENEM RESISTANT),Citrobacter freundii complex,Citrobacter freundii complex,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+CITROBACTER KOSERI,Citrobacter koseri,Citrobacter koseri,,1,reviewed,
+CITROBACTER KOSERI (CARBAPENEM RESISTANT),Citrobacter koseri,Citrobacter koseri,carbapenem_resistant,1,reviewed,Resistance phenotype retained separately
+CITROBACTER YOUNGAE,Citrobacter youngae,Citrobacter freundii complex,,1,reviewed,Grouped to reviewed Citrobacter freundii complex reporting category

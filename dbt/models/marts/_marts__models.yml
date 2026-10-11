@@ -3,9 +3,11 @@ version: 2
 models:
   - name: mart_susceptibility
     description: >
-      Patient-deduplicated susceptibility reporting mart at the grain
-      of source release, cohort, standardized organism, and reviewed
-      antibiotic pair.
+      Patient-deduplicated phenotype-aware susceptibility reporting mart at
+      the grain of source release, cohort, organism reporting group,
+      reporting phenotype, and reviewed antibiotic pair. CRE and MDR
+      Pseudomonas aeruginosa reporting categories are excluded from this
+      main susceptibility mart and summarized separately in mart_mdro.
 
     columns:
       - name: susceptibility_mart_key
@@ -20,10 +22,31 @@ models:
       - name: cohort_id
         data_tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - blood
+                  - urine
+                  - respiratory
 
-      - name: organism_standardized
+      - name: organism_reporting_group
         data_tests:
           - not_null
+
+      - name: organism_name
+        data_tests:
+          - not_null
+
+      - name: reporting_phenotype
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - base
+                  - esce_r
+                  - oxacillin_resistant
+                  - vancomycin_resistant
 
       - name: antibiotic
         data_tests:
@@ -33,7 +56,43 @@ models:
         data_tests:
           - not_null
 
+      - name: tested_endpoint_count
+        data_tests:
+          - not_null
+
       - name: categorized_count
+        data_tests:
+          - not_null
+
+      - name: susceptible_count
+        data_tests:
+          - not_null
+
+      - name: resistant_count
+        data_tests:
+          - not_null
+
+      - name: intermediate_count
+        data_tests:
+          - not_null
+
+      - name: inconclusive_count
+        data_tests:
+          - not_null
+
+      - name: synergism_count
+        data_tests:
+          - not_null
+
+      - name: missing_result_count
+        data_tests:
+          - not_null
+
+      - name: conflict_result_count
+        data_tests:
+          - not_null
+
+      - name: untested_count
         data_tests:
           - not_null
 
@@ -45,3 +104,100 @@ models:
                 values:
                   - display
                   - insufficient_data
+
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: >
+              eligible_count =
+              categorized_count
+              + inconclusive_count
+              + synergism_count
+              + missing_result_count
+              + conflict_result_count
+              + untested_count
+
+  - name: mart_mdro
+    description: >
+      Patient-level MDRO summary for CRE and MDR Pseudomonas aeruginosa.
+      Denominators are unique patients with the applicable base organism
+      within each cohort. Positive, not-detected, and not-evaluable states
+      are retained separately; phenotype_pct uses the full base-organism
+      denominator.
+
+    columns:
+      - name: mdro_mart_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: source_version
+        data_tests:
+          - not_null
+
+      - name: cohort_id
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - blood
+                  - urine
+                  - respiratory
+
+      - name: organism_base_name
+        data_tests:
+          - not_null
+
+      - name: mdro_phenotype
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - CRE
+                  - MDR Pseudomonas aeruginosa
+
+      - name: denominator_count
+        data_tests:
+          - not_null
+
+      - name: positive_count
+        data_tests:
+          - not_null
+
+      - name: not_detected_count
+        data_tests:
+          - not_null
+
+      - name: not_evaluable_count
+        data_tests:
+          - not_null
+
+      - name: evaluable_count
+        data_tests:
+          - not_null
+
+      - name: phenotype_pct
+        data_tests:
+          - not_null
+
+      - name: evaluable_pct
+        data_tests:
+          - not_null
+
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: >
+              denominator_count =
+              positive_count
+              + not_detected_count
+              + not_evaluable_count
+
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: >
+              evaluable_count =
+              positive_count
+              + not_detected_count

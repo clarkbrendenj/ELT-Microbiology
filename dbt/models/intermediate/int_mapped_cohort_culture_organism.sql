@@ -36,6 +36,7 @@ final as (
         -- Reviewed terminology attributes.
         d.organism_source_key,
         d.organism_standardized,
+        d.organism_reporting_group,
         d.source_qualifier,
         d.include_primary_summary,
         d.mapping_status,

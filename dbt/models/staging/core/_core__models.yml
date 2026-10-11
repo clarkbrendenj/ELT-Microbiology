@@ -119,21 +119,60 @@ models:
   - name: dim_organism
     description: >
       Version-controlled project mapping from ARMD source organism labels
-      to reviewed standardized organism identities. Unreviewed source
-      labels remain visible and are explicitly marked as unmapped.
+      to reviewed organism identities and reporting groups. The standardized
+      identity preserves the reviewed organism identity, while the reporting
+      group controls grouping for downstream susceptibility reporting.
+      Source qualifiers are preserved separately from organism identity.
+      Unreviewed source labels remain visible and are explicitly marked as
+      unmapped.
 
     columns:
       - name: organism_source_key
+        description: >
+          Project-generated identifier for the exact ARMD source organism
+          label.
         data_tests:
           - not_null
           - unique
 
       - name: organism_source
+        description: >
+          Exact organism label as represented in the ARMD source.
         data_tests:
           - not_null
           - unique
 
+      - name: organism_standardized
+        description: >
+          Reviewed organism identity corresponding to the ARMD source label.
+          Phenotype and morphotype qualifiers are not appended to this field.
+        data_tests:
+          - not_null:
+              config:
+                where: "mapping_status = 'reviewed'"
+
+      - name: organism_reporting_group
+        description: >
+          Reviewed organism group used for downstream susceptibility
+          reporting and phenotype-aware patient-level deduplication. This may
+          differ from organism_standardized when multiple organism identities
+          are intentionally combined into a reporting complex.
+        data_tests:
+          - not_null:
+              config:
+                where: "mapping_status = 'reviewed'"
+
+      - name: source_qualifier
+        description: >
+          Source-system qualifier preserved separately from organism
+          identity, such as MRSA, carbapenem resistance, mucoid morphology,
+          or other reviewed source terminology.
+
       - name: include_primary_summary
+        description: >
+          Indicates whether the reviewed organism mapping is eligible for
+          downstream primary susceptibility reporting before phenotype-level
+          inclusion and exclusion rules are applied.
         data_tests:
           - not_null
           - accepted_values:
@@ -141,6 +180,9 @@ models:
                 values: [0, 1]
 
       - name: mapping_status
+        description: >
+          Indicates whether the ARMD source organism label has a reviewed
+          project mapping.
         data_tests:
           - not_null
           - accepted_values:
@@ -148,3 +190,10 @@ models:
                 values:
                   - reviewed
                   - unmapped
+
+      - name: has_reviewed_mapping
+        description: >
+          Boolean indicator that a reviewed organism mapping exists for the
+          source label.
+        data_tests:
+          - not_null

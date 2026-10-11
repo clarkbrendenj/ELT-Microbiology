@@ -110,65 +110,87 @@ models:
               - culture_organism_key
               - cohort_id
 
-  - name: int_standardized_culture_organism
+  - name: int_culture_organism_phenotype
     description: >
-      One row per culture and reviewed standardized organism. Source
-      organism records that map unambiguously to one standardized organism
-      are marked resolved. Cultures containing multiple source organism
-      records mapping to the same standardized organism are retained and
-      flagged as collisions rather than arbitrarily collapsed.
+      One row per source culture-organism record with AST-derived resistance
+      phenotype classifications. CRE, extended-spectrum cephalosporin-resistant
+      Enterobacterales, oxacillin-resistant Staphylococcus aureus,
+      vancomycin-resistant Enterococcus, and MDR Pseudomonas aeruginosa are
+      evaluated before patient-level deduplication. Source phenotype
+      designations are retained only as provenance.
 
     columns:
-      - name: standardized_culture_organism_key
+      - name: culture_organism_key
         data_tests:
           - not_null
           - unique
-
-      - name: organism_standardized
-        data_tests:
-          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_mapped_cohort_culture_organism')
+                field: culture_organism_key
 
       - name: cohort_id
-        data_tests:
-          - not_null
-
-      - name: mapping_resolution_status
         data_tests:
           - not_null
           - accepted_values:
               arguments:
                 values:
-                  - resolved
-                  - collision
+                  - blood
+                  - urine
+                  - respiratory
 
-  - name: int_first_culture_organism
+      - name: ast_cre_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [positive, not_detected, not_evaluable, not_applicable]
+
+      - name: ast_esce_enterobacterales_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [positive, not_detected, not_evaluable, not_applicable]
+
+      - name: ast_oxacillin_resistance_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [positive, not_detected, not_evaluable, not_applicable]
+
+      - name: ast_vancomycin_resistance_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [positive, not_detected, not_evaluable, not_applicable]
+
+      - name: ast_mdr_p_aeruginosa_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [positive, not_detected, not_evaluable, not_applicable]
+
+  - name: int_reporting_culture_organism
     description: >
-      First eligible resolved culture-organism per patient,
-      standardized organism, and cohort across the analyzed ARMD
-      release. Selection occurs before considering antibiotic
-      testing or susceptibility result.
+      Phenotype-aware culture-level reporting records. Reviewed source organism
+      records that belong to the same culture, reporting group, and reporting
+      phenotype are safely consolidated after phenotype assignment while all
+      contributing source culture-organism keys are retained for downstream
+      susceptibility reconciliation.
 
     columns:
-      - name: first_culture_organism_key
+      - name: reporting_culture_organism_key
         data_tests:
           - not_null
           - unique
 
-      - name: standardized_culture_organism_key
+      - name: culture_key
         data_tests:
           - not_null
-          - relationships:
-              arguments:
-                to: ref('int_standardized_culture_organism')
-                field: standardized_culture_organism_key
-
-      - name: culture_organism_key
-        data_tests:
-          - not_null
-          - relationships:
-              arguments:
-                to: ref('fct_culture_organism')
-                field: culture_organism_key
 
       - name: patient_key
         data_tests:
@@ -184,19 +206,94 @@ models:
                   - urine
                   - respiratory
 
-      - name: organism_standardized
+      - name: organism_reporting_group
         data_tests:
           - not_null
+
+      - name: organism_name
+        data_tests:
+          - not_null
+
+      - name: reporting_phenotype
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - base
+                  - cre
+                  - esce_r
+                  - mdr_p_aeruginosa
+                  - oxacillin_resistant
+                  - vancomycin_resistant
+
+      - name: include_main_antibiogram
+        data_tests:
+          - not_null
+
+      - name: source_organism_record_count
+        data_tests:
+          - not_null
+
+  - name: int_first_reporting_isolate
+    description: >
+      First phenotype-aware reporting isolate per patient, cohort, base
+      reporting organism, and reporting phenotype. Selection is based on the
+      earliest culture timestamp with deterministic tie-breaking and occurs
+      before antibiotic-level reporting.
+
+    columns:
+      - name: first_reporting_isolate_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: reporting_culture_organism_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_reporting_culture_organism')
+                field: reporting_culture_organism_key
+
+      - name: patient_key
+        data_tests:
+          - not_null
+
+      - name: cohort_id
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - blood
+                  - urine
+                  - respiratory
 
       - name: culture_time_shifted
         data_tests:
           - not_null
 
-      - name: culture_rank
+      - name: organism_reporting_group
         data_tests:
+          - not_null
+
+      - name: organism_name
+        data_tests:
+          - not_null
+
+      - name: reporting_phenotype
+        data_tests:
+          - not_null
           - accepted_values:
               arguments:
-                values: [1]
+                values:
+                  - base
+                  - cre
+                  - esce_r
+                  - mdr_p_aeruginosa
+                  - oxacillin_resistant
+                  - vancomycin_resistant
 
     data_tests:
       - dbt_utils.unique_combination_of_columns:
@@ -205,4 +302,71 @@ models:
               - source_version
               - cohort_id
               - patient_key
-              - organism_standardized
+              - organism_reporting_group
+              - reporting_phenotype
+
+  - name: int_first_reporting_susceptibility
+    description: >
+      Antibiotic-level susceptibility endpoints for first phenotype-aware
+      reporting isolates. When a reporting isolate contains multiple source
+      culture-organism records, source endpoints are reconciled without
+      arbitrarily selecting one source record; discordant results remain
+      explicit conflicts.
+
+    columns:
+      - name: reporting_susceptibility_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: first_reporting_isolate_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_first_reporting_isolate')
+                field: first_reporting_isolate_key
+
+      - name: antibiotic
+        data_tests:
+          - not_null
+
+      - name: resolution_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - resolved
+                  - missing
+                  - conflict
+
+      - name: susceptibility
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - Susceptible
+                  - Resistant
+                  - Intermediate
+                  - Inconclusive
+                  - Synergism
+
+      - name: reconciliation_reason
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - source_endpoint_conflict
+                  - discordant_source_results
+                  - resolved_with_missing_source_endpoint
+                  - resolved_consistent_result
+                  - missing_only
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - first_reporting_isolate_key
+              - antibiotic

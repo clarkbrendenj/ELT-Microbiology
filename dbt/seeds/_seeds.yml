@@ -3,12 +3,12 @@ version: 2
 seeds:
   - name: reportable_organism_antibiotic_pairs
     description: >
-      Explicitly reviewed organism-antibiotic pairs used by the
-      susceptibility reporting mart. Inclusion is a project reporting
-      decision and does not imply clinical guideline endorsement.
+      Explicitly reviewed base organism reporting-group and antibiotic pairs
+      used by the susceptibility reporting mart. Inclusion is a project
+      reporting decision and does not imply clinical guideline endorsement.
 
     columns:
-      - name: organism_standardized
+      - name: organism_reporting_group
         data_tests:
           - not_null
 
@@ -39,5 +39,5 @@ seeds:
       - dbt_utils.unique_combination_of_columns:
           arguments:
             combination_of_columns:
-              - organism_standardized
+              - organism_reporting_group
               - antibiotic

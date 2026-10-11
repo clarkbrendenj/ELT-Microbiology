@@ -1,4 +1,4 @@
-organism_standardized,antibiotic,pair_order,include_primary_dashboard,review_status
+organism_reporting_group,antibiotic,pair_order,include_primary_dashboard,review_status
 Enterobacter cloacae complex,Gentamicin,1,1,reviewed
 Enterobacter cloacae complex,Meropenem,2,1,reviewed
 Enterobacter cloacae complex,Trimethoprim/Sulfamethoxazole,3,1,reviewed
