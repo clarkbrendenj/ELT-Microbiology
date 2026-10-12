@@ -43,9 +43,11 @@ ARMD does not include a verified isolate identifier. Keys created by dbt identif
 
 | `resolution_status` | Rule | Analytical treatment |
 |---|---|---|
-| `resolved` | Exactly one non-null susceptibility interpretation is observed | Retain the interpretation; eligible for `fct_susceptibility` |
-| `missing` | Endpoint is recorded, but no non-null interpretation is available | Preserve as missing |
-| `conflict` | Two or more distinct interpretations are present | Preserve the conflict; do not select a winner |
+| `resolved` | Repeated source rows agree on one non-null susceptibility category, with no missing-category rows in that source endpoint | Retain the interpretation; eligible for `fct_susceptibility` |
+| `missing` | The endpoint exists but all recorded source interpretations are `NULL` | Preserve as missing |
+| `conflict` | Source rows contain different non-null categories **or** a combination of a category and a `NULL` result | Preserve the conflict; do not select a winner |
+
+The source-level implementation treats a `NULL` as a distinct recorded result state when comparing repeated rows. For example, `Susceptible` plus `NULL` for the **same source culture-organism–drug endpoint** is classified as a conflict. This conservative rule differs from the second-stage reconciliation of **different source organism records** on a reporting culture, described below. Both stages retain their unresolved-result counts for audit.
 
 No "latest result," "most resistant," or similar tie-break is applied because the extract does not provide enough version history to defend such a choice.
 
@@ -100,9 +102,11 @@ Reviewed taxonomy decisions include retaining *Citrobacter koseri* and *C. farme
 
 The current mapping seed has **41 reviewed source-label entries**. Reporting scope reflects the reviewed mapping, the available drug panel, cohort eligibility, and explicit exclusions; it is not determined by organism frequency alone.
 
-### Expanded reporting groups
+### Reporting organism groups
 
-The reporting reference data now include CoNS (unspeciated), *Enterococcus* species (unspeciated), *Morganella morganii*, and *Stenotrophomonas maltophilia*, alongside the earlier reviewed organisms. CoNS is a pooled, nonspeciated group; it is not represented as a species-specific *S. epidermidis* or *S. lugdunensis* antibiogram.
+`organism_reporting_groups.csv` contains **20 reviewed reporting groups**, including *Escherichia coli*, *Klebsiella* and *Citrobacter* species or complexes, *Staphylococcus aureus*, CoNS (unspeciated), *Enterococcus* species (unspeciated), *Morganella morganii*, and *Stenotrophomonas maltophilia*. A reporting group may represent a species, species complex, or an intentionally pooled unspeciated category.
+
+CoNS is pooled as **coagulase-negative staphylococci (unspeciated)**; its results are not labeled as species-specific *S. epidermidis* or *S. lugdunensis* susceptibility.
 
 Some source organisms remain outside the primary reporting mart, including organisms requiring separate AST frameworks or species-specific interpretive review. Not appearing in the mart does not mean an organism is clinically insignificant.
 
@@ -175,11 +179,11 @@ Three or more positive categories establish MDR. Fewer than three positive categ
 
 MDR *P. aeruginosa* is summarized in `mart_mdro`, not as a separate phenotype row in `mart_susceptibility`. The organism still contributes to the overall *P. aeruginosa* susceptibility population.
 
-## First-culture selection policies
+## Susceptibility population: first culture per patient and organism
 
-Two different policies are used because the marts answer different questions. They **must not be mixed**.
+The susceptibility mart selects a single overall first culture for each patient, specimen cohort, and reporting organism. The MDRO mart uses a **separate patient-level, across-observations policy**, defined in its own section below. Their denominators are not interchangeable.
 
-### Conventional overall-organism first-culture population
+### Overall first-culture selection
 
 **Model:** `int_overall_first_reporting_isolate`
 
@@ -194,23 +198,9 @@ Selection occurs before evaluating the chosen antibiotic's availability or S/R/I
 
 A phenotype-specific susceptibility subgroup is filtered **from these selected overall first cultures**. It is not independently re-deduplicated to the patient's first resistant culture.
 
-### Historical phenotype-first comparison (Notebook 10)
+### Subgroups derived from the overall population
 
-The former pipeline ranked first cultures separately within each resistance
-phenotype. That approach could count the same patient more than once for an
-organism and cohort. It is **not** used by either current mart.
-
-Notebook 10 reconstructs that historical selection from the surviving
-`int_reporting_culture_organism` model for comparison only; it does not
-require a separate materialized phenotype-first model.
-
-The MDRO mart instead reads `int_reporting_culture_organism` directly,
-classifies patient-level phenotype evidence across eligible culture
-observations, and applies its own denominator policy.
-
-### Why the distinction matters
-
-In the validated release, urine *E. coli* has **37,104** overall patient–organism first cultures but **38,247** records after independent first selection within phenotype. The additional phenotype records cannot be added together as an overall antibiogram denominator.
+The reporting mart evaluates each selected first culture's AST-derived phenotype classifications to produce the applicable resistance-specific subgroups. These subsets share the overall population's culture-selection rule. Patients are **not** independently reselected by phenotype, and subgroup counts are never added together to estimate an overall-organism denominator.
 
 ## Reviewed antibiotic-pair policy
 
@@ -267,7 +257,7 @@ The current seed retains **11 inactive proposed rows** pending more detailed rev
 | `oxacillin_susceptible` | AST-supported MSSA subset of overall first *S. aureus* cultures |
 | `vancomycin_resistant` | VRE subset of overall first *E. faecalis* or *E. faecium* cultures |
 
-The former `base` category is **not** equivalent to `overall` and is not used in the current susceptibility mart. CRE and MDR cultures are included in `overall`; their prevalence is reported separately in `mart_mdro`.
+The `overall` population includes CRE-positive and MDR *P. aeruginosa* cultures where applicable. These resistance phenotypes are also described in the separate patient-level `mart_mdro` summary. They are not published as additional susceptibility subgroups in this mart.
 
 The published subgroup denominator cannot exceed its corresponding overall denominator. Some subgroups can overlap in conceptual resistance status, but they are not summed to construct the overall population.
 
@@ -370,7 +360,7 @@ Division is protected by `nullif(denominator_count, 0)`, and the two percentages
 **Organism:** *Escherichia coli*  
 **Antibiotic:** ceftriaxone
 
-These counts reflect the **current overall first-culture mart**, not the retired phenotype-separated `base` population.
+These counts come from the `overall` organism row and its ESCE-R subgroup in `mart_susceptibility`.
 
 | Metric | Overall *E. coli* | ESCE-R subgroup |
 |---|---:|---:|
@@ -417,7 +407,7 @@ The related validation notebooks are `10_validate_first_reporting_isolate.ipynb`
 
 ### Validated release snapshot
 
-The full dbt regression build completed successfully for the current version: **232 passes, 0 warnings, 0 errors, 0 skips** (19 models, 4 seeds, 209 data tests).
+The latest full dbt regression build completed successfully: **205 successful operations, 0 warnings, 0 errors, 0 skips** (17 models, 4 seeds, 184 data tests).
 
 | Component | Validated current count |
 |---|---:|

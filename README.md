@@ -7,7 +7,7 @@
 
 ## Project overview
 
-As a clinical laboratory scientist working in clinical microbiology, I use laboratory information system data to monitor laboratory quality, analyze testing workflows, investigate antimicrobial resistance patterns, and produce cumulative antimicrobial susceptibility reports (*antibiograms*). This independent portfolio project demonstrates the intersection of **clinical microbiology, epidemiology, data engineering, analytics, and data visualization**.
+As a quality management systems specialist / clinical data analyst working in clinical microbiology, I use laboratory information system data to monitor laboratory quality, analyze testing workflows, investigate antimicrobial resistance patterns, and produce cumulative antimicrobial susceptibility reports (*antibiograms*). This independent portfolio project demonstrates the intersection of **clinical microbiology, epidemiology, data engineering, analytics, and data visualization**.
 
 The clinical data I work with professionally may contain **protected health information (PHI)** and cannot be published in a personal portfolio. Instead, this project uses the publicly available, de-identified **Antibiotic Resistance Microbiology Dataset (ARMD)** to demonstrate similar analytical methods and reporting decisions **without using data from my employer**.
 
@@ -21,34 +21,11 @@ I developed a version-controlled **extract, load, transform (ELT)** pipeline to 
 
 The dashboard presents organism–antibiotic susceptibility summaries stratified by **blood, urine, and respiratory cultures**, with separate Gram-positive and Gram-negative views. The tables distinguish overall organism populations from selected resistance-phenotype subgroups. Blank cells should not be interpreted as 0% susceptibility: a result may be omitted because a pair is not approved for reporting, is intentionally suppressed, or does not satisfy the minimum categorized-result threshold.
 
-The images below show four selected views from the published antibiogram. The linked Tableau Public workbook provides the interactive experience.
-
-### Urine cultures — Gram-negative organisms
-
-![Tableau antibiogram showing percentage susceptible by organism and antibiotic for Gram-negative urine cultures](docs/images/urine-gram-negative.png)
-
-<details>
-<summary><strong>View three more antibiogram screenshots</strong> — urine Gram-positive and blood Gram-negative/positive</summary>
-
-### Urine cultures — Gram-positive organisms
-
-![Tableau antibiogram showing percentage susceptible by organism and antibiotic for Gram-positive urine cultures](docs/images/urine-gram-positive.png)
-
-### Blood cultures — Gram-negative organisms
-
-![Tableau antibiogram showing percentage susceptible by organism and antibiotic for Gram-negative blood cultures](docs/images/blood-gram-negative.png)
-
-### Blood cultures — Gram-positive organisms
-
-![Tableau antibiogram showing percentage susceptible by organism and antibiotic for Gram-positive blood cultures](docs/images/blood-gram-positive.png)
-
-</details>
-
 **How to interpret the tables:** `%S` is the percentage of **categorized S/I/R endpoints** that are classified as susceptible for a particular organism–antibiotic combination. The overall first-culture population is a different denominator from the drug-specific categorized count. Because ARMD lacks verified biological isolate identifiers, the analytical first-culture counts should not be construed as individually verified strains. See [Metric definitions](docs/metric_definitions.md) for denominators, exclusions, and limitations.
 
 ### Tableau connection and publication approach
 
-For this portfolio demonstration, the validated reporting marts are **exported from Databricks** for use in Tableau Public. Tableau workbook and extract files are intentionally not tracked in this GitHub repository; screenshots and a link to the published workbook are provided instead.
+For this portfolio demonstration, the validated reporting marts are **exported from Databricks** for use in Tableau Public. Tableau workbook and extract files are intentionally not tracked in this GitHub repository; the published interactive workbook is available through the link above.
 
 In a typical internal clinical analytics environment, I would **connect Tableau directly to the curated Databricks data source**, rather than manually maintaining exported CSVs. That allows visualizations to consume centrally maintained tables, with refreshes coordinated through the data pipeline and supported Tableau connection/refresh capabilities. Such a deployment would also require institutional access controls and PHI governance; Tableau Public is not appropriate for protected clinical data.
 
@@ -144,7 +121,6 @@ Automated **dbt data tests** cover uniqueness, relationships, accepted values, c
 | `notebooks/source_exploration/` | Source profiling and initial grain assessment |
 | `notebooks/pipeline validation/` | Numbered SQL-based pipeline validation notebooks |
 | `docs/metric_definitions.md` | Detailed metric definitions, methodology, and limitations |
-| `docs/images/` | Static preview screenshots of the Tableau antibiogram |
 | [`docs/`](docs/) | Additional project materials, including a **PDF** and a **PowerPoint presentation (`.pptx`)** |
 | `data/exports/` | Reporting extracts produced from the validated marts, when published |
 
