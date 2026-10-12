@@ -24,8 +24,6 @@ dbt/target/
 dbt/logs/
 dbt/dbt_packages/
 
-.databricks
-
 # Ignore session files
 *.session.sql
 
@@ -49,4 +47,9 @@ dbt/dbt_packages/
 *.tfl
 *.tflx
 
-APPLY_CLEANUP.md
+# Local VS Code settings
+.vscode/
+
+# Local Databricks configuration
+databricks.yml
+.databricks/
