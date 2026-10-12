@@ -32,6 +32,7 @@ dbt/dbt_packages/
 # Tableau workbooks
 *.twb
 *.twbx
+*.twbr
 
 # Tableau data sources
 *.tds
