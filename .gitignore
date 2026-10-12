@@ -47,3 +47,5 @@ dbt/dbt_packages/
 # Tableau Prep flows
 *.tfl
 *.tflx
+
+APPLY_CLEANUP.md
