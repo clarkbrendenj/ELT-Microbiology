@@ -27,3 +27,8 @@ dbt/dbt_packages/
 
 # Ignore session files
 *.session.sql
+
+.vscode
+*.twbr
+*.twb
+*.png
