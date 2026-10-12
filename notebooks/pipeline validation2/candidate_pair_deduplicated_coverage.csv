@@ -1,0 +1,125 @@
+organism_reporting_group,cohort_id,organism_name,reporting_phenotype,antibiotic,eligible_count,categorized_count,categorized_coverage_pct,conflict_count,missing_count,threshold_status
+Citrobacter freundii complex,blood,Citrobacter freundii complex,base,Ciprofloxacin,84,84,100.0,0,0,meets_threshold
+Citrobacter freundii complex,blood,Citrobacter freundii complex,base,Gentamicin,84,84,100.0,0,0,meets_threshold
+Citrobacter freundii complex,blood,Citrobacter freundii complex,base,Trimethoprim/Sulfamethoxazole,84,84,100.0,0,0,meets_threshold
+Citrobacter freundii complex,blood,Citrobacter freundii complex,base,Cefepime,84,50,59.5,0,0,meets_threshold
+Citrobacter freundii complex,blood,Citrobacter freundii complex,base,Meropenem,84,83,98.8,0,0,meets_threshold
+Citrobacter freundii complex,blood,Citrobacter freundii complex,base,Ertapenem,84,59,70.2,0,0,meets_threshold
+Citrobacter freundii complex,blood,Citrobacter freundii complex,base,Levofloxacin,84,81,96.4,0,0,meets_threshold
+Citrobacter freundii complex,respiratory,Citrobacter freundii complex,base,Ciprofloxacin,46,46,100.0,0,0,meets_threshold
+Citrobacter freundii complex,respiratory,Citrobacter freundii complex,base,Gentamicin,46,46,100.0,0,0,meets_threshold
+Citrobacter freundii complex,respiratory,Citrobacter freundii complex,base,Trimethoprim/Sulfamethoxazole,46,46,100.0,0,0,meets_threshold
+Citrobacter freundii complex,respiratory,Citrobacter freundii complex,base,Cefepime,46,33,71.7,0,0,meets_threshold
+Citrobacter freundii complex,respiratory,Citrobacter freundii complex,base,Levofloxacin,46,46,100.0,0,0,meets_threshold
+Citrobacter freundii complex,urine,Citrobacter freundii complex,base,Ciprofloxacin,860,856,99.5,3,0,meets_threshold
+Citrobacter freundii complex,urine,Citrobacter freundii complex,base,Gentamicin,860,860,100.0,0,0,meets_threshold
+Citrobacter freundii complex,urine,Citrobacter freundii complex,base,Trimethoprim/Sulfamethoxazole,860,858,99.8,1,0,meets_threshold
+Citrobacter freundii complex,urine,Citrobacter freundii complex,base,Cefepime,860,288,33.5,0,0,meets_threshold
+Citrobacter freundii complex,urine,Citrobacter freundii complex,base,Meropenem,860,655,76.2,1,0,meets_threshold
+Citrobacter freundii complex,urine,Citrobacter freundii complex,base,Ertapenem,860,584,67.9,1,0,meets_threshold
+Citrobacter freundii complex,urine,Citrobacter freundii complex,base,Levofloxacin,860,761,88.5,2,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Ceftriaxone,44,44,100.0,0,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Ciprofloxacin,44,44,100.0,0,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Gentamicin,44,44,100.0,0,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Trimethoprim/Sulfamethoxazole,44,44,100.0,0,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Meropenem,44,44,100.0,0,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Ertapenem,44,38,86.4,0,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Levofloxacin,44,37,84.1,0,0,meets_threshold
+Citrobacter koseri,blood,Citrobacter koseri,base,Piperacillin/Tazobactam,44,44,100.0,0,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Ceftriaxone,95,69,72.6,0,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Ciprofloxacin,95,94,98.9,1,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Gentamicin,95,95,100.0,0,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Trimethoprim/Sulfamethoxazole,95,95,100.0,0,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Meropenem,95,45,47.4,0,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Ertapenem,95,45,47.4,0,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Levofloxacin,95,92,96.8,1,0,meets_threshold
+Citrobacter koseri,respiratory,Citrobacter koseri,base,Piperacillin/Tazobactam,95,94,98.9,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Ceftriaxone,1004,790,78.7,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Ciprofloxacin,1004,1004,100.0,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Gentamicin,1004,1004,100.0,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Trimethoprim/Sulfamethoxazole,1004,1004,100.0,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Meropenem,1004,702,69.9,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Ertapenem,1004,688,68.5,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Levofloxacin,1004,843,84.0,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Piperacillin/Tazobactam,1004,838,83.5,0,0,meets_threshold
+Citrobacter koseri,urine,Citrobacter koseri,base,Nitrofurantoin,1004,997,99.3,6,0,meets_threshold
+Coagulase-negative staphylococci (unspeciated),blood,Coagulase-negative staphylococci (unspeciated),base,Oxacillin,1247,1216,97.5,30,1,meets_threshold
+Coagulase-negative staphylococci (unspeciated),blood,Coagulase-negative staphylococci (unspeciated),base,Vancomycin,1247,1245,99.8,0,1,meets_threshold
+Coagulase-negative staphylococci (unspeciated),blood,Coagulase-negative staphylococci (unspeciated),base,Trimethoprim/Sulfamethoxazole,1247,1216,97.5,26,1,meets_threshold
+Coagulase-negative staphylococci (unspeciated),blood,Coagulase-negative staphylococci (unspeciated),base,Clindamycin,1247,1189,95.3,30,1,meets_threshold
+Coagulase-negative staphylococci (unspeciated),blood,Coagulase-negative staphylococci (unspeciated),base,Erythromycin,1247,1203,96.5,41,1,meets_threshold
+Coagulase-negative staphylococci (unspeciated),blood,Coagulase-negative staphylococci (unspeciated),base,Linezolid,1247,601,48.2,0,2,meets_threshold
+Enterococcus species (unspeciated),urine,Enterococcus species (unspeciated),base,Ampicillin,7354,7334,99.7,17,0,meets_threshold
+Enterococcus species (unspeciated),urine,Enterococcus species (unspeciated),base,Penicillin,7354,3499,47.6,7,0,meets_threshold
+Enterococcus species (unspeciated),urine,Enterococcus species (unspeciated),base,Vancomycin,7354,3505,47.7,3,0,meets_threshold
+Enterococcus species (unspeciated),urine,Enterococcus species (unspeciated),base,Linezolid,7354,3438,46.8,0,1,meets_threshold
+Enterococcus species (unspeciated),urine,Enterococcus species (unspeciated),base,Nitrofurantoin,7354,7328,99.6,15,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes,base,Gentamicin,64,64,100.0,0,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes,base,Ciprofloxacin,64,64,100.0,0,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes,base,Trimethoprim/Sulfamethoxazole,64,64,100.0,0,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes,base,Cefepime,64,39,60.9,0,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes,base,Meropenem,64,60,93.8,0,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes,base,Ertapenem,64,45,70.3,0,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes,base,Levofloxacin,64,55,85.9,0,0,meets_threshold
+Klebsiella aerogenes,blood,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Gentamicin,21,21,100.0,0,0,insufficient_data
+Klebsiella aerogenes,blood,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Ciprofloxacin,21,21,100.0,0,0,insufficient_data
+Klebsiella aerogenes,blood,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Trimethoprim/Sulfamethoxazole,21,21,100.0,0,0,insufficient_data
+Klebsiella aerogenes,blood,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Cefepime,21,10,47.6,0,0,insufficient_data
+Klebsiella aerogenes,blood,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Meropenem,21,21,100.0,0,0,insufficient_data
+Klebsiella aerogenes,blood,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Ertapenem,21,18,85.7,0,0,insufficient_data
+Klebsiella aerogenes,blood,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Levofloxacin,21,18,85.7,0,0,insufficient_data
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes,base,Gentamicin,171,171,100.0,0,0,meets_threshold
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes,base,Ciprofloxacin,171,171,100.0,0,0,meets_threshold
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes,base,Trimethoprim/Sulfamethoxazole,171,170,99.4,1,0,meets_threshold
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes,base,Cefepime,171,125,73.1,0,0,meets_threshold
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes,base,Meropenem,171,92,53.8,0,0,meets_threshold
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes,base,Ertapenem,171,91,53.2,0,0,meets_threshold
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes,base,Levofloxacin,171,162,94.7,0,0,meets_threshold
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Gentamicin,28,28,100.0,0,0,insufficient_data
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Ciprofloxacin,28,28,100.0,0,0,insufficient_data
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Trimethoprim/Sulfamethoxazole,28,28,100.0,0,0,insufficient_data
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Cefepime,28,27,96.4,0,0,insufficient_data
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Meropenem,28,28,100.0,0,0,insufficient_data
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Ertapenem,28,25,89.3,1,0,insufficient_data
+Klebsiella aerogenes,respiratory,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Levofloxacin,28,27,96.4,0,0,insufficient_data
+Klebsiella aerogenes,urine,Klebsiella aerogenes,base,Gentamicin,826,826,100.0,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes,base,Ciprofloxacin,826,826,100.0,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes,base,Trimethoprim/Sulfamethoxazole,826,825,99.9,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes,base,Cefepime,826,236,28.6,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes,base,Meropenem,826,523,63.3,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes,base,Ertapenem,826,528,63.9,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes,base,Levofloxacin,826,717,86.8,1,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Gentamicin,103,103,100.0,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Ciprofloxacin,103,103,100.0,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Trimethoprim/Sulfamethoxazole,103,103,100.0,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Cefepime,103,34,33.0,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Meropenem,103,90,87.4,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Ertapenem,103,99,96.1,0,0,meets_threshold
+Klebsiella aerogenes,urine,Klebsiella aerogenes — extended-spectrum cephalosporin resistant,esce_r,Levofloxacin,103,85,82.5,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Ciprofloxacin,48,48,100.0,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Gentamicin,48,48,100.0,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Trimethoprim/Sulfamethoxazole,48,47,97.9,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Piperacillin/Tazobactam,48,47,97.9,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Ceftriaxone,48,48,100.0,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Meropenem,48,47,97.9,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Ertapenem,48,39,81.3,0,0,meets_threshold
+Morganella morganii,blood,Morganella morganii,base,Levofloxacin,48,41,85.4,0,0,meets_threshold
+Morganella morganii,respiratory,Morganella morganii,base,Ciprofloxacin,31,31,100.0,0,0,meets_threshold
+Morganella morganii,respiratory,Morganella morganii,base,Gentamicin,31,31,100.0,0,0,meets_threshold
+Morganella morganii,respiratory,Morganella morganii,base,Trimethoprim/Sulfamethoxazole,31,31,100.0,0,0,meets_threshold
+Morganella morganii,respiratory,Morganella morganii,base,Piperacillin/Tazobactam,31,31,100.0,0,0,meets_threshold
+Morganella morganii,respiratory,Morganella morganii,base,Levofloxacin,31,29,93.5,0,0,insufficient_data
+Morganella morganii,urine,Morganella morganii,base,Ciprofloxacin,498,496,99.6,2,0,meets_threshold
+Morganella morganii,urine,Morganella morganii,base,Gentamicin,498,498,100.0,0,0,meets_threshold
+Morganella morganii,urine,Morganella morganii,base,Trimethoprim/Sulfamethoxazole,498,495,99.4,0,0,meets_threshold
+Morganella morganii,urine,Morganella morganii,base,Piperacillin/Tazobactam,498,458,92.0,1,0,meets_threshold
+Morganella morganii,urine,Morganella morganii,base,Ceftriaxone,498,443,89.0,3,0,meets_threshold
+Morganella morganii,urine,Morganella morganii,base,Meropenem,498,353,70.9,1,0,meets_threshold
+Morganella morganii,urine,Morganella morganii,base,Ertapenem,498,324,65.1,2,0,meets_threshold
+Morganella morganii,urine,Morganella morganii,base,Levofloxacin,498,411,82.5,3,0,meets_threshold
+Stenotrophomonas maltophilia,blood,Stenotrophomonas maltophilia,base,Trimethoprim/Sulfamethoxazole,34,34,100.0,0,0,meets_threshold
+Stenotrophomonas maltophilia,blood,Stenotrophomonas maltophilia,base,Levofloxacin,34,34,100.0,0,0,meets_threshold
+Stenotrophomonas maltophilia,respiratory,Stenotrophomonas maltophilia,base,Trimethoprim/Sulfamethoxazole,621,621,100.0,0,0,meets_threshold
+Stenotrophomonas maltophilia,respiratory,Stenotrophomonas maltophilia,base,Levofloxacin,621,610,98.2,11,0,meets_threshold
+Stenotrophomonas maltophilia,urine,Stenotrophomonas maltophilia,base,Trimethoprim/Sulfamethoxazole,112,112,100.0,0,0,meets_threshold
+Stenotrophomonas maltophilia,urine,Stenotrophomonas maltophilia,base,Levofloxacin,112,111,99.1,1,0,meets_threshold

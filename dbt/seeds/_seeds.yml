@@ -34,13 +34,25 @@ seeds:
               arguments:
                 values:
                   - reviewed
+                  - proposed
+      - name: cohort_id
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - blood
+                  - respiratory
+                  - urine
 
     data_tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
             combination_of_columns:
               - organism_reporting_group
+              - cohort_id
               - antibiotic
+  
   - name: organism_antibiotic_exclusions
     description: >
       Reviewed organism-antibiotic combinations excluded from the
@@ -65,6 +77,8 @@ seeds:
                 values:
                   - expected_resistant
                   - ampc_reporting_suppression
+                  - inappropriate_surrogate
+                  - no_current_breakpoint
 
       - name: review_basis
         data_tests:

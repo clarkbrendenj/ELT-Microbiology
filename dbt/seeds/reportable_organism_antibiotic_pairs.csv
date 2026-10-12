@@ -1,53 +1,53 @@
 organism_reporting_group,cohort_id,antibiotic,pair_order,include_primary_dashboard,review_status
-Citrobacter freundii complex,blood,Ciprofloxacin,1,0,proposed
-Citrobacter freundii complex,blood,Gentamicin,2,0,proposed
-Citrobacter freundii complex,blood,Trimethoprim/Sulfamethoxazole,3,0,proposed
-Citrobacter freundii complex,blood,Cefepime,4,0,proposed
-Citrobacter freundii complex,blood,Meropenem,5,0,proposed
-Citrobacter freundii complex,blood,Ertapenem,6,0,proposed
-Citrobacter freundii complex,blood,Levofloxacin,7,0,proposed
-Citrobacter freundii complex,respiratory,Ciprofloxacin,1,0,proposed
-Citrobacter freundii complex,respiratory,Gentamicin,2,0,proposed
-Citrobacter freundii complex,respiratory,Trimethoprim/Sulfamethoxazole,3,0,proposed
-Citrobacter freundii complex,respiratory,Cefepime,4,0,proposed
-Citrobacter freundii complex,respiratory,Levofloxacin,5,0,proposed
-Citrobacter freundii complex,urine,Ciprofloxacin,1,0,proposed
-Citrobacter freundii complex,urine,Gentamicin,2,0,proposed
-Citrobacter freundii complex,urine,Trimethoprim/Sulfamethoxazole,3,0,proposed
+Citrobacter freundii complex,blood,Ciprofloxacin,1,1,reviewed
+Citrobacter freundii complex,blood,Gentamicin,2,1,reviewed
+Citrobacter freundii complex,blood,Trimethoprim/Sulfamethoxazole,3,1,reviewed
+Citrobacter freundii complex,blood,Cefepime,4,1,reviewed
+Citrobacter freundii complex,blood,Meropenem,5,1,reviewed
+Citrobacter freundii complex,blood,Ertapenem,6,1,reviewed
+Citrobacter freundii complex,blood,Levofloxacin,7,1,reviewed
+Citrobacter freundii complex,respiratory,Ciprofloxacin,1,1,reviewed
+Citrobacter freundii complex,respiratory,Gentamicin,2,1,reviewed
+Citrobacter freundii complex,respiratory,Trimethoprim/Sulfamethoxazole,3,1,reviewed
+Citrobacter freundii complex,respiratory,Cefepime,4,1,reviewed
+Citrobacter freundii complex,respiratory,Levofloxacin,5,1,reviewed
+Citrobacter freundii complex,urine,Ciprofloxacin,1,1,reviewed
+Citrobacter freundii complex,urine,Gentamicin,2,1,reviewed
+Citrobacter freundii complex,urine,Trimethoprim/Sulfamethoxazole,3,1,reviewed
 Citrobacter freundii complex,urine,Cefepime,4,0,proposed
-Citrobacter freundii complex,urine,Meropenem,5,0,proposed
-Citrobacter freundii complex,urine,Ertapenem,6,0,proposed
-Citrobacter freundii complex,urine,Levofloxacin,7,0,proposed
-Citrobacter koseri,blood,Ceftriaxone,1,0,proposed
-Citrobacter koseri,blood,Ciprofloxacin,2,0,proposed
-Citrobacter koseri,blood,Gentamicin,3,0,proposed
-Citrobacter koseri,blood,Trimethoprim/Sulfamethoxazole,4,0,proposed
-Citrobacter koseri,blood,Meropenem,5,0,proposed
-Citrobacter koseri,blood,Ertapenem,6,0,proposed
-Citrobacter koseri,blood,Levofloxacin,7,0,proposed
-Citrobacter koseri,blood,Piperacillin/Tazobactam,8,0,proposed
-Citrobacter koseri,respiratory,Ceftriaxone,1,0,proposed
-Citrobacter koseri,respiratory,Ciprofloxacin,2,0,proposed
-Citrobacter koseri,respiratory,Gentamicin,3,0,proposed
-Citrobacter koseri,respiratory,Trimethoprim/Sulfamethoxazole,4,0,proposed
+Citrobacter freundii complex,urine,Meropenem,5,1,reviewed
+Citrobacter freundii complex,urine,Ertapenem,6,1,reviewed
+Citrobacter freundii complex,urine,Levofloxacin,7,1,reviewed
+Citrobacter koseri,blood,Ceftriaxone,1,1,reviewed
+Citrobacter koseri,blood,Ciprofloxacin,2,1,reviewed
+Citrobacter koseri,blood,Gentamicin,3,1,reviewed
+Citrobacter koseri,blood,Trimethoprim/Sulfamethoxazole,4,1,reviewed
+Citrobacter koseri,blood,Meropenem,5,1,reviewed
+Citrobacter koseri,blood,Ertapenem,6,1,reviewed
+Citrobacter koseri,blood,Levofloxacin,7,1,reviewed
+Citrobacter koseri,blood,Piperacillin/Tazobactam,8,1,reviewed
+Citrobacter koseri,respiratory,Ceftriaxone,1,1,reviewed
+Citrobacter koseri,respiratory,Ciprofloxacin,2,1,reviewed
+Citrobacter koseri,respiratory,Gentamicin,3,1,reviewed
+Citrobacter koseri,respiratory,Trimethoprim/Sulfamethoxazole,4,1,reviewed
 Citrobacter koseri,respiratory,Meropenem,5,0,proposed
 Citrobacter koseri,respiratory,Ertapenem,6,0,proposed
-Citrobacter koseri,respiratory,Levofloxacin,7,0,proposed
-Citrobacter koseri,respiratory,Piperacillin/Tazobactam,8,0,proposed
-Citrobacter koseri,urine,Ceftriaxone,1,0,proposed
-Citrobacter koseri,urine,Ciprofloxacin,2,0,proposed
-Citrobacter koseri,urine,Gentamicin,3,0,proposed
-Citrobacter koseri,urine,Trimethoprim/Sulfamethoxazole,4,0,proposed
-Citrobacter koseri,urine,Meropenem,5,0,proposed
-Citrobacter koseri,urine,Ertapenem,6,0,proposed
-Citrobacter koseri,urine,Levofloxacin,7,0,proposed
-Citrobacter koseri,urine,Piperacillin/Tazobactam,8,0,proposed
-Citrobacter koseri,urine,Nitrofurantoin,9,0,proposed
+Citrobacter koseri,respiratory,Levofloxacin,7,1,reviewed
+Citrobacter koseri,respiratory,Piperacillin/Tazobactam,8,1,reviewed
+Citrobacter koseri,urine,Ceftriaxone,1,1,reviewed
+Citrobacter koseri,urine,Ciprofloxacin,2,1,reviewed
+Citrobacter koseri,urine,Gentamicin,3,1,reviewed
+Citrobacter koseri,urine,Trimethoprim/Sulfamethoxazole,4,1,reviewed
+Citrobacter koseri,urine,Meropenem,5,1,reviewed
+Citrobacter koseri,urine,Ertapenem,6,1,reviewed
+Citrobacter koseri,urine,Levofloxacin,7,1,reviewed
+Citrobacter koseri,urine,Piperacillin/Tazobactam,8,1,reviewed
+Citrobacter koseri,urine,Nitrofurantoin,9,1,reviewed
 Coagulase-negative staphylococci (unspeciated),blood,Oxacillin,1,0,proposed
-Coagulase-negative staphylococci (unspeciated),blood,Vancomycin,2,0,proposed
-Coagulase-negative staphylococci (unspeciated),blood,Trimethoprim/Sulfamethoxazole,3,0,proposed
+Coagulase-negative staphylococci (unspeciated),blood,Vancomycin,2,1,reviewed
+Coagulase-negative staphylococci (unspeciated),blood,Trimethoprim/Sulfamethoxazole,3,1,reviewed
 Coagulase-negative staphylococci (unspeciated),blood,Clindamycin,4,0,proposed
-Coagulase-negative staphylococci (unspeciated),blood,Erythromycin,5,0,proposed
+Coagulase-negative staphylococci (unspeciated),blood,Erythromycin,5,1,reviewed
 Coagulase-negative staphylococci (unspeciated),blood,Linezolid,6,0,proposed
 Enterobacter cloacae complex,blood,Gentamicin,1,1,reviewed
 Enterobacter cloacae complex,blood,Meropenem,2,1,reviewed
@@ -97,11 +97,11 @@ Enterococcus faecium,urine,Vancomycin,2,1,reviewed
 Enterococcus faecium,urine,Penicillin,3,1,reviewed
 Enterococcus faecium,urine,Linezolid,4,1,reviewed
 Enterococcus faecium,urine,Daptomycin,5,1,reviewed
-Enterococcus species (unspeciated),urine,Ampicillin,1,0,proposed
+Enterococcus species (unspeciated),urine,Ampicillin,1,1,reviewed
 Enterococcus species (unspeciated),urine,Penicillin,2,0,proposed
 Enterococcus species (unspeciated),urine,Vancomycin,3,0,proposed
 Enterococcus species (unspeciated),urine,Linezolid,4,0,proposed
-Enterococcus species (unspeciated),urine,Nitrofurantoin,5,0,proposed
+Enterococcus species (unspeciated),urine,Nitrofurantoin,5,1,reviewed
 Escherichia coli,blood,Ceftriaxone,1,1,reviewed
 Escherichia coli,blood,Ciprofloxacin,2,1,reviewed
 Escherichia coli,blood,Trimethoprim/Sulfamethoxazole,3,1,reviewed
@@ -123,27 +123,27 @@ Escherichia coli,urine,Gentamicin,4,1,reviewed
 Escherichia coli,urine,Piperacillin/Tazobactam,5,1,reviewed
 Escherichia coli,urine,Meropenem,6,1,reviewed
 Escherichia coli,urine,Ampicillin,7,1,reviewed
-Klebsiella aerogenes,blood,Gentamicin,1,0,proposed
-Klebsiella aerogenes,blood,Ciprofloxacin,2,0,proposed
-Klebsiella aerogenes,blood,Trimethoprim/Sulfamethoxazole,3,0,proposed
-Klebsiella aerogenes,blood,Cefepime,4,0,proposed
-Klebsiella aerogenes,blood,Meropenem,5,0,proposed
-Klebsiella aerogenes,blood,Ertapenem,6,0,proposed
-Klebsiella aerogenes,blood,Levofloxacin,7,0,proposed
-Klebsiella aerogenes,respiratory,Gentamicin,1,0,proposed
-Klebsiella aerogenes,respiratory,Ciprofloxacin,2,0,proposed
-Klebsiella aerogenes,respiratory,Trimethoprim/Sulfamethoxazole,3,0,proposed
-Klebsiella aerogenes,respiratory,Cefepime,4,0,proposed
-Klebsiella aerogenes,respiratory,Meropenem,5,0,proposed
-Klebsiella aerogenes,respiratory,Ertapenem,6,0,proposed
-Klebsiella aerogenes,respiratory,Levofloxacin,7,0,proposed
-Klebsiella aerogenes,urine,Gentamicin,1,0,proposed
-Klebsiella aerogenes,urine,Ciprofloxacin,2,0,proposed
-Klebsiella aerogenes,urine,Trimethoprim/Sulfamethoxazole,3,0,proposed
+Klebsiella aerogenes,blood,Gentamicin,1,1,reviewed
+Klebsiella aerogenes,blood,Ciprofloxacin,2,1,reviewed
+Klebsiella aerogenes,blood,Trimethoprim/Sulfamethoxazole,3,1,reviewed
+Klebsiella aerogenes,blood,Cefepime,4,1,reviewed
+Klebsiella aerogenes,blood,Meropenem,5,1,reviewed
+Klebsiella aerogenes,blood,Ertapenem,6,1,reviewed
+Klebsiella aerogenes,blood,Levofloxacin,7,1,reviewed
+Klebsiella aerogenes,respiratory,Gentamicin,1,1,reviewed
+Klebsiella aerogenes,respiratory,Ciprofloxacin,2,1,reviewed
+Klebsiella aerogenes,respiratory,Trimethoprim/Sulfamethoxazole,3,1,reviewed
+Klebsiella aerogenes,respiratory,Cefepime,4,1,reviewed
+Klebsiella aerogenes,respiratory,Meropenem,5,1,reviewed
+Klebsiella aerogenes,respiratory,Ertapenem,6,1,reviewed
+Klebsiella aerogenes,respiratory,Levofloxacin,7,1,reviewed
+Klebsiella aerogenes,urine,Gentamicin,1,1,reviewed
+Klebsiella aerogenes,urine,Ciprofloxacin,2,1,reviewed
+Klebsiella aerogenes,urine,Trimethoprim/Sulfamethoxazole,3,1,reviewed
 Klebsiella aerogenes,urine,Cefepime,4,0,proposed
-Klebsiella aerogenes,urine,Meropenem,5,0,proposed
-Klebsiella aerogenes,urine,Ertapenem,6,0,proposed
-Klebsiella aerogenes,urine,Levofloxacin,7,0,proposed
+Klebsiella aerogenes,urine,Meropenem,5,1,reviewed
+Klebsiella aerogenes,urine,Ertapenem,6,1,reviewed
+Klebsiella aerogenes,urine,Levofloxacin,7,1,reviewed
 Klebsiella oxytoca,blood,Ceftriaxone,1,1,reviewed
 Klebsiella oxytoca,blood,Ciprofloxacin,2,1,reviewed
 Klebsiella oxytoca,blood,Gentamicin,3,1,reviewed
@@ -180,27 +180,27 @@ Klebsiella pneumoniae,urine,Gentamicin,3,1,reviewed
 Klebsiella pneumoniae,urine,Meropenem,4,1,reviewed
 Klebsiella pneumoniae,urine,Trimethoprim/Sulfamethoxazole,5,1,reviewed
 Klebsiella pneumoniae,urine,Piperacillin/Tazobactam,6,1,reviewed
-Morganella morganii,blood,Ciprofloxacin,1,0,proposed
-Morganella morganii,blood,Gentamicin,2,0,proposed
-Morganella morganii,blood,Trimethoprim/Sulfamethoxazole,3,0,proposed
-Morganella morganii,blood,Piperacillin/Tazobactam,4,0,proposed
-Morganella morganii,blood,Ceftriaxone,5,0,proposed
-Morganella morganii,blood,Meropenem,6,0,proposed
-Morganella morganii,blood,Ertapenem,7,0,proposed
-Morganella morganii,blood,Levofloxacin,8,0,proposed
-Morganella morganii,respiratory,Ciprofloxacin,1,0,proposed
-Morganella morganii,respiratory,Gentamicin,2,0,proposed
-Morganella morganii,respiratory,Trimethoprim/Sulfamethoxazole,3,0,proposed
-Morganella morganii,respiratory,Piperacillin/Tazobactam,4,0,proposed
+Morganella morganii,blood,Ciprofloxacin,1,1,reviewed
+Morganella morganii,blood,Gentamicin,2,1,reviewed
+Morganella morganii,blood,Trimethoprim/Sulfamethoxazole,3,1,reviewed
+Morganella morganii,blood,Piperacillin/Tazobactam,4,1,reviewed
+Morganella morganii,blood,Ceftriaxone,5,1,reviewed
+Morganella morganii,blood,Meropenem,6,1,reviewed
+Morganella morganii,blood,Ertapenem,7,1,reviewed
+Morganella morganii,blood,Levofloxacin,8,1,reviewed
+Morganella morganii,respiratory,Ciprofloxacin,1,1,reviewed
+Morganella morganii,respiratory,Gentamicin,2,1,reviewed
+Morganella morganii,respiratory,Trimethoprim/Sulfamethoxazole,3,1,reviewed
+Morganella morganii,respiratory,Piperacillin/Tazobactam,4,1,reviewed
 Morganella morganii,respiratory,Levofloxacin,5,0,proposed
-Morganella morganii,urine,Ciprofloxacin,1,0,proposed
-Morganella morganii,urine,Gentamicin,2,0,proposed
-Morganella morganii,urine,Trimethoprim/Sulfamethoxazole,3,0,proposed
-Morganella morganii,urine,Piperacillin/Tazobactam,4,0,proposed
-Morganella morganii,urine,Ceftriaxone,5,0,proposed
-Morganella morganii,urine,Meropenem,6,0,proposed
-Morganella morganii,urine,Ertapenem,7,0,proposed
-Morganella morganii,urine,Levofloxacin,8,0,proposed
+Morganella morganii,urine,Ciprofloxacin,1,1,reviewed
+Morganella morganii,urine,Gentamicin,2,1,reviewed
+Morganella morganii,urine,Trimethoprim/Sulfamethoxazole,3,1,reviewed
+Morganella morganii,urine,Piperacillin/Tazobactam,4,1,reviewed
+Morganella morganii,urine,Ceftriaxone,5,1,reviewed
+Morganella morganii,urine,Meropenem,6,1,reviewed
+Morganella morganii,urine,Ertapenem,7,1,reviewed
+Morganella morganii,urine,Levofloxacin,8,1,reviewed
 Proteus mirabilis,blood,Ampicillin,1,1,reviewed
 Proteus mirabilis,blood,Ceftriaxone,2,1,reviewed
 Proteus mirabilis,blood,Ciprofloxacin,3,1,reviewed
@@ -282,12 +282,12 @@ Staphylococcus aureus,urine,Clindamycin,3,1,reviewed
 Staphylococcus aureus,urine,Erythromycin,4,1,reviewed
 Staphylococcus aureus,urine,Trimethoprim/Sulfamethoxazole,5,1,reviewed
 Staphylococcus aureus,urine,Linezolid,6,1,reviewed
-Stenotrophomonas maltophilia,blood,Trimethoprim/Sulfamethoxazole,1,0,proposed
-Stenotrophomonas maltophilia,blood,Levofloxacin,2,0,proposed
-Stenotrophomonas maltophilia,respiratory,Trimethoprim/Sulfamethoxazole,1,0,proposed
-Stenotrophomonas maltophilia,respiratory,Levofloxacin,2,0,proposed
-Stenotrophomonas maltophilia,urine,Trimethoprim/Sulfamethoxazole,1,0,proposed
-Stenotrophomonas maltophilia,urine,Levofloxacin,2,0,proposed
+Stenotrophomonas maltophilia,blood,Trimethoprim/Sulfamethoxazole,1,1,reviewed
+Stenotrophomonas maltophilia,blood,Levofloxacin,2,1,reviewed
+Stenotrophomonas maltophilia,respiratory,Trimethoprim/Sulfamethoxazole,1,1,reviewed
+Stenotrophomonas maltophilia,respiratory,Levofloxacin,2,1,reviewed
+Stenotrophomonas maltophilia,urine,Trimethoprim/Sulfamethoxazole,1,1,reviewed
+Stenotrophomonas maltophilia,urine,Levofloxacin,2,1,reviewed
 Streptococcus agalactiae,blood,Penicillin,1,1,reviewed
 Streptococcus agalactiae,blood,Clindamycin,2,1,reviewed
 Streptococcus agalactiae,blood,Erythromycin,3,1,reviewed

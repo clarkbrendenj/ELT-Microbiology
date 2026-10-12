@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: int_overall_first_reporting_isolate
+    description: >
+      One earliest culture per patient, cohort, organism reporting group,
+      and source release. All reporting phenotype/source-organism records
+      on that culture are consolidated before first-record selection.
+      The grain deliberately does not contain reporting_phenotype.
+    columns:
+      - name: overall_reporting_isolate_key
+        data_tests:
+          - not_null
+          - unique
+      - name: culture_key
+        data_tests:
+          - not_null
+      - name: culture_time_shifted
+        data_tests:
+          - not_null
+      - name: organism_reporting_group
+        data_tests:
+          - not_null
+      - name: source_culture_organism_keys
+        data_tests:
+          - not_null
+      - name: ast_cre_status
+        data_tests:
+          - not_null
+      - name: ast_esce_enterobacterales_status
+        data_tests:
+          - not_null
+      - name: ast_oxacillin_resistance_status
+        data_tests:
+          - not_null
+      - name: ast_vancomycin_resistance_status
+        data_tests:
+          - not_null
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_version
+              - cohort_id
+              - patient_key
+              - organism_reporting_group
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "size(source_culture_organism_keys) > 0"
+
+  - name: int_overall_first_reporting_susceptibility
+    description: >
+      Reconciles all AST endpoints across source organism records on
+      the overall-selected first culture. Conflicting and missing
+      endpoints are preserved, not overwritten by a chosen source row.
+    columns:
+      - name: overall_reporting_susceptibility_key
+        data_tests:
+          - not_null
+          - unique
+      - name: overall_reporting_isolate_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_overall_first_reporting_isolate')
+                field: overall_reporting_isolate_key
+      - name: antibiotic
+        data_tests:
+          - not_null
+      - name: resolution_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [resolved, missing, conflict]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - overall_reporting_isolate_key
+              - antibiotic
