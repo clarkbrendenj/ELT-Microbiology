@@ -53,3 +53,7 @@ dbt/dbt_packages/
 # Local Databricks configuration
 databricks.yml
 .databricks/
+
+# Retired notebook README files
+/notebooks/README.md
+/notebooks/pipeline validation/README.md
