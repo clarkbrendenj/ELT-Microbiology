@@ -66,25 +66,7 @@ categorized as (
                 )
 
             else organism_reporting_group
-        end as organism_name,
-
-        case
-            when is_cre = true
-              or is_mdr_p_aeruginosa = true
-                then false
-
-            else true
-        end as include_main_antibiogram,
-
-        case
-            when is_cre = true
-                then 'cre'
-
-            when is_mdr_p_aeruginosa = true
-                then 'mdr_p_aeruginosa'
-
-            else null
-        end as main_exclusion_reason
+        end as organism_name
 
     from phenotype
 
@@ -107,9 +89,6 @@ grouped as (
         organism_reporting_group,
         reporting_phenotype,
         organism_name,
-
-        include_main_antibiogram,
-        main_exclusion_reason,
 
         count(
             distinct culture_organism_key
@@ -292,10 +271,7 @@ grouped as (
 
         organism_reporting_group,
         reporting_phenotype,
-        organism_name,
-
-        include_main_antibiogram,
-        main_exclusion_reason
+        organism_name
 
 ),
 
@@ -384,9 +360,6 @@ final as (
         organism_reporting_group,
         organism_name,
         reporting_phenotype,
-
-        include_main_antibiogram,
-        main_exclusion_reason,
 
         source_organism_record_count,
         source_label_count,

@@ -32,8 +32,6 @@ Source timestamps are shifted. They support deterministic ordering within this d
 | `int_reporting_culture_organism` | One culture/reporting organism/reporting phenotype | Consolidate source labels **after** assigning phenotype |
 | `int_overall_first_reporting_isolate` | One first culture per release/cohort/patient/reporting organism | Define the conventional overall-organism population |
 | `int_overall_first_reporting_susceptibility` | One overall first-culture–antibiotic endpoint | Reconcile AST across source labels on that selected culture |
-| `int_first_reporting_isolate` | One first record per release/cohort/patient/reporting organism/**phenotype** | Retain an auxiliary phenotype-first analysis; not an input to either current mart |
-| `int_first_reporting_susceptibility` | One phenotype-first reporting record–antibiotic endpoint | Reconcile AST for the auxiliary phenotype-first analysis; not an input to either current mart |
 
 ARMD does not include a verified isolate identifier. Keys created by dbt identify analytical records under the project's declared grains; they are not reconstructed biological isolate IDs.
 
@@ -69,7 +67,7 @@ In `int_overall_first_reporting_susceptibility`:
 - One consistent resolved interpretation is retained, even if another source record for that drug is missing; this is tracked as `resolved_with_missing_source_endpoint`.
 - With no resolved interpretation, the combined endpoint is `missing`.
 
-The phenotype-first susceptibility model follows the same reconciliation principle on its own selected records. No arbitrary source label is preferred.
+No arbitrary source label is preferred in the overall-culture reconciliation.
 
 ## Source AST categories
 
@@ -196,17 +194,19 @@ Selection occurs before evaluating the chosen antibiotic's availability or S/R/I
 
 A phenotype-specific susceptibility subgroup is filtered **from these selected overall first cultures**. It is not independently re-deduplicated to the patient's first resistant culture.
 
-### Auxiliary phenotype-first selection
+### Historical phenotype-first comparison (Notebook 10)
 
-**Model:** `int_first_reporting_isolate`
+The former pipeline ranked first cultures separately within each resistance
+phenotype. That approach could count the same patient more than once for an
+organism and cohort. It is **not** used by either current mart.
 
-This model retains the grain:
+Notebook 10 reconstructs that historical selection from the surviving
+`int_reporting_culture_organism` model for comparison only; it does not
+require a separate materialized phenotype-first model.
 
-`source_version × cohort_id × patient_key × organism_reporting_group × reporting_phenotype`.
-
-It selects the first eligible record **within each phenotype**. A patient may therefore contribute to more than one phenotype category for the same organism. This model and its corresponding susceptibility reconciliation remain available for exploratory and validation work, but **neither current reporting mart depends on them**.
-
-The MDRO mart instead reads `int_reporting_culture_organism` directly and aggregates phenotype evidence across eligible culture observations at the patient/cohort/base-organism level. Its denominator and case-ascertainment policy are distinct from the overall susceptibility mart's earliest-culture policy.
+The MDRO mart instead reads `int_reporting_culture_organism` directly,
+classifies patient-level phenotype evidence across eligible culture
+observations, and applies its own denominator policy.
 
 ### Why the distinction matters
 
