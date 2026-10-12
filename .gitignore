@@ -14,6 +14,7 @@ __pycache__/
 /.dbt/
 profiles.yml
 .databrickscfg
+.vscode
 
 # Generated dbt files
 target/
@@ -28,7 +29,21 @@ dbt/dbt_packages/
 # Ignore session files
 *.session.sql
 
-.vscode
-*.twbr
+# Tableau workbooks
 *.twb
-*.png
+*.twbx
+
+# Tableau data sources
+*.tds
+*.tdsx
+
+# Tableau extracts
+*.hyper
+*.tde
+
+# Tableau bookmarks
+*.tbm
+
+# Tableau Prep flows
+*.tfl
+*.tflx
