@@ -15,6 +15,13 @@ models:
       - name: culture_key
         data_tests:
           - not_null
+      - name: reporting_culture_observation_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_culture_reporting_observation')
+                field: reporting_culture_observation_key
       - name: culture_time_shifted
         data_tests:
           - not_null

@@ -1,0 +1,125 @@
+version: 2
+models:
+  - name: int_culture_reporting_observation
+    description: >
+      Consolidates source organism labels across phenotype categories within
+      each culture. Used solely for organism-level overall S. aureus.
+      The eligible population follows the configured shifted-date window.
+    columns:
+      - name: reporting_culture_observation_key
+        data_tests: [not_null, unique]
+      - name: culture_time_shifted
+        data_tests: [not_null]
+      - name: source_culture_organism_keys
+        data_tests: [not_null]
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "size(source_culture_organism_keys) > 0"
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [source_version, cohort_id, culture_key, organism_reporting_group]
+
+  - name: int_culture_reporting_susceptibility
+    description: >
+      Shared second-stage AST reconciliation at two explicitly disjoint
+      scopes. Overall S. aureus combines all same-culture source labels;
+      stratified rows combine only labels within a source phenotype category.
+    columns:
+      - name: reporting_culture_susceptibility_key
+        data_tests: [not_null, unique]
+      - name: ast_scope
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [overall, stratified]
+      - name: reporting_source_key
+        data_tests: [not_null]
+      - name: antibiotic
+        data_tests: [not_null]
+      - name: resolution_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [resolved, missing, conflict]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [ast_scope, reporting_source_key, antibiotic]
+
+  - name: int_stratified_reporting_candidates
+    description: >
+      Source culture/organism/phenotype candidate observations. Excludes CRE
+      and MDR P. aeruginosa from the susceptibility report. Adds strictly
+      AST-supported MSSA within the S. aureus base observations.
+    columns:
+      - name: reporting_culture_organism_key
+        data_tests: [not_null]
+      - name: reporting_phenotype
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [base, esce_r, vancomycin_resistant, oxacillin_resistant, oxacillin_susceptible]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [reporting_culture_organism_key, reporting_phenotype]
+
+  - name: int_first_stratified_reporting_culture
+    description: >
+      Independent first qualifying culture per patient, cohort, source
+      release, base organism and phenotype category. A patient may appear
+      once in both baseline and resistant categories for the same organism.
+    columns:
+      - name: first_stratified_reporting_culture_key
+        data_tests: [not_null, unique]
+      - name: reporting_culture_organism_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_reporting_culture_organism')
+                field: reporting_culture_organism_key
+      - name: reporting_phenotype
+        data_tests: [not_null]
+      - name: culture_time_shifted
+        data_tests: [not_null]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_version
+              - cohort_id
+              - patient_key
+              - organism_reporting_group
+              - reporting_phenotype
+
+  - name: int_first_stratified_reporting_susceptibility
+    description: >
+      AST endpoints projected onto each independently selected phenotype-
+      specific culture. Only its source organism label set contributes.
+    columns:
+      - name: first_stratified_reporting_susceptibility_key
+        data_tests: [not_null, unique]
+      - name: first_stratified_reporting_culture_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_first_stratified_reporting_culture')
+                field: first_stratified_reporting_culture_key
+      - name: antibiotic
+        data_tests: [not_null]
+      - name: resolution_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [resolved, missing, conflict]
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [first_stratified_reporting_culture_key, antibiotic]

@@ -1,6 +1,5 @@
--- Every approved overall organism/antibiotic row uses one selected
--- first culture per patient/cohort/reporting organism.
--- The overall pool includes all resistance phenotypes.
+-- Only Staphylococcus aureus has an organism-level 'overall' row.
+-- It must use the first culture per patient/cohort regardless of phenotype.
 with expected as (
     select
         source_version,

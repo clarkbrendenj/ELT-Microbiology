@@ -6,6 +6,7 @@ with reporting_records as (
     from {{ ref('int_reporting_culture_organism') }}
 
     where culture_time_shifted is not null
+      and {{ analysis_window_filter('culture_time_shifted') }}
 
 ),
 
@@ -265,6 +266,8 @@ final as (
 
 select
     f.*,
+    {{ analysis_window_start_expr() }} as analysis_window_start,
+    {{ analysis_window_end_expr() }} as analysis_window_end_exclusive,
     g.gram_stain_group
 
 from final f

@@ -1,26 +1,19 @@
 {{ config(materialized='table') }}
 
--- Conventional organism-level susceptibility: select the earliest culture
--- per patient/cohort/reporting organism regardless of resistance phenotype.
--- Phenotype-specific rows below are SUBSETS OF THIS SAME SELECTED POPULATION,
--- not separately selected "first positive phenotype" observations.
--- CRE and MDR records are included in the overall organism denominator.
--- The independent MDRO prevalence mart retains its own any-positive policy.
+-- Baseline organisms (base) and resistant phenotype categories are distinct
+-- FIRST-WITHIN-CATEGORY populations, not exclusive patient populations.
+-- Staph aureus is the sole unstratified 'overall' organism row, together
+-- with separately first-selected MRSA and MSSA categories.
+-- CRE/MDR P. aeruginosa observations never form a main reporting row.
 
-with first_overall as (
-
-    select *
-    from {{ ref('int_overall_first_reporting_isolate') }}
-
+with first_staph_overall as (
+    select * from {{ ref('int_overall_first_reporting_isolate') }}
 ),
-
+first_stratified as (
+    select * from {{ ref('int_first_stratified_reporting_culture') }}
+),
 pairs as (
-
-    select
-        p.organism_reporting_group,
-        p.cohort_id,
-        p.antibiotic,
-        p.pair_order
+    select p.organism_reporting_group, p.cohort_id, p.antibiotic, p.pair_order
     from {{ ref('reportable_organism_antibiotic_pairs') }} p
     left join {{ ref('organism_antibiotic_exclusions') }} e
         on p.organism_reporting_group = e.organism_reporting_group
@@ -28,155 +21,56 @@ pairs as (
     where p.include_primary_dashboard = 1
       and p.review_status = 'reviewed'
       and e.organism_reporting_group is null
-
 ),
-
--- Label MSSA only if the overall isolate has a clean, resolved,
--- susceptible oxacillin/cefoxitin marker (not just absence of R).
--- The original categorical ARMD AST cannot reconstruct numeric MICs.
-mssa_markers as (
-
-    select
-        overall_reporting_isolate_key,
-        max(case
-            when resolution_status = 'resolved'
-             and susceptibility = 'Susceptible' then 1
-            else 0
-        end) as any_susceptible_marker,
-        max(case
-            when resolution_status <> 'resolved'
-              or susceptibility <> 'Susceptible' then 1
-            else 0
-        end) as any_non_susceptible_marker
-    from {{ ref('int_overall_first_reporting_susceptibility') }}
-    where antibiotic in ('Oxacillin', 'Cefoxitin')
-    group by overall_reporting_isolate_key
-
-),
-
 reporting_populations as (
-
-    -- All organism-level records: exactly one selected first culture
-    -- per patient/cohort/reporting organism.
     select
-        overall_reporting_isolate_key,
-        source_version,
-        cohort_id,
-        patient_key,
-        organism_reporting_group,
-        organism_reporting_group as organism_name,
-        'overall' as reporting_phenotype
-    from first_overall
-
-    union all
-
-    -- Resistance-specific summaries use only the selected overall culture.
-    -- CRE gets display precedence over ESCE-R, as in the original project
-    -- hierarchy. CRE still contributes to the organism's OVERALL row.
-    select
-        overall_reporting_isolate_key,
-        source_version,
-        cohort_id,
-        patient_key,
-        organism_reporting_group,
-        concat(organism_reporting_group,
-               ' — extended-spectrum cephalosporin resistant') as organism_name,
-        'esce_r' as reporting_phenotype
-    from first_overall
-    where ast_esce_enterobacterales_status = 'positive'
-      and ast_cre_status <> 'positive'
+        overall_reporting_isolate_key as selected_reporting_isolate_key,
+        source_version, cohort_id, patient_key, organism_reporting_group,
+        organism_name, 'overall' as reporting_phenotype
+    from first_staph_overall
 
     union all
 
     select
-        overall_reporting_isolate_key,
-        source_version,
-        cohort_id,
-        patient_key,
-        organism_reporting_group,
-        concat(organism_reporting_group, ' — methicillin resistant (MRSA)')
-            as organism_name,
-        'oxacillin_resistant' as reporting_phenotype
-    from first_overall
-    where organism_reporting_group = 'Staphylococcus aureus'
-      and ast_oxacillin_resistance_status = 'positive'
-
-    union all
-
-    -- MSSA is supported only by an unambiguous susceptible marker.
-    -- An unknown/Intermediate phenotype must not be called MSSA.
-    select
-        f.overall_reporting_isolate_key,
-        f.source_version,
-        f.cohort_id,
-        f.patient_key,
-        f.organism_reporting_group,
-        concat(f.organism_reporting_group,
-               ' — methicillin susceptible (MSSA)') as organism_name,
-        'oxacillin_susceptible' as reporting_phenotype
-    from first_overall f
-    inner join mssa_markers m
-        on f.overall_reporting_isolate_key = m.overall_reporting_isolate_key
-    where f.organism_reporting_group = 'Staphylococcus aureus'
-      and f.ast_oxacillin_resistance_status = 'not_detected'
-      and m.any_susceptible_marker = 1
-      and m.any_non_susceptible_marker = 0
-
-    union all
-
-    select
-        overall_reporting_isolate_key,
-        source_version,
-        cohort_id,
-        patient_key,
-        organism_reporting_group,
-        concat(organism_reporting_group, ' — vancomycin resistant')
-            as organism_name,
-        'vancomycin_resistant' as reporting_phenotype
-    from first_overall
-    where ast_vancomycin_resistance_status = 'positive'
-      and organism_reporting_group in (
-          'Enterococcus faecalis',
-          'Enterococcus faecium'
-      )
-
+        first_stratified_reporting_culture_key as selected_reporting_isolate_key,
+        source_version, cohort_id, patient_key, organism_reporting_group,
+        organism_name, reporting_phenotype
+    from first_stratified
 ),
+reporting_endpoints as (
+    select
+        overall_reporting_isolate_key as selected_reporting_isolate_key,
+        'overall' as reporting_phenotype,
+        antibiotic, resolution_status, susceptibility, reconciliation_reason
+    from {{ ref('int_overall_first_reporting_susceptibility') }}
 
-eligible_grid as (
+    union all
 
     select
-        f.overall_reporting_isolate_key,
-        f.source_version,
-        f.cohort_id,
-        f.patient_key,
-        f.organism_reporting_group,
-        f.organism_name,
-        f.reporting_phenotype,
-        p.antibiotic,
-        p.pair_order
+        first_stratified_reporting_culture_key as selected_reporting_isolate_key,
+        reporting_phenotype,
+        antibiotic, resolution_status, susceptibility, reconciliation_reason
+    from {{ ref('int_first_stratified_reporting_susceptibility') }}
+),
+eligible_grid as (
+    select
+        f.selected_reporting_isolate_key,
+        f.source_version, f.cohort_id, f.patient_key,
+        f.organism_reporting_group, f.organism_name,
+        f.reporting_phenotype, p.antibiotic, p.pair_order
     from reporting_populations f
     inner join pairs p
         on f.organism_reporting_group = p.organism_reporting_group
        and f.cohort_id = p.cohort_id
-
 ),
-
 endpoint_status as (
-
-    select
-        g.*,
-
-        r.resolution_status,
-        r.susceptibility,
-        r.reconciliation_reason
-
+    select g.*, r.resolution_status, r.susceptibility,
+           r.reconciliation_reason
     from eligible_grid g
-
-    left join {{ ref('int_overall_first_reporting_susceptibility') }} r
-        on g.overall_reporting_isolate_key
-         = r.overall_reporting_isolate_key
+    left join reporting_endpoints r
+        on g.selected_reporting_isolate_key = r.selected_reporting_isolate_key
+       and g.reporting_phenotype = r.reporting_phenotype
        and g.antibiotic = r.antibiotic
-
 ),
 
 aggregated as (
@@ -346,6 +240,8 @@ final as (
 
 select
     f.*,
+    {{ analysis_window_start_expr() }} as analysis_window_start,
+    {{ analysis_window_end_expr() }} as analysis_window_end_exclusive,
     g.gram_stain_group
 
 from final f
