@@ -18,22 +18,37 @@ The output is a retrospective research summary designed to demonstrate reproduci
 
 Cohorts are assigned by exact source values in `int_cohort_culture_organism`. No substring-based specimen classification is used.
 
-Source timestamps are shifted. They support deterministic ordering within this dataset but must not be treated as actual clinical calendar dates. The analysis covers the supplied release, **not a calendar-year antibiogram period**.
+Source timestamps are shifted. They support ordering within the supplied extract but do not define a shared clinical calendar year across patients. The release date and the selected reporting period are separate concepts.
+
+### Optional 12-month reporting window
+
+`analysis_window_start` in `dbt/dbt_project.yml` defines an inclusive shifted-date start; `dbt/macros/analysis_window.sql` computes an exclusive end exactly 12 months later. The current value is `2023-01-01`, selecting **2023-01-01 ≤ timestamp < 2024-01-01**. When the variable is absent, null, or blank, the date predicate is unrestricted; reporting models still require a non-null culture timestamp.
+
+The filter is applied before ranking in the susceptibility branches and before patient-level aggregation in `mart_mdro`. A patient can therefore have a different selected first culture in a restricted window than in the full-release run. Filtering an already aggregated mart cannot reproduce this behavior.
+
+Both marts publish `analysis_window_start` and `analysis_window_end_exclusive`; these are null in full-release mode. The mart keys do not include the dates, and each build replaces the configured mart tables. Retain the window fields and separate export identifiers when preserving more than one period; do not append different windows and treat a mart key as globally unique.
+
+`int_reporting_culture_organism` remains a full-release upstream model. Notebook 14 uses it to explore alternative windows without inheriting the currently active window. Label the selected annual result a **2023 shifted-date research antibiogram**.
 
 ## Core data grains
 
 | Model | Analytical grain | Purpose |
 |---|---|---|
-| `fct_culture` | One culture order per source release/patient/encounter/order | Prevent long-format AST rows from inflating culture counts |
-| `fct_culture_organism` | One source culture-organism combination | Preserve source organism identity without inventing an isolate ID |
-| `int_susceptibility_reconciliation` | One culture-organism–antibiotic endpoint | Classify repeated AST records as resolved, missing, or conflicting |
-| `fct_susceptibility` | One unambiguous culture-organism–antibiotic endpoint | Provide resolved source interpretations for analysis |
-| `int_culture_organism_phenotype` | One source culture-organism combination | Add independently derived resistance phenotype statuses |
-| `int_reporting_culture_organism` | One culture/reporting organism/reporting phenotype | Consolidate source labels **after** assigning phenotype |
-| `int_overall_first_reporting_isolate` | One first culture per release/cohort/patient/reporting organism | Define the conventional overall-organism population |
-| `int_overall_first_reporting_susceptibility` | One overall first-culture–antibiotic endpoint | Reconcile AST across source labels on that selected culture |
+| `fct_culture` | Source release / patient / encounter / culture order | Prevent long-format AST rows from inflating culture counts |
+| `fct_culture_organism` | Source culture–organism combination | Preserve source organism identity without inventing a biological isolate ID |
+| `int_susceptibility_reconciliation` | Culture–organism–antibiotic endpoint | Classify repeated AST as resolved, missing, or conflicting |
+| `fct_susceptibility` | Unambiguous source endpoint | Retain resolved source interpretations |
+| `int_culture_organism_phenotype` | Source culture–organism combination | Add AST-derived resistance statuses |
+| `int_reporting_culture_organism` | Release / cohort / culture / reporting organism / phenotype | Consolidate reviewed source labels after classification; full-release scope |
+| `int_culture_reporting_observation` | Release / cohort / culture / reporting organism | Combine source keys across phenotypes within the window; eligible patient–organism universe |
+| `int_culture_reporting_susceptibility` | AST scope / reporting source group / antibiotic | Shared reconciliation for separate overall and stratified source groups |
+| `int_stratified_reporting_candidates` | Qualifying culture / organism / reporting category | Apply period and category eligibility, including MSSA marker requirements |
+| `int_first_stratified_reporting_culture` | Release / cohort / patient / organism / reporting category | First qualifying culture independently within each category |
+| `int_first_stratified_reporting_susceptibility` | Selected stratified culture / antibiotic | Attach reconciled AST from the matching phenotype group |
+| `int_overall_first_reporting_isolate` | Release / cohort / patient / *S. aureus* | First *S. aureus* culture irrespective of phenotype |
+| `int_overall_first_reporting_susceptibility` | Selected overall *S. aureus* culture / antibiotic | Attach AST reconciled across source labels on that culture |
 
-ARMD does not include a verified isolate identifier. Keys created by dbt identify analytical records under the project's declared grains; they are not reconstructed biological isolate IDs.
+ARMD does not include a verified isolate identifier. Model keys identify analytical records at these grains; they are not reconstructed biological isolate IDs. All downstream reporting grains refer to one configured window per build.
 
 ## Source susceptibility reconciliation
 
@@ -51,25 +66,23 @@ The source-level implementation treats a `NULL` as a distinct recorded result st
 
 No "latest result," "most resistant," or similar tie-break is applied because the extract does not provide enough version history to defend such a choice.
 
-### Second-stage reconciliation after source-label consolidation
+### Second-stage reconciliation within the reporting source group
 
-A single selected reporting culture can contain several ARMD organism labels mapped to the same reporting organism. For example, a culture can have ordinary *S. aureus* and an MRSA-qualified source label, or multiple *P. aeruginosa* morphotypes.
+Several source organism labels can map to the same reporting organism on one culture. The pipeline assigns phenotypes before consolidation and retains the source culture–organism keys. Mapping collisions alone do not remove records.
 
-Source organism records are **not excluded merely because their mappings collide**. Instead, the pipeline:
+`int_culture_reporting_susceptibility` applies the same reconciliation rule to two deliberately separate scopes:
 
-1. Assigns resistance phenotypes at the source culture-organism level.
-2. Preserves the source keys and labels when consolidating culture/reporting-organism records.
-3. For the overall first culture, combines source keys across its phenotype categories.
-4. Reconciles each drug endpoint across those source keys.
+- **`overall`:** all retained source keys across phenotype labels on one *S. aureus* culture, using `int_culture_reporting_observation`.
+- **`stratified`:** source keys within one culture/reporting-organism/phenotype group. AST from a different phenotype group on the same culture is not borrowed to fill a missing result.
 
-In `int_overall_first_reporting_susceptibility`:
+For each source group and antibiotic:
 
-- Any already-conflicting source endpoint makes the combined endpoint `conflict`.
-- Different resolved interpretations across source records make it `conflict`.
-- One consistent resolved interpretation is retained, even if another source record for that drug is missing; this is tracked as `resolved_with_missing_source_endpoint`.
-- With no resolved interpretation, the combined endpoint is `missing`.
+1. Any already-conflicting source endpoint produces `conflict`.
+2. Different resolved interpretations across source endpoints produce `conflict`.
+3. One consistent resolved interpretation is retained, even when another source endpoint is missing; the reason is `resolved_with_missing_source_endpoint`.
+4. With no resolved interpretation, the endpoint is `missing`.
 
-No arbitrary source label is preferred in the overall-culture reconciliation.
+The selected first-culture models attach the matching AST scope to their selected culture. A later tested culture is not substituted for a missing drug. The first-stage category-plus-null conflict rule and this cross-source-label reconciliation rule answer different questions and retain their audit reasons.
 
 ## Source AST categories
 
@@ -148,7 +161,7 @@ The project uses an **ESCE-R AST phenotype**, not a confirmed ESBL producer desi
 
 Qualifying agents are cefepime, ceftriaxone, cefotaxime, ceftazidime, ceftazidime/avibactam, and ceftolozane/tazobactam. A resolved `Resistant` interpretation for any qualifying agent establishes ESCE-R under this rule.
 
-ESCE-R and CRE statuses are derived independently. For **mutually exclusive ESCE-R display**, CRE-positive cultures take precedence, so a CRE-positive first culture is not also listed in the ESCE-R subgroup. It still contributes to the **overall organism** susceptibility row.
+ESCE-R and CRE statuses are derived independently. For **mutually exclusive ESCE-R display**, CRE-positive cultures take precedence, so a CRE-positive first culture is not also listed in the ESCE-R subgroup. CRE reporting records are excluded from the main susceptibility categories and remain available to the separate MDRO calculation. The same patient may contribute another eligible non-CRE culture to a main reporting category.
 
 The source does not contain an ESBL confirmatory screen, resistance gene, or numeric MIC values suitable for proving ESBL production or rebuilding breakpoints.
 
@@ -158,7 +171,7 @@ For reviewed *S. aureus*, resistance to oxacillin or cefoxitin is positive evide
 
 The separate **methicillin susceptible (MSSA)** subgroup (`oxacillin_susceptible`) requires an unambiguous resolved `Susceptible` oxacillin/cefoxitin marker, no conflicting or non-susceptible defining marker, and the applicable phenotype status `not_detected`. A record with unknown defining AST is not automatically assigned to MSSA.
 
-MRSA and MSSA are separate subsets of the same overall first-*S. aureus* population. Their counts need not sum to the overall total because unclassifiable records may remain.
+MRSA and MSSA independently select their first qualifying culture within the window. The same patient may enter both populations on different qualifying observations, so their counts can sum to more than the overall *S. aureus* count. Unknown defining AST is not treated as MSSA.
 
 ### Vancomycin-resistant *Enterococcus* (VRE)
 
@@ -177,30 +190,33 @@ The project's CDC/NHSN-derived MDR rule counts antimicrobial categories with a r
 
 Three or more positive categories establish MDR. Fewer than three positive categories are `not_detected` **only when the remaining unknown categories cannot raise the total to three**; otherwise the status is `not_evaluable`.
 
-MDR *P. aeruginosa* is summarized in `mart_mdro`, not as a separate phenotype row in `mart_susceptibility`. The organism still contributes to the overall *P. aeruginosa* susceptibility population.
+MDR *P. aeruginosa* reporting records are summarized in `mart_mdro` and excluded from the main susceptibility categories. Eligible ordinary *P. aeruginosa* records can contribute to the independently selected `base` population. Exclusion is at the reporting-record/category level; it is not a blanket exclusion of every observation from a patient who ever has MDR evidence.
 
-## Susceptibility population: first culture per patient and organism
+## Susceptibility population: first qualifying culture within each category
 
-The susceptibility mart selects a single overall first culture for each patient, specimen cohort, and reporting organism. The MDRO mart uses a **separate patient-level, across-observations policy**, defined in its own section below. Their denominators are not interchangeable.
+### Independent category selection
 
-### Overall first-culture selection
+`int_stratified_reporting_candidates` restricts source reporting records to the configured window and creates the ordinary (`base`), ESCE-R, VRE, MRSA, and MSSA populations under their category-specific eligibility rules. There is no published *S. aureus* `base` row: it has overall, MRSA, and MSSA rows instead. CRE and MDR *P. aeruginosa* categories are not eligible for the main susceptibility mart.
 
-**Model:** `int_overall_first_reporting_isolate`
+`int_first_stratified_reporting_culture` ranks separately by:
 
-**Grain:** `source_version × cohort_id × patient_key × organism_reporting_group`.
+`source_version × cohort_id × patient_key × organism_reporting_group × reporting_phenotype`.
 
-The pipeline first combines reporting records for the **same culture and base organism**, including those assigned different resistance phenotypes. Then it selects exactly one culture per patient/cohort/reporting organism using:
+The ordering is `culture_time_shifted`, then `culture_key`, then `reporting_culture_organism_key`. Exactly one first qualifying culture is retained per category. Selection is independent of the antibiotic being summarized. Defining AST establishes phenotype eligibility (including MSSA marker requirements); the presence or result of each displayed drug does not trigger a new first-culture selection.
 
-1. Earliest available `culture_time_shifted`;
-2. `culture_key` as deterministic tie-breaker.
+A patient can contribute a base culture and a different ESCE-R or VRE culture, or separately qualifying MRSA and MSSA cultures. These are overlapping patient populations. Do not sum them to estimate distinct patients, and do not require one category's denominator to be bounded by another displayed category's denominator. Each category is bounded by the eligible patient–organism universe within the same cohort and window.
 
-Selection occurs before evaluating the chosen antibiotic's availability or S/R/I result. The **overall** population includes cultures with CRE, MDR, MRSA, VRE, and ESCE-R phenotypes. A patient can contribute to different specimen cohorts or different reporting organisms, but only once to a given overall patient/cohort/organism group in this release.
+`base` means the source record did not enter a higher-priority reporting category. It may include not-evaluable phenotype evidence and must not be labeled proven susceptible or wild type.
 
-A phenotype-specific susceptibility subgroup is filtered **from these selected overall first cultures**. It is not independently re-deduplicated to the patient's first resistant culture.
+### Overall *Staphylococcus aureus*
 
-### Subgroups derived from the overall population
+`int_overall_first_reporting_isolate` is now restricted to *S. aureus*. It selects the earliest culture per release/cohort/patient/organism from the window-filtered `int_culture_reporting_observation`, irrespective of phenotype, using timestamp and culture key as the ordering. Its source keys span phenotype labels on that selected culture.
 
-The reporting mart evaluates each selected first culture's AST-derived phenotype classifications to produce the applicable resistance-specific subgroups. These subsets share the overall population's culture-selection rule. Patients are **not** independently reselected by phenotype, and subgroup counts are never added together to estimate an overall-organism denominator.
+This overall population and the independently selected MRSA/MSSA populations answer different questions. The MRSA/MSSA rows are not filters of the overall row's selected cultures.
+
+### Evidence of expected overlap
+
+In Notebook 13's saved **full-release** baseline, urine *E. coli* has 34,714 base patients, 3,500 ESCE-R patients, and 1,119 patients in both categories. Blood *S. aureus* has 1,737 overall patients, 546 MRSA patients, and 1,206 MSSA patients. The sum 546 + 1,206 exceeding 1,737 is compatible with independent category selection; it is not evidence of duplicate records within a category. These figures describe the baseline, not the 2023 window.
 
 ## Reviewed antibiotic-pair policy
 
@@ -245,28 +261,29 @@ The current seed retains **11 inactive proposed rows** pending more detailed rev
 
 `source_version × cohort_id × organism_reporting_group × reporting_phenotype × antibiotic`.
 
-`organism_name` is the display label. `organism_reporting_group` is the base identity used to join the approved pair and Gram-reference seeds. `reporting_phenotype` identifies either the conventional overall population or a selected subgroup.
+`organism_name` is the display label. `organism_reporting_group` is the base identity used to join the approved pair and Gram-reference seeds. `reporting_phenotype` identifies overall *S. aureus* or an independently selected reporting category.
 
 ### Reporting categories
 
 | `reporting_phenotype` | Population |
 |---|---|
-| `overall` | Earliest culture per patient/cohort/base organism, **including all resistance phenotypes** |
-| `esce_r` | ESCE-R-positive subset of those overall first cultures, excluding CRE-positive cultures by display precedence |
-| `oxacillin_resistant` | AST-derived MRSA subset of overall first *S. aureus* cultures |
-| `oxacillin_susceptible` | AST-supported MSSA subset of overall first *S. aureus* cultures |
-| `vancomycin_resistant` | VRE subset of overall first *E. faecalis* or *E. faecium* cultures |
+| `base` | First qualifying ordinary reporting culture per patient/cohort/organism; excludes *S. aureus* |
+| `overall` | First *S. aureus* culture per patient/cohort irrespective of phenotype |
+| `esce_r` | Independently selected first ESCE-R reporting culture; CRE takes display precedence |
+| `oxacillin_resistant` | Independently selected first AST-derived MRSA reporting culture |
+| `oxacillin_susceptible` | Independently selected first culture meeting the MSSA marker requirements |
+| `vancomycin_resistant` | Independently selected first VRE reporting culture for reviewed *E. faecalis* or *E. faecium* |
 
-The `overall` population includes CRE-positive and MDR *P. aeruginosa* cultures where applicable. These resistance phenotypes are also described in the separate patient-level `mart_mdro` summary. They are not published as additional susceptibility subgroups in this mart.
+CRE and MDR *P. aeruginosa* do not appear as main susceptibility categories. Their patient-level evidence remains in `mart_mdro`. A missing category can mean no qualifying selected population in that window; a retained row marked `insufficient_data` means a population exists but its drug-specific categorized count is below 30.
 
-The published subgroup denominator cannot exceed its corresponding overall denominator. Some subgroups can overlap in conceptual resistance status, but they are not summed to construct the overall population.
+The category is part of the mart key. Patient overlap across categories is allowed, but duplicate keys within a category are not.
 
 ### Counts and identities
 
 | Field | Definition |
 |---|---|
 | `susceptibility_mart_key` | Deterministic key for one row at the mart grain |
-| `eligible_count` | Number of selected overall first cultures in that organism/cohort, or selected first cultures meeting the row's subgroup definition |
+| `eligible_count` | Number of independently selected first qualifying cultures in the row's category; for `overall`, the first *S. aureus* cultures irrespective of phenotype |
 | `tested_endpoint_count` | Eligible cultures with an AST endpoint for the antibiotic, regardless of whether it was resolved |
 | `untested_count` | Eligible cultures with no recorded endpoint for that antibiotic |
 | `categorized_count` | Resolved endpoints labeled `Susceptible`, `Intermediate`, or `Resistant` |
@@ -279,6 +296,8 @@ The published subgroup denominator cannot exceed its corresponding overall denom
 | `conflict_result_count` | Endpoints classified `conflict` after reconciliation |
 | `gram_stain_group` | Reference-data classification of the base reporting group |
 | `pair_order` | Review-defined ordering of antibiotic rows in the reporting panel |
+| `analysis_window_start` | Inclusive shifted-date start, or null for full-release mode |
+| `analysis_window_end_exclusive` | Start plus 12 months, excluded from the window; null for full-release mode |
 
 The required row-level reconciliations are:
 
@@ -316,13 +335,13 @@ The mart retains insufficient-data rows for audit; the Tableau reporting view sh
 
 **Model:** `mart_mdro`
 
-The MDRO mart reports **CRE** and **MDR *P. aeruginosa*** independently of the conventional susceptibility table.
+The MDRO mart reports **CRE** and **MDR *P. aeruginosa*** independently of the category-specific susceptibility table.
 
 **Grain:** `source_version × cohort_id × organism_base_name × mdro_phenotype`.
 
-Its patient-level denominator is constructed from the reviewed base-organism population **across eligible culture observations in the release**, not only from the patient's selected first overall culture and not by summing phenotype-specific categories.
+Its patient-level denominator is constructed from the reviewed base-organism population **across eligible culture observations in the configured window**, not only from the patient's selected first overall culture and not by summing phenotype-specific categories.
 
-For each CRE or MDR *P. aeruginosa* calculation, the model excludes culture records where the phenotype status is `not_applicable`, groups the remaining records by source version, cohort, patient, and base reporting organism, and assigns **one patient-level status**. Precedence across eligible observations is:
+For each CRE or MDR *P. aeruginosa* calculation, the model first requires a non-null timestamp within the configured window and excludes culture records where the phenotype status is `not_applicable`, groups the remaining records by source version, cohort, patient, and base reporting organism, and assigns **one patient-level status**. Precedence across eligible observations is:
 
 1. `positive` if **any** observation is positive;
 2. otherwise `not_evaluable` if **any** observation is not evaluable;
@@ -334,8 +353,8 @@ A patient therefore contributes at most once to each cohort/base-organism/MDRO a
 |---|---|
 | `denominator_count` | Eligible distinct patient/base-organism groups for the MDRO phenotype and cohort |
 | `positive_count` | Patient groups classified positive for the specified phenotype |
-| `not_detected_count` | Patient groups with evidence supporting `not_detected` and no positive evidence |
-| `not_evaluable_count` | Patient groups without sufficient positive or negative evidence |
+| `not_detected_count` | Patient groups with `not_detected` evidence and neither positive nor not-evaluable evidence |
+| `not_evaluable_count` | Patient groups with no positive observation and at least one not-evaluable observation, even if other observations are not detected |
 | `evaluable_count` | `positive_count + not_detected_count` |
 | `phenotype_pct` | `round(100 × positive_count / denominator_count, 1)`; percentage of all eligible patient groups classified phenotype-positive |
 | `evaluable_pct` | `round(100 × evaluable_count / denominator_count, 1)`; percentage of eligible patient groups with a determinate positive or not-detected status |
@@ -353,14 +372,14 @@ Both `phenotype_pct` and `evaluable_pct` use **`denominator_count`**, which incl
 
 Division is protected by `nullif(denominator_count, 0)`, and the two percentages are rounded to one decimal place. These MDRO measures are distinct from `mart_susceptibility`'s S/I/R percentages and should be labeled separately in Tableau.
 
-## Worked susceptibility example
+## Historical worked susceptibility example
 
 **ARMD release:** `2025-04-11`  
 **Cohort:** `blood`  
 **Organism:** *Escherichia coli*  
 **Antibiotic:** ceftriaxone
 
-These counts come from the `overall` organism row and its ESCE-R subgroup in `mart_susceptibility`.
+**Historical scope:** this saved example belongs to the earlier full-release, overall-population/subset implementation. It is retained to explain the percentage arithmetic. The current implementation has a `base` *E. coli* population and independently selected ESCE-R population; these numbers are not current 2023 results.
 
 | Metric | Overall *E. coli* | ESCE-R subgroup |
 |---|---:|---:|
@@ -381,61 +400,82 @@ For the overall row:
 100 × 2,542 / 3,016 = 84.3% susceptible (rounded)
 ```
 
-The ESCE-R row represents a **subset of the selected overall first cultures**, not a second set of independently selected first resistant cultures. Counts from the two rows must not be added to estimate the overall population.
+In that historical implementation, the ESCE-R row was a subset of the selected overall first cultures. The current first-within-category methodology supersedes that selection rule while retaining the percentage formulas. Category counts must not be added as unique patients in either example.
 
 ## Validation and reproducibility
 
-The pipeline uses dbt schema tests and independent SQL assertions for:
+The current dbt tests cover unique keys, reference relationships, accepted values, first qualifying culture selection, window boundaries, reconciled AST states, endpoint count identities, reporting-population denominators, approved-pair completeness, suppression rules, and Gram metadata.
 
-- Unique source and mart keys, non-null identifiers, and reviewed reference-data vocabulary;
-- Overall earliest-culture selection and unique patient/cohort/organism groups;
-- Reconciled AST endpoint uniqueness and consistent null/result status;
-- Reconciliation of eligible, tested, categorized, missing, conflict, and untested counts;
-- Overall mart denominators reconstructed from `int_overall_first_reporting_isolate`;
-- Phenotype-subgroup denominators bounded by corresponding overall rows;
-- Approved cohort-specific antibiotic pairs and exclusion overrides;
-- Complete, consistent Gram classifications;
-- MDRO numerator and denominator reconstruction from the separate MDRO population.
+The custom assertions in `dbt/tests/` are:
 
-The principal custom dbt assertions are:
+- `assert_first_stratified_qualifying_culture`: independently reconstructs the first culture in each qualifying category.
+- `assert_stratified_denominators_within_population`: bounds each category by the window-eligible patient–organism universe, not by a different displayed category.
+- `assert_overall_susceptibility_denominator`: compares overall *S. aureus* mart denominators with the selected overall population.
+- `assert_reporting_mart_population_complete`: compares the full expected approved-pair grid with the actual mart in both directions.
+- `assert_reporting_window_selection`: checks that selected overall and stratified culture timestamps lie within the configured window; the date predicate is unrestricted in full-release mode.
+- `assert_no_mdro_in_main_susceptibility`: checks exclusion of CRE/MDR reporting categories and their selected-record evidence.
+- `assert_no_suppressed_or_unapproved_pairs`: enforces the allow-list and exclusion overrides.
 
-- `assert_overall_susceptibility_denominator`
-- `assert_subgroup_denominators_within_overall`
-- `assert_no_suppressed_or_unapproved_pairs`
+Notebook 13 supplies the phenotype inventory, overlap checks, *S. aureus* population inspection, MDRO summary, AST-scope review, and display-coverage results. Notebook 14 documents preselection availability by shifted year and month. Their saved outputs include both full-release and 2023 evidence; their Markdown labels the scope of each.
 
-The related validation notebooks are `10_validate_first_reporting_isolate.ipynb`, `11_validate_mart_susceptibility.ipynb`, and `12_validate_mdro_mart.ipynb`, with upstream grain, terminology, and phenotype validation in notebooks 01–09.
+### Notebook checks and execution status
 
-### Validated release snapshot
+- Notebook 07 retains source vocabulary and reference-policy checks. Its obsolete inactive-proposal query was removed; reassessing proposals requires the matching category population and reporting window.
+- Notebook 10 checks the overall *S. aureus* branch. Its earliest-culture reconstruction now ranks *S. aureus* in the already-windowed `int_culture_reporting_observation` model. The old all-organism/full-release comparisons were removed.
+- Notebook 11 inventories all categories with their window dates and retains structural, arithmetic, approval, suppression, overall *S. aureus* denominator, display, and Gram checks. The obsolete base-absence gate, subgroup-within-overall assertion, MRSA+MSSA sum assertion, all-organism overall-pair audit, and old E. coli example were removed. Category-specific completeness and population bounds remain covered by the dbt assertions above.
+- Notebook 12 independently reconstructs patient-level MDRO status from upstream observations filtered to the distinct start/end pair in `mart_mdro`. Filtering precedes both CRE/MDR branches and patient aggregation. Start is inclusive; end is exclusive; null/null dates select full-release observations with non-null timestamps. An empty mart, mixed windows, one-sided null, or non-increasing range returns `invalid_reporting_window`. Confirm the returned dates against the intended configuration: the reconstruction uses the mart's recorded bounds rather than independently proving that configuration.
 
-The latest full dbt regression build completed successfully: **205 successful operations, 0 warnings, 0 errors, 0 skips** (17 models, 4 seeds, 184 data tests).
+Changed queries have cleared outputs and execution counts; unchanged query outputs retain their original execution scope. No warehouse queries or dbt build were run during the cleanup. Rerun the revised cells, especially Notebook 12 section 2, and save their results before claiming fresh validation. For the current MDRO comparison, expect the recorded bounds `2023-01-01` and `2024-01-01` and only `pass`; the full-release 34-row snapshot is not an expected annual row count.
 
-| Component | Validated current count |
-|---|---:|
-| Reviewed organism-mapping seed rows | 41 |
-| Organism/Gram reference seed rows | 20 |
-| Approved active organism–drug–cohort seed rows | 311 |
-| Inactive proposed pair seed rows | 11 |
-| Organism–drug exclusion seed rows | 33 |
-| Overall first-culture records | 85,818 |
-| Overall reconciled AST endpoints | 1,033,825 |
-| `mart_susceptibility` rows | 455 |
-| Overall organism–drug–cohort mart rows | 305 |
-| Phenotype-subgroup mart rows | 150 |
-| Active approved pairs omitted through documented AmpC suppression | 6 |
+### Recorded build and reporting snapshots
 
-These are dataset-release and model-version validation results, **not invariant expectations for future source releases**. The final mart will change if the source, organism mappings, reviewed panels, exclusions, or phenotype rules change.
+The saved full `dbt build` completed on **October 12, 2026, at 10:48 p.m. Eastern** (`2026-10-13T02:48:09Z`): **22 models, 4 reference seeds, and 224 passing data tests** — **250 successful operations**, with no error, warning, or skipped result statuses. The saved compiled manifest uses the 2023 window. These are recorded build results; the documentation revision did not execute a new warehouse build.
+
+The current reference seeds contain 41 organism-mapping rows, 20 organism/Gram groups, 311 active approved cohort-specific pairs, 11 inactive proposals, and 33 organism–drug exclusion rules. Six active approvals are suppressed for *E. cloacae* complex (ceftriaxone and piperacillin/tazobactam in blood, respiratory, and urine). Thus 305 distinct approved organism–cohort–drug combinations remain before category expansion and window population eligibility; 305 is not an expected current mart-row count.
+
+Notebook 13 preserves the newer **full-release phenotype-stratified baseline** and the explicitly dated **2023** coverage query:
+
+| Reporting population | Full-release rows | Full-release displayable | 2023 rows | 2023 displayable |
+|---|---:|---:|---:|---:|
+| Ordinary (`base`) | 287 | 264 | 266 | 129 |
+| ESCE-R | 89 | 53 | 89 | 19 |
+| Overall *S. aureus* | 18 | 18 | 18 | 18 |
+| MRSA | 18 | 18 | 18 | 12 |
+| MSSA | 18 | 18 | 18 | 16 |
+| VRE | 25 | 10 | 15 | 0 |
+| **Total** | **455** | **381** | **424** | **194** |
+
+The saved full-release MDRO table in Notebook 13 contains **34 rows**: 31 CRE rows across the cohorts plus three MDR *P. aeruginosa* rows. That is a baseline count, not a verified 2023 MDRO count.
+
+### 2023 display coverage by cohort
+
+| Cohort | Mart rows | Displayable | Insufficient data | Displayable (%) |
+|---|---:|---:|---:|---:|
+| Blood | 158 | 59 | 99 | 37.3% |
+| Respiratory | 123 | 32 | 91 | 26.0% |
+| Urine | 143 | 103 | 40 | 72.0% |
+| **Total** | **424** | **194** | **230** | **45.8%** |
+
+The 2023 coverage query records `analysis_window_start = 2023-01-01` and `analysis_window_end_exclusive = 2024-01-01` for all returned groups. Here, `pct_displayable = 100 × displayable_pairs / total_pairs` (one decimal); it measures reporting-row coverage, not patient susceptibility or AST testing coverage. Across cohorts, 194 of 424 rows (45.8%) are displayable and 230 are insufficient-data rows. The full-release comparison is 381 of 455 rows (83.7%): the window has 187 fewer displayable rows, or 49.1% fewer.
+
+Urine retains 80 of 91 ordinary/base pairs. Overall *S. aureus* retains all six antibiotics in each cohort. No VRE, respiratory ESCE-R, or urine MRSA percentages are designated for display. Low counts do not establish absence of the phenotype; insufficient-data rows remain available for audit.
+
+Notebook 14's monthly check counts distinct culture keys in `int_reporting_culture_organism` before final first-culture selection. All 12 shifted months have observations in each cohort: 961 blood, 719 respiratory, and 8,611 urine cultures across the monthly output. These are not raw culture-order totals, unique patient counts, or drug-specific categorized denominators. They demonstrate monthly representation, not completeness of source capture.
+
+All snapshot counts depend on the source release, model version, reference seeds, and reporting window. Preserve window labels in exports and keep old and new runs distinct.
 
 ## Interpretation limitations
 
 - **Not a clinical antibiogram.** The project uses selected reporting conventions but has not established full CLSI M39/M100 compliance, clinical laboratory authorization, or clinical decision-support validity.
 - **No verified isolate identifier.** An analytical culture/reporting-organism key is not proof that multiple biological isolates have been resolved.
-- **Shifted dates and project period.** The release does not represent an unshifted calendar-year institutional antibiogram. First-culture selection is a documented project policy within cohort and release.
+- **Shifted dates and project period.** The release does not represent an unshifted calendar-year institutional antibiogram. First-qualifying-culture selection is a documented project policy within cohort, category, and configured window; overall selection is retained for *S. aureus*.
 - **Source-provided S/I/R.** MICs, original testing methods, breakpoint editions, confirmatory AST, and resistance genes cannot be reconstructed from the available categorical fields.
 - **Phenotypes are derived, not diagnoses.** ESCE-R is not equivalent to confirmed ESBL; CRE, MRSA, VRE, and MDR classifications depend on the qualifying AST present in the source.
 - **Incomplete and selective testing.** Missing drugs, conflicts, and selectively tested agents can bias susceptibility percentages. `categorized_result_coverage_pct` should be interpreted alongside `%S`.
 - **Mixed taxonomic detail.** Reporting groups include species, complexes, and unspeciated categories. Their pooled rates should not be interpreted as species-specific susceptibility distributions.
 - **Specimen cohort stratification.** Blood, respiratory, and urine analyses are distinct; a patient can appear in more than one cohort. Cohort results should not be added without a new deduplication policy.
-- **MDRO rates use another denominator.** `mart_mdro` uses patient-level phenotype status across observations; `mart_susceptibility` uses the selected first culture. Their counts and percentages must not be directly equated.
+- **Overlapping phenotype populations.** A patient can enter multiple independently selected categories; adding their denominators does not produce a unique-patient total. `base` is not proof of wild-type susceptibility.
+- **MDRO rates use another denominator.** `mart_mdro` uses patient-level phenotype status across observations; `mart_susceptibility` uses the first qualifying culture within each reporting category, plus overall *S. aureus*. Their counts and percentages must not be directly equated.
 - **Reporting controls are explicit project decisions.** An excluded organism–drug pair is not necessarily untested, intrinsically resistant, or inappropriate in every clinical circumstance.
 
 Differences across cohorts are descriptive and should not be interpreted as treatment effects or estimates of resistance rates in a general hospital population.

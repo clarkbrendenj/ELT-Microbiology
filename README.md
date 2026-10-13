@@ -19,9 +19,11 @@ I developed a version-controlled **extract, load, transform (ELT)** pipeline to 
 
 **[Open the published Tableau Public workbook](https://public.tableau.com/views/ARMDAntibiogram/RespiratoryGramPositive)**
 
-The dashboard presents organism–antibiotic susceptibility summaries stratified by **blood, urine, and respiratory cultures**, with separate Gram-positive and Gram-negative views. The tables distinguish overall organism populations from selected resistance-phenotype subgroups. Blank cells should not be interpreted as 0% susceptibility: a result may be omitted because a pair is not approved for reporting, is intentionally suppressed, or does not satisfy the minimum categorized-result threshold.
+The dashboard presents organism–antibiotic susceptibility summaries stratified by **blood, urine, and respiratory cultures**, with separate Gram-positive and Gram-negative views. The current reporting design separates ordinary (`base`) and resistance-phenotype populations, each selected independently. *Staphylococcus aureus* also has an overall population alongside separately selected MRSA and MSSA populations. Blank cells should not be interpreted as 0% susceptibility: a result may be omitted because a pair is not approved for reporting, is intentionally suppressed, or does not satisfy the minimum categorized-result threshold.
 
-**How to interpret the tables:** `%S` is the percentage of **categorized S/I/R endpoints** that are classified as susceptible for a particular organism–antibiotic combination. The overall first-culture population is a different denominator from the drug-specific categorized count. Because ARMD lacks verified biological isolate identifiers, the analytical first-culture counts should not be construed as individually verified strains. See [Metric definitions](docs/metric_definitions.md) for denominators, exclusions, and limitations.
+**How to interpret the tables:** `%S` is the percentage of **categorized S/I/R endpoints** that are classified as susceptible for a particular organism–antibiotic combination. Each reporting category has its own first-qualifying-culture population, distinct from the drug-specific categorized count. Patients can contribute to more than one category, so category counts are not additive unique-patient totals. Because ARMD lacks verified biological isolate identifiers, the analytical first-culture counts should not be construed as individually verified strains. See [Metric definitions](docs/metric_definitions.md) for denominators, exclusions, and limitations.
+
+The 2023 results documented below come from the saved warehouse validation outputs. Refresh the Tableau extracts from the selected reporting window before presenting them as the current published view.
 
 ### Tableau connection and publication approach
 
@@ -46,20 +48,24 @@ The current analytical cohorts are **blood, urine, and respiratory** cultures. T
 ```mermaid
 flowchart TD
     A["Public ARMD CSV files"] --> B["Databricks Delta: raw tables"]
-    B --> C["dbt staging and core facts / dimension"]
-    C --> D["Organism mapping and AST reconciliation"]
-    R["Version-controlled dbt seeds: mappings, panels, exclusions"] --> D
-    D --> E["AST-based resistance phenotype classification"]
-    E --> F["First culture per patient / cohort / organism"]
-    F --> G["Reconcile susceptibility across source labels"]
-    G --> H["mart_susceptibility"]
-    E --> I["Patient-level MDRO evidence across cultures"]
+    B --> C["dbt staging and source-level facts"]
+    C --> D["Organism mapping, AST reconciliation, phenotype classification"]
+    R["Version-controlled mappings, panels, exclusions"] --> D
+    D --> E["Culture / organism / phenotype records"]
+    E --> W["Filter eligible observations to reporting window"]
+    W --> F["First qualifying culture within each reporting category"]
+    W --> S["Overall S. aureus: first culture across phenotypes"]
+    W --> G["Reconcile AST within matching overall or stratified scope"]
+    G --> F
+    F --> H["mart_susceptibility"]
+    S --> H
+    G --> H
+    R --> H
+    W --> I["Patient-level CRE / MDR evidence across eligible observations"]
     I --> J["mart_mdro"]
-    H --> K["Validated reporting exports"]
+    H --> K["Validated, window-labeled reporting exports"]
     J --> K
-    K --> L["Tableau Public: interactive antibiogram"]
-    H -. "Direct Databricks connection in an internal deployment" .-> M["Tableau: governed institutional reporting"]
-    J -.-> M
+    K --> L["Tableau Public"]
 ```
 
 ### Why combine Databricks, dbt, and Tableau?
@@ -77,37 +83,57 @@ Each tool handles a different part of the analytics lifecycle, allowing data pre
 
 ## Key analytical and modeling decisions
 
-1. **Preserve the grain of the source data.** Culture orders, culture–organism observations, and organism–antibiotic results are modeled separately so the long-format AST records do not inflate culture counts.
-2. **Standardize terminology without losing provenance.** Version-controlled dbt seeds define reviewed organism mappings, Gram groupings, cohort-specific antibiotic panels, and explicit exclusions, while source organism labels and qualifiers remain traceable.
-3. **Reconcile conflicting and missing AST interpretations.** Repeated source endpoints and combined labels are evaluated rather than arbitrarily choosing the newest or most resistant result. Unresolved results remain visible as quality metrics.
-4. **Select the overall first culture before evaluating antibiotic results.** The susceptibility population selects the earliest eligible culture per patient, specimen cohort, and reporting organism, **regardless of resistance phenotype or antibiotic availability**. Results from qualifying source labels on that culture are reconciled together. This avoids excluding resistant observations from the overall organism population.
-5. **Keep resistance subgroups and MDRO surveillance separate.** Selected phenotype-specific susceptibility subgroups are derived from the overall first-culture population. The MDRO mart instead summarizes CRE and MDR *Pseudomonas aeruginosa* phenotype evidence **across eligible culture observations** at a distinct patient-level grain.
+1. **Preserve source grain and provenance.** Culture orders, source culture–organism observations, and organism–antibiotic endpoints are separate. Reviewed mappings retain the original labels and qualifiers.
+2. **Keep ambiguous AST visible.** Reconciliation retains missing and conflicting endpoints. The shared reporting reconciliation uses all source labels for overall *S. aureus*, and only labels within the selected phenotype category for stratified results.
+3. **Filter the period before selecting cultures.** The optional 12-month window limits eligible observations before patient-level ranking and MDRO aggregation. Filtering a previously built full-release mart is not equivalent.
+4. **Select each phenotype population independently.** Ordinary (`base`), ESCE-R, VRE, MRSA, and MSSA categories select their first qualifying culture per patient/cohort/organism/category. One patient can enter multiple categories. `base` is a reporting category, not proof of wild-type susceptibility. Overall *S. aureus* separately uses its first culture regardless of phenotype.
+5. **Keep MDRO evidence separate.** CRE and MDR *Pseudomonas aeruginosa* reporting records do not enter the main susceptibility categories. `mart_mdro` summarizes their patient-level evidence across eligible observations in the same window, with positive evidence taking precedence over not-evaluable and not-detected evidence.
+6. **Apply explicit reporting controls.** Reviewed cohort-specific organism–antibiotic approvals and suppression rules determine the panel. At least 30 categorized S/I/R results are required to designate a susceptibility percentage for display.
 
 ### Validated reporting datasets
 
 | dbt mart | Analytical grain and purpose |
 |---|---|
-| `mart_susceptibility` | Source release × specimen cohort × organism reporting group × susceptibility subgroup × approved antibiotic. Reports eligible and categorized counts, S/I/R counts, `% susceptible`, testing coverage, and display status. Contains overall organism rows plus selected phenotype subgroups. Percentages are designated for display when at least **30 categorized results** are available. |
-| `mart_mdro` | Source release × specimen cohort × base organism × MDRO phenotype. Summarizes patient-level CRE and MDR *P. aeruginosa* evidence, including positive, not-detected, and not-evaluable counts, phenotype proportion, and evaluability. |
+| `mart_susceptibility` | Source release × specimen cohort × organism reporting group × reporting category × approved antibiotic, within the configured window. Reports category-specific eligible and categorized counts, S/I/R counts, `% susceptible`, testing coverage, and display status. Percentages are designated for display when at least **30 categorized results** are available. |
+| `mart_mdro` | Source release × specimen cohort × base organism × MDRO phenotype, within the configured window. Summarizes patient-level CRE and MDR *P. aeruginosa* evidence, including positive, not-detected, and not-evaluable counts, phenotype proportion, and evaluability. |
 
 The pipeline uses susceptibility categories **as supplied by ARMD**; it does not reconstruct MIC values or reinterpret results under contemporary breakpoints. Detailed formulas, phenotype definitions, and clinical limitations are in [Metric definitions](docs/metric_definitions.md).
 
+## Current reporting window and coverage
+
+The configured demonstration is **January 1–December 31, 2023, using shifted dates**: `2023-01-01 <= culture_time_shifted < 2024-01-01`. Both marts carry the start and exclusive end dates. This is a **2023 shifted-date research antibiogram**; patient-level date shifts prevent treating it as a common clinical calendar year across patients.
+
+Notebook 13's saved coverage query confirms the window and the following reporting rows. A row is one organism–category–drug combination within a cohort; these percentages measure panel display coverage, not patient susceptibility.
+
+| Cohort | Mart rows | Displayable | Insufficient data | Displayable (%) |
+|---|---:|---:|---:|---:|
+| Blood | 158 | 59 | 99 | 37.3% |
+| Respiratory | 123 | 32 | 91 | 26.0% |
+| Urine | 143 | 103 | 40 | 72.0% |
+| **Total** | **424** | **194** | **230** | **45.8%** |
+
+The earlier full-release phenotype-stratified baseline had **455 rows, with 381 displayable**. The 2023 window has **424 rows, with 194 displayable**, a reduction of 187 displayable rows (49.1%). Urine retains the broadest coverage. Overall *S. aureus* retains all six approved antibiotics in each cohort. No VRE susceptibility percentages meet the threshold; respiratory ESCE-R and urine MRSA also have none designated for display. This reflects reporting coverage, not absence of those phenotypes.
+
+Keep insufficient-data rows for audit and mark their percentages as **Insufficient data** in reporting. Do not replace them with zero or lower the threshold to fill the panel. Preserve full-release outputs separately for comparison; rebuilding a different window replaces the current marts.
+
 ## How this architecture could support routine clinical reporting
 
-This repository demonstrates a **fixed-release retrospective batch pipeline**, not a live LIS/EHR integration or an already implemented longitudinal surveillance system. With governed clinical data, real event timestamps, and scheduled ingestion/builds, the same architecture could be extended to support:
+This repository implements a **fixed-release retrospective batch pipeline with an optional 12-month shifted-date research window**. It does not implement live LIS/EHR ingestion or scheduled longitudinal surveillance. With governed clinical data, real event timestamps, and scheduled ingestion/builds, the same architecture could be extended to support:
 
 - **Annual cumulative antibiograms:** select a defined annual cohort, reapply the first-eligible-isolate policy *within that reporting year*, validate organism–antibiotic denominators, and publish consistent tables for clinical microbiology and antimicrobial stewardship programs.
 - **Periodically updated or rolling antibiograms:** ingest new eligible cultures on a schedule and **recalculate the first-isolate population within each rolling reporting window** (for example, the preceding 12 months). A rolling report cannot be produced correctly by simply filtering a mart that selected each patient's first culture across the entire dataset.
 - **Resistance-pattern monitoring:** construct time-indexed, source-governed reporting marts to examine longitudinal susceptibility patterns, selected resistance phenotypes, test coverage, and changes in MDRO classifications. Trend interpretation would require stable methods, comparable reporting periods, and attention to changes in AST testing/breakpoints.
 - **Reusable quality and stewardship dashboards:** feed several Tableau dashboards from the same tested transformations, with refreshes and reporting rules managed centrally instead of by manual workbook updates.
 
-These are **potential production extensions**, not capabilities claimed for the shifted-date public ARMD extract as currently modeled.
+The current project demonstrates window filtering, within-window selection, and reporting validation. Clinical annual reporting, scheduled refreshes, and longitudinal surveillance would require the additional data and governance described above.
 
 ## Validation and quality assurance
 
-Automated **dbt data tests** cover uniqueness, relationships, accepted values, count identities, approved organism–antibiotic pair completeness, and phenotype-subgroup denominators. Numbered SQL notebooks provide independent checks of source grains, AST reconciliation, organism mapping, phenotype derivation, first-culture selection, and both final marts.
+Automated **dbt data tests** cover unique keys, relationships, accepted values, endpoint count identities, first qualifying culture selection, reporting-window bounds, category-specific denominators, approved-pair completeness, exclusion rules, and Gram metadata.
 
-**Most recent completed full dbt regression build:** **17 models, 4 reference seeds, 184 passing data tests, zero warnings, zero errors** (**205 successful operations**). The validation notebooks are supplementary and should be rerun after meaningful upstream changes.
+The saved full `dbt build` completed on **October 12, 2026, at 10:48 p.m. Eastern** (`2026-10-13T02:48:09Z`): **22 models, 4 reference seeds, and 224 passing data tests** — **250 successful operations**, with no error, warning, or skipped result statuses. The saved compiled manifest uses the 2023 window. These are recorded build results; the documentation revision did not execute a new warehouse build.
+
+Notebooks 10–12 check overall *S. aureus* selection, susceptibility mart structure/policy, and patient-level MDRO counts. Obsolete population/subset checks have been removed. Notebook 12 reads the MDRO mart's recorded window and filters upstream observations before reconstructing patient status; its revised query still needs a saved warehouse execution. Notebooks 13–14 document the phenotype-stratified design, the full-release baseline, the 2023 availability check, and saved 2023 coverage. Retained historical outputs must not be relabeled as current validations. See [validation scope and execution status](docs/metric_definitions.md#validation-and-reproducibility).
 
 ## Repository guide
 
@@ -119,7 +145,8 @@ Automated **dbt data tests** cover uniqueness, relationships, accepted values, c
 | `dbt/seeds/` | Reviewed organism mappings, Gram groups, antibiotic approvals, and exclusions |
 | `dbt/tests/` | Custom data-quality and reporting-policy assertions |
 | `notebooks/source_exploration/` | Source profiling and initial grain assessment |
-| `notebooks/pipeline validation/` | Numbered SQL-based pipeline validation notebooks |
+| `notebooks/pipeline validation/` | Source profiling and validation history; notebooks 13–14 document the current reporting design and window |
+| `dbt/macros/analysis_window.sql` | Inclusive start / exclusive 12-month end and window metadata |
 | `docs/metric_definitions.md` | Detailed metric definitions, methodology, and limitations |
 | [`docs/`](docs/) | Additional project materials, including a **PDF** and a **PowerPoint presentation (`.pptx`)** |
 | `data/exports/` | Reporting extracts produced from the validated marts, when published |
@@ -130,7 +157,16 @@ This is a Databricks-based batch ELT project for the **2025-04-11 ARMD source re
 
 1. Download the three CSVs from the [public ARMD release](https://doi.org/10.5061/dryad.jq2bvq8kp) and load them into Databricks raw Delta tables matching the declared dbt sources (`workspace.micro_raw` in this development environment).
 2. Install dbt Core and the Databricks adapter; configure a Databricks SQL warehouse and a private dbt profile (`~/.dbt/profiles.yml`). Do not commit secrets, tokens, or employer data.
-3. From the `dbt/` directory, run:
+3. Select the reporting period in `dbt/dbt_project.yml`. The current configuration is:
+
+   ```yaml
+   vars:
+     analysis_window_start: '2023-01-01'
+   ```
+
+   The end is computed as 12 months after the start and is exclusive. Remove the variable or set it to `null` for a full-release comparison. Preserve existing exports before rebuilding a different scope: the current mart tables are replaced, and the surrogate keys do not encode the window.
+
+4. From the `dbt/` directory, run:
 
    ```powershell
    dbt deps
@@ -138,8 +174,8 @@ This is a Databricks-based batch ELT project for the **2025-04-11 ARMD source re
    dbt build
    ```
 
-4. Rerun relevant notebooks in `notebooks/pipeline validation/` in a VS Code notebook environment with a working Databricks connection. Notebook `%sql` cells query Databricks tables directly and do not use dbt's `{{ ref(...) }}` syntax.
-5. Verify the mart outputs, then export the **current** validated datasets used for Tableau Public publication. In a governed internal implementation, Tableau could instead query the Databricks marts directly.
+5. Rerun relevant notebooks in `notebooks/pipeline validation/` in a VS Code notebook environment with a working Databricks connection. Notebook `%sql` cells query Databricks tables directly and do not use dbt's `{{ ref(...) }}` syntax.
+6. Verify the mart window columns and display coverage in Notebook 13, then export the **current** validated datasets for Tableau Public publication. Include the reporting-window fields and preserve full-release and annual outputs separately. In a governed internal implementation, Tableau could instead query the Databricks marts directly.
 
 ## Skills demonstrated
 
