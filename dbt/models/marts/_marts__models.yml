@@ -43,8 +43,9 @@ models:
           - accepted_values:
               arguments:
                 values:
-                  - overall
+                  - base
                   - esce_r
+                  - overall
                   - oxacillin_resistant
                   - oxacillin_susceptible
                   - vancomycin_resistant
