@@ -19,12 +19,8 @@ selected_counts as (
 approved_pairs as (
     select p.organism_reporting_group, p.cohort_id, p.antibiotic
     from {{ ref('reportable_organism_antibiotic_pairs') }} p
-    left join {{ ref('organism_antibiotic_exclusions') }} e
-        on p.organism_reporting_group = e.organism_reporting_group
-       and p.antibiotic = e.antibiotic
     where p.review_status = 'reviewed'
       and p.include_primary_dashboard = 1
-      and e.organism_reporting_group is null
 ),
 expected as (
     select c.*, p.antibiotic
@@ -32,6 +28,15 @@ expected as (
     inner join approved_pairs p
         on c.cohort_id = p.cohort_id
        and c.organism_reporting_group = p.organism_reporting_group
+    where not exists (
+        select 1
+        from {{ ref('organism_antibiotic_exclusions') }} e
+        where p.organism_reporting_group = e.organism_reporting_group
+          and p.antibiotic = e.antibiotic
+          and (e.cohort_id = '*' or c.cohort_id = e.cohort_id)
+          and (e.reporting_phenotype = '*'
+               or c.reporting_phenotype = e.reporting_phenotype)
+    )
 ),
 actual as (
     select source_version, cohort_id, organism_reporting_group,

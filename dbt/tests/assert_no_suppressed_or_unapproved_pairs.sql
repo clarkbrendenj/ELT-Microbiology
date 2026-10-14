@@ -4,6 +4,7 @@ with mart_pairs as (
     select distinct
         organism_reporting_group,
         cohort_id,
+        reporting_phenotype,
         antibiotic
     from {{ ref('mart_susceptibility') }}
 ),
@@ -30,6 +31,12 @@ union all
 
 select m.*, 'explicitly_excluded' as failing_rule
 from mart_pairs m
-inner join {{ ref('organism_antibiotic_exclusions') }} e
-    on m.organism_reporting_group = e.organism_reporting_group
-   and m.antibiotic = e.antibiotic
+where exists (
+    select 1
+    from {{ ref('organism_antibiotic_exclusions') }} e
+    where m.organism_reporting_group = e.organism_reporting_group
+      and m.antibiotic = e.antibiotic
+      and (e.cohort_id = '*' or m.cohort_id = e.cohort_id)
+      and (e.reporting_phenotype = '*'
+           or m.reporting_phenotype = e.reporting_phenotype)
+)

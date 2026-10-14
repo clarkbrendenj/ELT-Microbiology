@@ -55,10 +55,10 @@ seeds:
   
   - name: organism_antibiotic_exclusions
     description: >
-      Reviewed organism-antibiotic combinations excluded from the
-      susceptibility reporting mart. Exclusions include expected resistant
-      phenotypes and project reporting suppressions intended to produce a
-      clinically meaningful summary antibiogram.
+      Reviewed organism-antibiotic exclusions, optionally scoped to a cohort
+      and reporting phenotype. An asterisk in either scope column matches all
+      values of that dimension. Rules suppress reporting-grid rows before AST
+      aggregation without changing source evidence or phenotype selection.
 
     columns:
       - name: organism_reporting_group
@@ -68,6 +68,29 @@ seeds:
       - name: antibiotic
         data_tests:
           - not_null
+
+      - name: cohort_id
+        description: Specimen cohort to exclude, or '*' for every cohort.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['*', blood, respiratory, urine]
+
+      - name: reporting_phenotype
+        description: Reporting category to exclude, or '*' for every category.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - '*'
+                  - base
+                  - esce_r
+                  - overall
+                  - oxacillin_resistant
+                  - oxacillin_susceptible
+                  - vancomycin_resistant
 
       - name: exclusion_reason
         data_tests:
@@ -79,6 +102,9 @@ seeds:
                   - ampc_reporting_suppression
                   - inappropriate_surrogate
                   - no_current_breakpoint
+                  - phenotype_reporting_suppression
+                  - source_category_limitation
+                  - project_panel_exclusion
 
       - name: review_basis
         data_tests:
@@ -89,6 +115,8 @@ seeds:
           arguments:
             combination_of_columns:
               - organism_reporting_group
+              - cohort_id
+              - reporting_phenotype
               - antibiotic
   
   - name: organism_reporting_groups

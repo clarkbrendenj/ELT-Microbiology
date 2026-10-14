@@ -236,7 +236,9 @@ The reviewed grid is constructed **before** joining AST endpoints. An approved a
 
 **Seed:** `organism_antibiotic_exclusions.csv`
 
-The exclusion key is `organism_reporting_group × antibiotic`. It overrides the approved list **across all cohorts** for that organism–drug combination. Review reasons include:
+The exclusion key is `organism_reporting_group × cohort_id × reporting_phenotype × antibiotic`. A literal `*` in either scope column matches every cohort or category respectively. Scope fields are required; null or blank is not a wildcard. Existing species-level exclusions retain `*` in both fields.
+
+The mart applies these rules after expanding approved pairs to the selected reporting populations, before attaching AST endpoints and aggregating counts. Any matching exclusion wins. A cohort/category-specific rule does not affect the same drug in other populations; for example, MRSA oxacillin exclusions preserve overall and MSSA oxacillin rows. Review reasons include:
 
 | `exclusion_reason` | Meaning |
 |---|---|
@@ -244,6 +246,11 @@ The exclusion key is `organism_reporting_group × antibiotic`. It overrides the 
 | `ampc_reporting_suppression` | Project policy suppresses selected agents for reviewed inducible-AmpC-risk organisms |
 | `inappropriate_surrogate` | Result is not appropriate for the proposed surrogate interpretation |
 | `no_current_breakpoint` | No applicable current interpretive breakpoint for the reporting use |
+| `phenotype_reporting_suppression` | Project-reviewed exclusion of a drug within a resistance-defined reporting category |
+| `source_category_limitation` | Conventional percent-susceptible presentation is excluded because of the reviewed source-category interpretation limitation |
+| `project_panel_exclusion` | Project-owner decision to omit a combination from a particular routine reporting panel |
+
+On October 13, 2026, the project owner approved all 28 reviewed low-susceptibility rows for exclusion (27 distinct organism/cohort/drug triples because E. faecium–blood–daptomycin occurs in both base and VRE categories). Their exact cohorts and categories are enumerated in the seed with `review_basis = Project owner review 2026-10-13`. This records a project reporting decision, not a claim that every pair is intrinsically resistant or prohibited by a clinical guideline. No runtime percent-susceptible cutoff is used: the reviewed rules continue to apply if later counts change.
 
 These are **reporting suppressions**, not edits to the original organism, AST result, or phenotype calculation. A drug may remain in the source facts and downstream reconciliation while being omitted from the reporting mart.
 
@@ -431,9 +438,9 @@ Changed queries have cleared outputs and execution counts; unchanged query outpu
 
 The saved full `dbt build` completed on **October 12, 2026, at 10:48 p.m. Eastern** (`2026-10-13T02:48:09Z`): **22 models, 4 reference seeds, and 224 passing data tests** — **250 successful operations**, with no error, warning, or skipped result statuses. The saved compiled manifest uses the 2023 window. These are recorded build results; the documentation revision did not execute a new warehouse build.
 
-The current reference seeds contain 41 organism-mapping rows, 20 organism/Gram groups, 311 active approved cohort-specific pairs, 11 inactive proposals, and 33 organism–drug exclusion rules. Six active approvals are suppressed for *E. cloacae* complex (ceftriaxone and piperacillin/tazobactam in blood, respiratory, and urine). Thus 305 distinct approved organism–cohort–drug combinations remain before category expansion and window population eligibility; 305 is not an expected current mart-row count.
+The reference seeds contain 41 organism-mapping rows, 20 organism/Gram groups, 311 active approved cohort-specific pairs, 11 inactive proposals, and **61 exclusion rules: 33 broad plus 28 cohort/category-specific rules**. The original six active E. cloacae complex suppressions remain in place. Exclusions now act on the expanded category grid, so neither the rule count nor 305 is an expected mart-row total.
 
-Notebook 13 preserves the newer **full-release phenotype-stratified baseline** and the explicitly dated **2023** coverage query:
+Notebook 13 preserves the **pre-exclusion-update** full-release phenotype-stratified baseline and the explicitly dated 2023 coverage query. The tables below describe saved results before the 28 new scoped rules:
 
 | Reporting population | Full-release rows | Full-release displayable | 2023 rows | 2023 displayable |
 |---|---:|---:|---:|---:|
@@ -461,6 +468,16 @@ The 2023 coverage query records `analysis_window_start = 2023-01-01` and `analys
 Urine retains 80 of 91 ordinary/base pairs. Overall *S. aureus* retains all six antibiotics in each cohort. No VRE, respiratory ESCE-R, or urine MRSA percentages are designated for display. Low counts do not establish absence of the phenotype; insufficient-data rows remain available for audit.
 
 Notebook 14's monthly check counts distinct culture keys in `int_reporting_culture_organism` before final first-culture selection. All 12 shifted months have observations in each cohort: 961 blood, 719 respiratory, and 8,611 urine cultures across the monthly output. These are not raw culture-order totals, unique patient counts, or drug-specific categorized denominators. They demonstrate monthly representation, not completeness of source capture.
+
+Applying the 28 scoped rules to the saved 424-row 2023 export removes exactly those 28 rows: 7 displayable and 21 insufficient-data. The projected revised susceptibility mart has **396 rows, 187 displayable and 209 insufficient-data**. These are offline projection counts; rebuild the seed and susceptibility mart, run the tests, and refresh the notebook outputs and Tableau export before claiming a completed warehouse update. The MDRO model does not depend on the exclusion seed.
+
+The seed gained two columns, so apply this change from the `dbt` directory with a full refresh of the exclusion seed and its downstream mart/tests:
+
+```bash
+dbt build --full-refresh --select organism_antibiotic_exclusions+
+```
+
+Then rerun Notebooks 07, 11, and 13 and refresh the susceptibility export used by Tableau. The command targets the exclusion seed and its descendants; it does not rebuild upstream phenotype evidence or `mart_mdro`.
 
 All snapshot counts depend on the source release, model version, reference seeds, and reporting window. Preserve window labels in exports and keep old and new runs distinct.
 

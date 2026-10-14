@@ -88,7 +88,7 @@ Each tool handles a different part of the analytics lifecycle, allowing data pre
 3. **Filter the period before selecting cultures.** The optional 12-month window limits eligible observations before patient-level ranking and MDRO aggregation. 
 4. **Select each phenotype population independently.** Ordinary (`base`), ESCE-R, VRE, MRSA, and MSSA categories select their first qualifying culture per patient/cohort/organism/category. One patient can enter multiple categories. `base` is a reporting category, not proof of wild-type susceptibility. Overall *S. aureus* separately uses its first culture regardless of phenotype.
 5. **Keep MDRO evidence separate.** CRE and MDR *Pseudomonas aeruginosa* reporting records do not enter the main susceptibility categories. `mart_mdro` summarizes their patient-level evidence across eligible observations in the same window, with positive evidence taking precedence over not-evaluable and not-detected evidence.
-6. **Apply explicit reporting controls.** Reviewed cohort-specific organism–antibiotic approvals and suppression rules determine the panel. At least 30 categorized S/I/R results are required to designate a susceptibility percentage for display.
+6. **Apply explicit reporting controls.** Reviewed cohort-specific organism–antibiotic approvals and cohort/category-scoped exclusions determine the panel. A `*` scope applies a rule to all cohorts or categories. At least 30 categorized S/I/R results are required to designate a susceptibility percentage for display.
 
 ### Validated reporting datasets
 
@@ -101,9 +101,9 @@ The pipeline uses susceptibility categories **as supplied by ARMD**; it does not
 
 ## Current reporting window and coverage
 
-The configured demonstration is **January 1–December 31, 2023. Both marts carry the start and exclusive end dates. This is a **2023 shifted-date research antibiogram**; patient-level date shifts prevent treating it as a common clinical calendar year across patients.
+The configured demonstration is **January 1–December 31, 2023**. Both marts carry the start and exclusive end dates. This is a **2023 shifted-date research antibiogram**; patient-level date shifts prevent treating it as a common clinical calendar year across patients.
 
-Notebook 13's saved coverage query confirms the window and the following reporting rows. A row is one organism–category–drug combination within a cohort; these percentages measure panel display coverage, not patient susceptibility.
+Notebook 13's saved coverage query confirms the window and the following reporting rows **before the October 13, 2026 scoped-exclusion update**. A row is one organism–category–drug combination within a cohort; these percentages measure panel display coverage, not patient susceptibility.
 
 | Cohort | Mart rows | Displayable | Insufficient data | Displayable (%) |
 |---|---:|---:|---:|---:|
@@ -111,6 +111,16 @@ Notebook 13's saved coverage query confirms the window and the following reporti
 | Respiratory | 123 | 32 | 91 | 26.0% |
 | Urine | 143 | 103 | 40 | 72.0% |
 | **Total** | **424** | **194** | **230** | **45.8%** |
+
+The exclusion mapping now contains 33 broad rules and 28 newly approved cohort/category rules. Applied to the saved export, the new rules project **396 rows: 187 displayable and 209 insufficient-data**. Rebuild the exclusion seed and susceptibility mart, rerun validation, and refresh the export before replacing the recorded counts above. The MDRO mart is unaffected by this mapping change.
+
+The seed gained two columns, so apply this change from the `dbt` directory with a full refresh of the exclusion seed and its downstream mart/tests:
+
+```bash
+dbt build --full-refresh --select organism_antibiotic_exclusions+
+```
+
+Then rerun Notebooks 07, 11, and 13 and refresh the susceptibility export used by Tableau. The command targets the exclusion seed and its descendants; it does not rebuild upstream phenotype evidence or `mart_mdro`.
 
 
 

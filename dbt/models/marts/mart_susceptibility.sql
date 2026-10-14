@@ -15,12 +15,8 @@ first_stratified as (
 pairs as (
     select p.organism_reporting_group, p.cohort_id, p.antibiotic, p.pair_order
     from {{ ref('reportable_organism_antibiotic_pairs') }} p
-    left join {{ ref('organism_antibiotic_exclusions') }} e
-        on p.organism_reporting_group = e.organism_reporting_group
-       and p.antibiotic = e.antibiotic
     where p.include_primary_dashboard = 1
       and p.review_status = 'reviewed'
-      and e.organism_reporting_group is null
 ),
 reporting_populations as (
     select
@@ -62,6 +58,17 @@ eligible_grid as (
     inner join pairs p
         on f.organism_reporting_group = p.organism_reporting_group
        and f.cohort_id = p.cohort_id
+    -- Match exclusions only after cohort and reporting phenotype are known.
+    -- EXISTS also handles overlapping broad/scoped rules without multiplying rows.
+    where not exists (
+        select 1
+        from {{ ref('organism_antibiotic_exclusions') }} e
+        where p.organism_reporting_group = e.organism_reporting_group
+          and p.antibiotic = e.antibiotic
+          and (e.cohort_id = '*' or f.cohort_id = e.cohort_id)
+          and (e.reporting_phenotype = '*'
+               or f.reporting_phenotype = e.reporting_phenotype)
+    )
 ),
 endpoint_status as (
     select g.*, r.resolution_status, r.susceptibility,
