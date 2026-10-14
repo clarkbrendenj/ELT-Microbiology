@@ -85,7 +85,7 @@ Each tool handles a different part of the analytics lifecycle, allowing data pre
 
 1. **Preserve source grain and provenance.** Culture orders, source culture–organism observations, and organism–antibiotic endpoints are separate. Reviewed mappings retain the original labels and qualifiers.
 2. **Keep ambiguous AST visible.** Reconciliation retains missing and conflicting endpoints. The shared reporting reconciliation uses all source labels for overall *S. aureus*, and only labels within the selected phenotype category for stratified results.
-3. **Filter the period before selecting cultures.** The optional 12-month window limits eligible observations before patient-level ranking and MDRO aggregation. Filtering a previously built full-release mart is not equivalent.
+3. **Filter the period before selecting cultures.** The optional 12-month window limits eligible observations before patient-level ranking and MDRO aggregation. 
 4. **Select each phenotype population independently.** Ordinary (`base`), ESCE-R, VRE, MRSA, and MSSA categories select their first qualifying culture per patient/cohort/organism/category. One patient can enter multiple categories. `base` is a reporting category, not proof of wild-type susceptibility. Overall *S. aureus* separately uses its first culture regardless of phenotype.
 5. **Keep MDRO evidence separate.** CRE and MDR *Pseudomonas aeruginosa* reporting records do not enter the main susceptibility categories. `mart_mdro` summarizes their patient-level evidence across eligible observations in the same window, with positive evidence taking precedence over not-evaluable and not-detected evidence.
 6. **Apply explicit reporting controls.** Reviewed cohort-specific organism–antibiotic approvals and suppression rules determine the panel. At least 30 categorized S/I/R results are required to designate a susceptibility percentage for display.
@@ -101,7 +101,7 @@ The pipeline uses susceptibility categories **as supplied by ARMD**; it does not
 
 ## Current reporting window and coverage
 
-The configured demonstration is **January 1–December 31, 2023, using shifted dates**: `2023-01-01 <= culture_time_shifted < 2024-01-01`. Both marts carry the start and exclusive end dates. This is a **2023 shifted-date research antibiogram**; patient-level date shifts prevent treating it as a common clinical calendar year across patients.
+The configured demonstration is **January 1–December 31, 2023. Both marts carry the start and exclusive end dates. This is a **2023 shifted-date research antibiogram**; patient-level date shifts prevent treating it as a common clinical calendar year across patients.
 
 Notebook 13's saved coverage query confirms the window and the following reporting rows. A row is one organism–category–drug combination within a cohort; these percentages measure panel display coverage, not patient susceptibility.
 
@@ -112,9 +112,8 @@ Notebook 13's saved coverage query confirms the window and the following reporti
 | Urine | 143 | 103 | 40 | 72.0% |
 | **Total** | **424** | **194** | **230** | **45.8%** |
 
-The earlier full-release phenotype-stratified baseline had **455 rows, with 381 displayable**. The 2023 window has **424 rows, with 194 displayable**, a reduction of 187 displayable rows (49.1%). Urine retains the broadest coverage. Overall *S. aureus* retains all six approved antibiotics in each cohort. No VRE susceptibility percentages meet the threshold; respiratory ESCE-R and urine MRSA also have none designated for display. This reflects reporting coverage, not absence of those phenotypes.
 
-Keep insufficient-data rows for audit and mark their percentages as **Insufficient data** in reporting. Do not replace them with zero or lower the threshold to fill the panel. Preserve full-release outputs separately for comparison; rebuilding a different window replaces the current marts.
+
 
 ## How this architecture could support routine clinical reporting
 
@@ -127,13 +126,6 @@ This repository implements a **fixed-release retrospective batch pipeline with a
 
 The current project demonstrates window filtering, within-window selection, and reporting validation. Clinical annual reporting, scheduled refreshes, and longitudinal surveillance would require the additional data and governance described above.
 
-## Validation and quality assurance
-
-Automated **dbt data tests** cover unique keys, relationships, accepted values, endpoint count identities, first qualifying culture selection, reporting-window bounds, category-specific denominators, approved-pair completeness, exclusion rules, and Gram metadata.
-
-The saved full `dbt build` completed on **October 12, 2026, at 10:48 p.m. Eastern** (`2026-10-13T02:48:09Z`): **22 models, 4 reference seeds, and 224 passing data tests** — **250 successful operations**, with no error, warning, or skipped result statuses. The saved compiled manifest uses the 2023 window. These are recorded build results; the documentation revision did not execute a new warehouse build.
-
-Notebooks 10–12 check overall *S. aureus* selection, susceptibility mart structure/policy, and patient-level MDRO counts. Obsolete population/subset checks have been removed. Notebook 12 reads the MDRO mart's recorded window and filters upstream observations before reconstructing patient status; its revised query still needs a saved warehouse execution. Notebooks 13–14 document the phenotype-stratified design, the full-release baseline, the 2023 availability check, and saved 2023 coverage. Retained historical outputs must not be relabeled as current validations. See [validation scope and execution status](docs/metric_definitions.md#validation-and-reproducibility).
 
 ## Repository guide
 
