@@ -3,7 +3,7 @@
 **A reproducible antibiogram and antimicrobial resistance analytics portfolio project**  
 **Databricks · Delta Lake · SQL · dbt · Python · Tableau Public**
 
-[**Explore the interactive antibiogram on Tableau Public**](https://public.tableau.com/views/ARMDAntibiogram/RespiratoryGramPositive)
+[**Explore the interactive antibiogram on Tableau Public**](https://public.tableau.com/views/ARMDAntibiogram/BloodCultureGram-NegativeOrganisms?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ## Project overview
 
@@ -17,7 +17,7 @@ I developed a version-controlled **extract, load, transform (ELT)** pipeline to 
 
 ## Interactive Tableau antibiogram
 
-**[Open the published Tableau Public workbook](https://public.tableau.com/views/ARMDAntibiogram/RespiratoryGramPositive)**
+**[Open the published Tableau Public workbook](https://public.tableau.com/views/ARMDAntibiogram/BloodCultureGram-NegativeOrganisms?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)**
 
 The dashboard presents organism–antibiotic susceptibility summaries stratified by **blood, urine, and respiratory cultures**, with separate Gram-positive and Gram-negative views. The current reporting design separates ordinary (`base`) and resistance-phenotype populations, each selected independently. *Staphylococcus aureus* also has an overall population alongside separately selected MRSA and MSSA populations. Blank cells should not be interpreted as 0% susceptibility: a result may be omitted because a pair is not approved for reporting, is intentionally suppressed, or does not satisfy the minimum categorized-result threshold.
 
