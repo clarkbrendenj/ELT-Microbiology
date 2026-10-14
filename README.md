@@ -298,6 +298,10 @@ This is a Databricks-based batch ELT project for the **2025-04-11 ARMD source re
 
 **Clinical microbiology analytics · ELT pipeline design · Databricks and Delta Lake · SQL data modeling · dbt transformations and testing · Python exploratory analysis · terminology mapping · AST and resistance phenotype interpretation · data-quality validation · Tableau dashboard design**
 
+### AI assistance
+
+ChatGPT (OpenAI) assisted with SQL and dbt development, troubleshooting, validation queries, and documentation. I reviewed and refined the implementation using my clinical microbiology expertise and validated the pipeline with dbt tests and SQL notebooks. I remain responsible for the final code, reporting decisions, and interpretation.
+
 ## Data use, interpretation, and citation
 
 The source is a de-identified retrospective research extract without verified biological isolate identifiers. Antibiotic testing is selective, and results may be missing or conflicting. Shifted timestamps and project-specific organism/panel policies restrict interpretation. The displayed summaries represent **source-reported AST under the stated research rules** and should not be used for patient care or assumed to represent institutional resistance prevalence.
