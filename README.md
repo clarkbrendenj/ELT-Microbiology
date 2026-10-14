@@ -94,7 +94,7 @@ Each tool handles a different part of the analytics lifecycle, allowing data pre
 
 | dbt mart | Analytical grain and purpose |
 |---|---|
-| `mart_susceptibility` | Source release × specimen cohort × organism reporting group × reporting category × approved antibiotic, within the configured window. Reports category-specific eligible and categorized counts, S/I/R counts, `% susceptible`, testing coverage, and display status. Percentages are designated for display when at least **30 categorized results** are available. |
+| `mart_susceptibility` | Source release × specimen cohort × organism reporting group × reporting category × approved antibiotic, within the configured window. Reports category-specific eligible and categorized counts, S/I/R counts, `% susceptible`, testing coverage, and display status. |
 | `mart_mdro` | Source release × specimen cohort × base organism × MDRO phenotype, within the configured window. Summarizes patient-level CRE and MDR *P. aeruginosa* evidence, including positive, not-detected, and not-evaluable counts, phenotype proportion, and evaluability. |
 
 The pipeline uses susceptibility categories **as supplied by ARMD**; it does not reconstruct MIC values or reinterpret results under contemporary breakpoints. Detailed formulas, phenotype definitions, and clinical limitations are in [Metric definitions](docs/metric_definitions.md).
