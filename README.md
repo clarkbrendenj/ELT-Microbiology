@@ -99,31 +99,6 @@ Each tool handles a different part of the analytics lifecycle, allowing data pre
 
 The pipeline uses susceptibility categories **as supplied by ARMD**; it does not reconstruct MIC values or reinterpret results under contemporary breakpoints. Detailed formulas, phenotype definitions, and clinical limitations are in [Metric definitions](docs/metric_definitions.md).
 
-## Current reporting window and coverage
-
-The configured demonstration is **January 1–December 31, 2023**. Both marts carry the start and exclusive end dates. This is a **2023 shifted-date research antibiogram**; patient-level date shifts prevent treating it as a common clinical calendar year across patients.
-
-Notebook 13's saved coverage query confirms the window and the following reporting rows **before the October 13, 2026 scoped-exclusion update**. A row is one organism–category–drug combination within a cohort; these percentages measure panel display coverage, not patient susceptibility.
-
-| Cohort | Mart rows | Displayable | Insufficient data | Displayable (%) |
-|---|---:|---:|---:|---:|
-| Blood | 158 | 59 | 99 | 37.3% |
-| Respiratory | 123 | 32 | 91 | 26.0% |
-| Urine | 143 | 103 | 40 | 72.0% |
-| **Total** | **424** | **194** | **230** | **45.8%** |
-
-The exclusion mapping now contains 33 broad rules and 28 newly approved cohort/category rules. Applied to the saved export, the new rules project **396 rows: 187 displayable and 209 insufficient-data**. Rebuild the exclusion seed and susceptibility mart, rerun validation, and refresh the export before replacing the recorded counts above. The MDRO mart is unaffected by this mapping change.
-
-The seed gained two columns, so apply this change from the `dbt` directory with a full refresh of the exclusion seed and its downstream mart/tests:
-
-```bash
-dbt build --full-refresh --select organism_antibiotic_exclusions+
-```
-
-Then rerun Notebooks 07, 11, and 13 and refresh the susceptibility export used by Tableau. The command targets the exclusion seed and its descendants; it does not rebuild upstream phenotype evidence or `mart_mdro`.
-
-
-
 
 ## How this architecture could support routine clinical reporting
 
