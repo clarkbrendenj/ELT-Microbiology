@@ -156,8 +156,6 @@ The current project demonstrates window filtering, within-window selection, and 
 
 ### Data transformations
 
-<details>
-<summary>Show the complete model-by-model transformation diagram</summary>
 
 The dbt pipeline turns raw culture records into two reporting datasets. Each box names a model and summarizes its transformation. AST means antimicrobial susceptibility testing; MDRO means multidrug-resistant organism. Dashed arrows show reference-data lookups.
 
