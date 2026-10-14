@@ -23,7 +23,7 @@ The dashboard presents organism–antibiotic susceptibility summaries stratified
 
 **How to interpret the tables:** `%S` is the percentage of **categorized S/I/R endpoints** that are classified as susceptible for a particular organism–antibiotic combination. Each reporting category has its own first-qualifying-culture population, distinct from the drug-specific categorized count. Patients can contribute to more than one category, so category counts are not additive unique-patient totals. Because ARMD lacks verified biological isolate identifiers, the analytical first-culture counts should not be construed as individually verified strains. See [Metric definitions](docs/metric_definitions.md) for denominators, exclusions, and limitations.
 
-The 2023 results documented below come from the saved warehouse validation outputs. Refresh the Tableau extracts from the selected reporting window before presenting them as the current published view.
+Reporting scope is recorded in the exported marts as `analysis_window_start` and `analysis_window_end_exclusive`. Retain these fields with each Tableau extract so the displayed results can be traced to the reporting period used to build them.
 
 ### Tableau connection and publication approach
 
@@ -99,6 +99,32 @@ Each tool handles a different part of the analytics lifecycle, allowing data pre
 
 The pipeline uses susceptibility categories **as supplied by ARMD**; it does not reconstruct MIC values or reinterpret results under contemporary breakpoints. Detailed formulas, phenotype definitions, and clinical limitations are in [Metric definitions](docs/metric_definitions.md).
 
+### How the MDRO mart is built
+
+`mart_mdro` answers: **How many eligible patients had evidence of CRE or multidrug-resistant *Pseudomonas aeruginosa* during the reporting period?** It evaluates **all eligible culture observations**, rather than selecting only each patient's first culture.
+
+Resistance statuses are derived upstream in `int_culture_organism_phenotype` from reconciled AST results. Original organism-name qualifiers remain traceable, but do not establish resistance on their own.
+
+| MDRO phenotype | Project rule for positive evidence |
+|---|---|
+| **CRE** — carbapenem-resistant Enterobacterales | A resolved `Resistant` result to a qualifying carbapenem in a reviewed eligible organism, with documented organism-specific exceptions. |
+| **MDR *P. aeruginosa*** | Resolved `Intermediate` or `Resistant` results in at least **three of six reviewed antimicrobial categories**. Incomplete testing remains not evaluable when the unknown categories could change the classification. |
+
+After source labels are consolidated in `int_reporting_culture_organism`, the mart:
+
+1. **Filters the population.** Apply the configured reporting window and exclude observations where the specific phenotype is `not_applicable`.
+2. **Assigns one patient-level status.** Group by source release, specimen cohort, patient, and base organism. Any positive observation makes the patient group `positive`; otherwise, any `not_evaluable` observation takes precedence over `not_detected`.
+3. **Summarizes the patient groups.** Count positive, not-detected, and not-evaluable groups for each source release × cohort × base organism × MDRO phenotype. Repeated cultures do not count the same patient twice within that analysis.
+4. **Adds reporting fields.** Calculate phenotype and evaluability percentages, retain the reporting-window dates, and join Gram classification from `organism_reporting_groups`.
+
+| Output | Calculation |
+|---|---|
+| `denominator_count` | `positive_count + not_detected_count + not_evaluable_count` |
+| `phenotype_pct` | `100 × positive_count / denominator_count` |
+| `evaluable_pct` | `100 × (positive_count + not_detected_count) / denominator_count` |
+
+**Not-evaluable patient groups remain in the denominator and are not classified as negative.** The phenotype percentage therefore describes all eligible patient–organism groups, rather than only those with determinate AST evidence. A patient can contribute to different cohorts or organisms, so these counts are not additive unique-patient totals. Full drug definitions and exceptions are in [Metric definitions](docs/metric_definitions.md).
+
 
 ## How this architecture could support routine clinical reporting
 
@@ -129,6 +155,9 @@ The current project demonstrates window filtering, within-window selection, and 
 | `data/exports/` | Reporting extracts produced from the validated marts, when published |
 
 ### Data transformations
+
+<details>
+<summary>Show the complete model-by-model transformation diagram</summary>
 
 The dbt pipeline turns raw culture records into two reporting datasets. Each box names a model and summarizes its transformation. AST means antimicrobial susceptibility testing; MDRO means multidrug-resistant organism. Dashed arrows show reference-data lookups.
 
@@ -264,6 +293,8 @@ flowchart TD
 
 - **Susceptibility reporting:** baseline and resistance categories select their first qualifying cultures independently. S. aureus also has an overall first-culture population. CRE and MDR Pseudomonas categories are reserved for the separate MDRO summary. A patient may appear in multiple categories; baseline does not guarantee susceptibility.
 - **Reporting period:** when configured, the research date window is applied before first-culture selection and to the MDRO population. Demographics and ward models support additional analyses and do not currently feed these two marts.
+
+</details>
 
 
 
