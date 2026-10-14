@@ -128,6 +128,146 @@ The current project demonstrates window filtering, within-window selection, and 
 | [`docs/`](docs/) | Additional project materials, including a **PDF** and a **PowerPoint presentation (`.pptx`)** |
 | `data/exports/` | Reporting extracts produced from the validated marts, when published |
 
+### Data transformations
+
+The dbt pipeline turns raw culture records into two reporting datasets. Each box names a model and summarizes its transformation. AST means antimicrobial susceptibility testing; MDRO means multidrug-resistant organism. Dashed arrows show reference-data lookups.
+
+```mermaid
+flowchart TD
+    subgraph SOURCE["1. Prepare the source data"]
+        RAW[("Raw ARMD tables
+        Cultures, demographics and ward data")]
+        STG["stg_armd_cohort
+        Prepare culture and antibiotic-result fields"]
+        DEMO["stg_armd_demographics
+        Prepare patient characteristics"]
+        WARD["stg_armd_ward
+        Prepare location flags"]
+        RAW --> STG
+        RAW --> DEMO
+        RAW --> WARD
+    end
+
+    subgraph CORE["2. Organize records and resolve source results"]
+        CULT["fct_culture
+        One record per culture order"]
+        ORG["fct_culture_organism
+        One record per culture and source organism"]
+        COHORT["int_cohort_culture_organism
+        Assign blood, urine or respiratory cohort"]
+        MAPSEED["organism_mapping
+        Reviewed organism-name dictionary"]
+        DIM["dim_organism
+        Match source labels to reviewed identities"]
+        MAPPED["int_mapped_cohort_culture_organism
+        Attach standardized organism information"]
+        RECON["int_susceptibility_reconciliation
+        Resolve repeats; flag missing or conflicting AST"]
+        FACTAST["fct_susceptibility
+        Retain resolved source AST results"]
+        EXCEPT["int_susceptibility_exceptions
+        Preserve unresolved results for review"]
+        STG --> CULT
+        CULT --> ORG
+        STG --> ORG
+        CULT --> COHORT
+        ORG --> COHORT
+        ORG --> DIM
+        MAPSEED -.-> DIM
+        COHORT --> MAPPED
+        DIM --> MAPPED
+        STG --> RECON
+        ORG --> RECON
+        RECON --> FACTAST
+        RECON --> EXCEPT
+    end
+
+    subgraph CLASSIFY["3. Classify resistance and consolidate labels"]
+        PHENO["int_culture_organism_phenotype
+        Derive resistance patterns from AST evidence"]
+        REPORT["int_reporting_culture_organism
+        Combine same-culture labels within each phenotype"]
+        MAPPED --> PHENO
+        RECON --> PHENO
+        PHENO --> REPORT
+    end
+
+    subgraph SELECT["4. Select cultures for susceptibility reporting"]
+        OBS["int_culture_reporting_observation
+        Combine phenotype labels for overall S. aureus"]
+        CAST["int_culture_reporting_susceptibility
+        Reconcile AST within each reporting scope"]
+        CAND["int_stratified_reporting_candidates
+        Define baseline, ESCE-R, VRE, MRSA and MSSA groups"]
+        FIRST["int_first_stratified_reporting_culture
+        Select first culture per patient and category"]
+        FIRSTAST["int_first_stratified_reporting_susceptibility
+        Attach AST for each selected category culture"]
+        OVERALL["int_overall_first_reporting_isolate
+        Select first S. aureus culture, any phenotype"]
+        OVERALLAST["int_overall_first_reporting_susceptibility
+        Attach AST for overall first S. aureus cultures"]
+        REPORT --> OBS
+        REPORT --> CAST
+        RECON --> CAST
+        OBS --> CAST
+        REPORT --> CAND
+        CAST --> CAND
+        CAND --> FIRST
+        FIRST --> FIRSTAST
+        CAST --> FIRSTAST
+        OBS --> OVERALL
+        OVERALL --> OVERALLAST
+        CAST --> OVERALLAST
+    end
+
+    subgraph OUTPUT["5. Build the reporting datasets"]
+        PANELS["reportable_organism_antibiotic_pairs
+        organism_antibiotic_exclusions
+        Approved panels and reporting exclusions"]
+        GRAM["organism_reporting_groups
+        Gram-positive and Gram-negative classifications"]
+        SUS[("mart_susceptibility
+        Count S/I/R results; calculate susceptibility
+        Flag fewer than 30 categorized results")]
+        MDRO[("mart_mdro
+        Count patients with CRE or MDR Pseudomonas
+        Use evidence across eligible cultures")]
+        FIRST -->|eligible population| SUS
+        FIRSTAST -->|antibiotic results| SUS
+        OVERALL -->|eligible population| SUS
+        OVERALLAST -->|antibiotic results| SUS
+        PANELS -.-> SUS
+        GRAM -.-> SUS
+        REPORT -->|all eligible cultures| MDRO
+        GRAM -.-> MDRO
+    end
+
+    classDef raw fill:#f1f5f9,stroke:#64748b,color:#0f172a
+    classDef staging fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    classDef core fill:#ccfbf1,stroke:#0d9488,color:#134e4a
+    classDef phenotype fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef reporting fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef output fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef reference fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef qa fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+
+    class RAW raw
+    class STG,DEMO,WARD staging
+    class CULT,ORG,COHORT,DIM,MAPPED,RECON,FACTAST core
+    class PHENO,REPORT phenotype
+    class OBS,CAST,CAND,FIRST,FIRSTAST,OVERALL,OVERALLAST reporting
+    class SUS,MDRO output
+    class MAPSEED,PANELS,GRAM reference
+    class EXCEPT qa
+```
+
+- **Susceptibility reporting:** baseline and resistance categories select their first qualifying cultures independently. S. aureus also has an overall first-culture population. CRE and MDR Pseudomonas categories are reserved for the separate MDRO summary. A patient may appear in multiple categories; baseline does not guarantee susceptibility.
+- **Reporting period:** when configured, the research date window is applied before first-culture selection and to the MDRO population. Demographics and ward models support additional analyses and do not currently feed these two marts.
+
+
+
+
 ## Reproducing the pipeline
 
 This is a Databricks-based batch ELT project for the **2025-04-11 ARMD source release**. The repository does not currently package a one-command, from-scratch warehouse ingestion workflow.
